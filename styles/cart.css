@@ -1,0 +1,755 @@
+body {
+    background-color: #FFFFFF;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    outline: none;
+    border: none;
+    text-decoration: none;
+    text-transform: capitalize;
+    transition: .2s linear;
+}
+
+footer {
+    background-color: #9265A6;
+    padding: 10px;
+    text-align: center;
+    color: white;
+}
+
+html {
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+    overflow-x: hidden;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #9265A6;
+    padding: 1.5rem 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1000;
+    box-shadow: 0 .1rem 1rem rgba(0, 0, 0, 1);
+}
+
+header .logo {
+    font-size: 3rem;
+    color: #81C3C2;
+    font-weight: bold;
+    shadow: 0 .1rem 1rem rgba(0, 0, 0, 1);
+    z-index: 1001;
+}
+
+header span {
+    color: #FFFFFF;
+    position: relative;
+    top: -3px;
+    left: -5px;
+}
+
+header .navbar {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    z-index: 1;
+    margin-right: 10%;
+}
+
+header .navbar a {
+    font-size: 1.7rem;
+    padding: 0 1.1rem;
+    color: #ffffff;
+    text-shadow: 0.8px 0.8px #81C3C2;
+    transition: all 0.3s ease;
+    display: inline-block;
+    background-size: 150%;
+}
+
+header .navbar a:hover {
+    transform: scale(1.1);
+    color: #81C3C2;
+}
+
+header .icons a {
+    font-size: 3rem;
+    margin-left: 2rem;
+    color: white;
+    text-shadow: 1px 1px #81C3C2;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+header .icons a:hover {
+    color: #81C3C2;
+    transform: scale(1.2);
+}
+
+.search {
+    display: none;
+    position: absolute;
+    top: 10px;
+    left: 400px;
+    background: white;
+    z-index: 1000;
+    width: 645px;
+    max-width: 100%;
+    border-radius: 10px;
+    border: #303333 1px solid;
+}
+
+.search:target {
+    display: block;
+}
+
+.search input {
+    width: 100%;
+    padding: 10px 10px 10px 35px;
+    font-size: 16px;
+    border: 1px solid #303333;
+    border-radius: 10px;
+    box-sizing: border-box;
+    text-align: left;
+    position: relative;
+}
+
+.search i {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: #9265A6;
+    font-size: 16px;
+    pointer-events: none;
+}
+
+.close-btn {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #9265A6;
+    cursor: pointer;
+}
+
+.search a {
+    position: absolute;
+    top: 50%;
+    left: 600px;
+    transform: translateY(-50%);
+    color: #9265A6;
+    font-size: 20px;
+    pointer-events: none;
+}
+
+.laptop-btn {
+    position: absolute;
+    top: 0;
+    right: 775px;
+    background: rgb(146, 101, 166);
+    color: white !important;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    text-shadow: 1px 1px #81C3C2;
+    font-size: 1.7rem;
+}
+.home-btn {
+    position: absolute;
+    top: 0;
+    right: 970px;
+    background: rgb(146, 101, 166);
+    color: white !important;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    text-shadow: 1px 1px #81C3C2;
+    font-size: 1.7rem;
+}
+.pc-btn {
+    position: absolute;
+    top: 0;
+    right: 896px;
+    background: rgb(146, 101, 166);
+    color: white !important;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    text-shadow: 1px 1px #81C3C2;
+    font-size: 1.7rem;
+}
+.console-btn {
+    position: absolute;
+    top: 0;
+    right: 642px;
+    background: rgb(146, 101, 166);
+    color: white !important;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    text-shadow: 1px 1px #81C3C2;
+    font-size: 1.7rem;
+}
+.cata-btn {
+    position: absolute;
+    top: 0;
+    right: 475px;
+    background: rgb(146, 101, 166);
+    color: white !important;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    text-shadow: 1px 1px #81C3C2;
+    font-size: 1.7rem;
+}
+.search-btn {
+    position: absolute;
+    top: 0;
+    right: 438px;
+    background: rgb(146, 101, 166);
+    color: white !important;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    text-shadow: 1px 1px #81C3C2;
+    font-size: 1.7rem;
+}
+
+
+
+
+
+
+
+.dropdown-multicolumn {
+
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    pointer-events: none;
+    position: absolute;
+    top: 55px;
+    left: 0;
+    background: linear-gradient(to bottom right, #bbaeca, #9265a6);
+    color: #000000;
+    padding: 20px;
+    border-radius: 8px;
+    gap: 40px;
+    z-index: 1000;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    display: flex;
+    visibility: hidden;
+}
+
+.dropdown-multicolumn .column {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.dropdown-multicolumn a {
+    color: #ffffff !important;
+    font-size: 1.3rem;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.dropdown-multicolumn a:hover {
+    background-color: #9265A6;
+
+    transform: translateX(5px);
+    transition: all 0.3s ease;
+    border-radius: 6px;
+}
+
+.pc-btn:hover .dropdown-multicolumn {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    visibility: visible;
+}
+
+
+
+.dropdown-multicolumn2 {
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none; /* تمنع التفاعل قبل الظهور */
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    position: absolute;
+    top: 55px;
+    left: 0;
+    background: linear-gradient(to bottom right, #bbaeca, #9265a6);
+    color: #000000;
+    padding: 20px;
+    border-radius: 8px;
+    gap: 40px;
+    z-index: 1000;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    display: flex; /* خليه دائمًا موجود بس مخفي */
+    visibility: hidden;
+}
+
+
+.dropdown-multicolumn2 .column {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.dropdown-multicolumn2 a {
+    color: #ffffff !important;
+    font-size: 1.3rem;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.dropdown-multicolumn2 a:hover {
+    background-color: #9265A6;
+
+    transform: translateX(5px);
+    transition: all 0.3s ease;
+    border-radius: 6px;
+}
+
+
+.cata-btn:hover .dropdown-multicolumn2 {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    visibility: visible;
+}
+
+
+
+.back{
+    max-width: 1300px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    border: black 1px solid;
+    height: 200px;
+}
+.back2{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 50px;
+    padding: 40px 0;
+}
+
+.prod{
+    max-width: 500px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    border: black 1px solid;
+    height: 200px;
+
+}
+
+.pay{
+    max-width: 500px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    border: black 1px solid;
+    height: 200px;
+
+}
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px;
+    gap: 20px;
+}
+
+/* قسم المعلومات */
+.info {
+    flex: 1 1 45%;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 3px solid #9265a6;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    padding-bottom: 60px;
+    max-height: 600px; /* حدد الارتفاع الذي ترغب فيه */
+
+
+
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.items-container {
+    flex-grow: 1; /* يعني أن هذا القسم سيأخذ المساحة المتاحة */
+    overflow-y: auto; /* يضيف شريط التمرير عند الحاجة */
+    height: 600px;
+}
+.items-container * {
+    direction: ltr;
+}
+
+.info h1 {
+    background-color: #9265a6;
+    padding: 10px;
+    border-radius: 8px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.info .item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+.item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+    background-color: #eadbf1;
+    border-radius: 20px;
+
+    height: 140px;
+    border: 2px solid #9265a6;
+
+}
+
+
+
+.info .item img {
+    width: 120px;
+    margin-right: 15px;
+}
+
+.quantity-selector {
+    margin-left: 200px;
+    display: flex;
+    align-items: center;
+}
+
+
+
+.item img.icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+}
+
+.product_info {
+
+    font-size: 20px;
+    margin:0;
+    position: relative;
+}
+.product_price{
+    position: relative;
+    top: 10px;
+    font-size: 15px;
+
+}
+
+/* المجموع */
+.total {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    font-weight: bold;
+    border-top: 2px solid #ddd;
+
+    font-size: 20px;
+    color: #794e8c;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    margin-top: auto;
+}
+
+/* قسم الدفع */
+.payment {
+    flex: 1 1 45%;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    align-items: center;
+    text-align: center;
+    border: 3px solid #9265a6;
+
+}
+
+.payment h1 {
+    background-color: #9265a6;
+    padding: 10px;
+    border-radius: 8px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+
+.inputs, select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #9265a6;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.inputs:focus {
+
+    border: 1px solid #9265a6;
+
+}
+
+
+.radio {
+    margin: 10px 5px;
+}
+
+.button {
+    background-color: #9265a6;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 15px;
+    width: 100%;
+    color: white;
+    font-size: 17px;
+}
+.button:hover{
+    background-color: #7a4b91;
+}
+
+button a {
+    text-decoration: none;
+    color: black;
+}
+
+
+.aa {
+    color: #9265a6;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.aa:hover {
+    text-decoration: underline;
+
+}
+.fname{
+    width: 50%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #9265a6;
+
+
+}
+.lname{
+    width: 50%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #9265a6;
+
+}
+.name-group {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+.payment label i {
+    font-size: 30px;
+    margin-right: 10px;
+    color: #9265a6;
+}
+.item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 550px;
+}
+
+.item > img {
+    width: 80px;
+    height: auto;
+    flex-shrink: 0;
+}
+
+.item > div:first-of-type {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column; /* الاسم تحت السعر */
+    justify-content: center;
+}
+
+.product_info {
+    margin: 0; /* تأكد إنه مافي هوامش زائدة */
+    font-weight: bold;
+}
+
+.product_price {
+    margin: 0;
+    color: #555;
+    font-size: 14px;
+}
+
+.quantity-selector {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-family: sans-serif;
+    background-color: #FFFFFF;
+    margin-left: auto; /* يدفع الكبسات يمين */
+}
+
+.quantity-selector button {
+    background: none;
+    border: none;
+    font-size: 18px;
+    width: 20px;
+    cursor: pointer;
+}
+
+.quantity-selector span {
+    margin: 0 8px;
+    font-size: 16px;
+    min-width: 20px;
+    text-align: center;
+}
+.right-controls {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    gap: 8px;
+}
+.remove-item:hover {
+    color: darkred;
+    transform: scale(1.2);
+    transition: 0.2s;
+}
+.remove-item {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 4px;
+    color: #ff0000;
+    transition: color 0.3s;
+}
+#messageBox {
+    display: none;
+    position: fixed;
+    top: 80px; /* تحت الهيدر */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4CAF50;
+    color: white;
+    padding: 20px 30px; /* أكبر */
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    font-weight: 700;
+    font-size: 18px; /* تكبير الخط */
+    z-index: 1001;
+    max-width: 90%;
+    text-align: center;
+    font-family: 'Cairo', sans-serif;
+    border: 2px solid black;
+}
+.dropdown-results {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    max-height: 300px;
+    overflow-y: auto;
+    width: 250px;
+    z-index: 999;
+    display: none;
+    margin-top: 5px;
+    border-radius: 8px;
+}
+
+.dropdown-results .result-item {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+}
+
+.dropdown-results .result-item:hover {
+    background-color: #f2f2f2;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

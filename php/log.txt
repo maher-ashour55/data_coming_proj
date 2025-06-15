@@ -1,0 +1,487 @@
+========== New Request ==========
+Script started
+User ID from session: 1
+Database connected
+Raw input: {"fname":"بيشس","lname":"بشسب","address":"سشبشس","email":"بشسب","phone":"شسبشسب","city":"سلفيت","payment":"cash","total":4350}
+Decoded data: Array
+(
+    [fname] => بيشس
+    [lname] => بشسب
+    [address] => سشبشس
+    [email] => بشسب
+    [phone] => شسبشسب
+    [city] => سلفيت
+    [payment] => cash
+    [total] => 4350
+)
+
+Inserting order...
+Order inserted successfully with ID: 18
+Fetching cart items...
+Inserting order items...
+Adding product_id: 18, quantity: 1
+Clearing cart items...
+Order process finished successfully
+========== New Request ==========
+[2025-05-26 12:44:15] Script started
+User ID from session: 1
+Database connected
+Raw input: 
+Decoded data: 
+Missing field: fname
+========== New Request ==========
+[2025-05-26 12:44:43] Script started
+User ID from session: 1
+Database connected
+Raw input: {"fname":"شسيبشسيب","lname":"شسبشسب","address":"شسبش","email":"بسشب","phone":"شسبشس","city":"أريحا","payment":"cash","total":50}
+Decoded data: Array
+(
+    [fname] => شسيبشسيب
+    [lname] => شسبشسب
+    [address] => شسبش
+    [email] => بسشب
+    [phone] => شسبشس
+    [city] => أريحا
+    [payment] => cash
+    [total] => 50
+)
+
+Inserting order...
+Order inserted successfully with ID: 19
+Fetching cart items...
+Inserting order items...
+Adding product_id: 1, quantity: 1
+Item inserted for product 1 successfully
+Clearing cart items...
+Order process finished successfully
+========== New Request ==========
+[2025-05-26 12:50:24] Script started
+User ID from session: 1
+Database connected
+Raw input: {"fname":"mahera","lname":"sasa","address":"as","email":"sassssssss@asssss","phone":"124124","city":"القدس","payment":"cash","total":400}
+Decoded data: Array
+(
+    [fname] => mahera
+    [lname] => sasa
+    [address] => as
+    [email] => sassssssss@asssss
+    [phone] => 124124
+    [city] => القدس
+    [payment] => cash
+    [total] => 400
+)
+
+Inserting order...
+Order inserted successfully with ID: 20
+Fetching cart items...
+Inserting order items...
+Adding product_id: 22, quantity: 1
+Item inserted for product 22 successfully
+Clearing cart items...
+Order process finished successfully
+========== New Request ==========
+[2025-05-26 12:50:56] Script started
+User ID from session: 1
+Database connected
+Raw input: {"fname":"sdfdsf","lname":"dsf","address":"sdfsdf","email":"sdfsdf","phone":"sdfsd","city":"رام الله","payment":"cash","total":350}
+Decoded data: Array
+(
+    [fname] => sdfdsf
+    [lname] => dsf
+    [address] => sdfsdf
+    [email] => sdfsdf
+    [phone] => sdfsd
+    [city] => رام الله
+    [payment] => cash
+    [total] => 350
+)
+
+Inserting order...
+Order inserted successfully with ID: 21
+Fetching cart items...
+Inserting order items...
+Adding product_id: 28, quantity: 1
+Item inserted for product 28 successfully
+Clearing cart items...
+Order process finished successfully
+========== New Request ==========
+[2025-05-26 12:51:44] Script started
+User ID from session: 1
+Database connected
+Raw input: {"fname":"sdfsdf","lname":"dsf","address":"dsfdfsd","email":"fdsf","phone":"sdf","city":"الخليل","payment":"cash","total":350}
+Decoded data: Array
+(
+    [fname] => sdfsdf
+    [lname] => dsf
+    [address] => dsfdfsd
+    [email] => fdsf
+    [phone] => sdf
+    [city] => الخليل
+    [payment] => cash
+    [total] => 350
+)
+
+Inserting order...
+Order inserted successfully with ID: 22
+Fetching cart items...
+Inserting order items...
+Adding product_id: 28, quantity: 1
+Item inserted for product 28 successfully
+Clearing cart items...
+Order process finished successfully
+========== New Request ==========
+[2025-05-26 12:55:42] Script started
+User ID from session: 1
+Database connected
+Raw input: {"fname":"maher","lname":"ashour","address":"asdasd","email":"asdas","phone":"1241241","city":"الخليل","payment":"cash","total":350}
+Decoded data: Array
+(
+    [fname] => maher
+    [lname] => ashour
+    [address] => asdasd
+    [email] => asdas
+    [phone] => 1241241
+    [city] => الخليل
+    [payment] => cash
+    [total] => 350
+)
+
+Inserting order...
+Order inserted successfully with ID: 23
+Fetching cart items...
+Inserting order items...
+Adding product_id: 28, quantity: 1
+Item inserted for product 28 successfully
+Clearing cart items...
+Order process finished successfully
+========== New Request ==========
+[2025-05-26 13:04:24] Script started
+User ID from session: 1
+Database connected
+Raw input: {"fname":"afs","lname":"afas","address":"fa","email":"fasfa","phone":"sfasfasf","city":"بيت لحم","payment":"cash","total":1050}
+Decoded data: Array
+(
+    [fname] => afs
+    [lname] => afas
+    [address] => fa
+    [email] => fasfa
+    [phone] => sfasfasf
+    [city] => بيت لحم
+    [payment] => cash
+    [total] => 1050
+)
+
+Inserting order...
+Order inserted successfully with ID: 24
+Fetching cart items...
+Inserting order items...
+Adding product_id: 28, quantity: 3
+Item inserted for product 28 successfully
+Clearing cart items...
+Order process finished successfully
+========== New Request ==========
+[2025-05-27 12:47:20] Script started
+User ID from session: 2
+Database connected
+Raw input: {"fname":"moh","lname":"ash","address":"p22233","email":"mohash@gmail.com","phone":"2121212","city":"القدس","payment":"visa","total":700,"paymentDetails":{"nameOnCard":"maher ashour","cardNumber":"1234567890123456","expiryDate":"2028-10","phone":"23311313","cvv":"123","holderId":"409974169"}}
+Decoded data: Array
+(
+    [fname] => moh
+    [lname] => ash
+    [address] => p22233
+    [email] => mohash@gmail.com
+    [phone] => 2121212
+    [city] => القدس
+    [payment] => visa
+    [total] => 700
+    [paymentDetails] => Array
+        (
+            [nameOnCard] => maher ashour
+            [cardNumber] => 1234567890123456
+            [expiryDate] => 2028-10
+            [phone] => 23311313
+            [cvv] => 123
+            [holderId] => 409974169
+        )
+
+)
+
+Inserting order...
+Order inserted successfully with ID: 25
+Fetching cart items...
+Inserting order items...
+Adding product_id: 28, quantity: 2
+Item inserted for product 28 successfully
+Clearing cart items...
+Order process finished successfully
+========== New Request ==========
+[2025-05-27 22:40:36] Script started
+User ID from session: 2
+Database connected
+Raw input: {"fname":"moh","lname":"ash","address":"P3041446","email":"mohash@gmail.com","phone":"0595340025","city":"طولكرم","payment":"visa","total":150,"paymentDetails":{"nameOnCard":"MAHER ASHOUR","cardNumber":"1234567890123456","expiryDate":"2028-10","phone":"059534--25","cvv":"123","holderId":"409974169"}}
+Decoded data: Array
+(
+    [fname] => moh
+    [lname] => ash
+    [address] => P3041446
+    [email] => mohash@gmail.com
+    [phone] => 0595340025
+    [city] => طولكرم
+    [payment] => visa
+    [total] => 150
+    [paymentDetails] => Array
+        (
+            [nameOnCard] => MAHER ASHOUR
+            [cardNumber] => 1234567890123456
+            [expiryDate] => 2028-10
+            [phone] => 059534--25
+            [cvv] => 123
+            [holderId] => 409974169
+        )
+
+)
+
+Inserting order...
+Order inserted successfully with ID: 26
+Fetching cart items...
+Inserting order items...
+Adding product_id: 23, quantity: 1
+Item inserted for product 23 successfully
+Clearing cart items...
+Order process finished successfully
+========== New Request ==========
+[2025-05-28 08:21:44] Script started
+User ID from session: 15
+Database connected
+Raw input: {"fname":"mahmoud","lname":"toma","address":"p1233","email":"mahmoud@gmail.com","phone":"0595340025","city":"طولكرم","payment":"cash","total":4999}
+Decoded data: Array
+(
+    [fname] => mahmoud
+    [lname] => toma
+    [address] => p1233
+    [email] => mahmoud@gmail.com
+    [phone] => 0595340025
+    [city] => طولكرم
+    [payment] => cash
+    [total] => 4999
+)
+
+Inserting order...
+Order inserted successfully with ID: 27
+Fetching cart items...
+Inserting order items...
+Adding product_id: 40, quantity: 1
+Item inserted for product 40 successfully
+Clearing cart items...
+Order process finished successfully
+========== New Request ==========
+[2025-05-28 08:22:39] Script started
+User ID from session: 15
+Database connected
+Raw input: {"fname":"mahmoud","lname":"toma","address":"p2223","email":"mahmoud@gmail.com","phone":"0595340025","city":"القدس","payment":"visa","total":1200,"paymentDetails":{"nameOnCard":"maher ashour","cardNumber":"1234567890123456","expiryDate":"2026-10","phone":"0595340025","cvv":"123","holderId":"409973416"}}
+Decoded data: Array
+(
+    [fname] => mahmoud
+    [lname] => toma
+    [address] => p2223
+    [email] => mahmoud@gmail.com
+    [phone] => 0595340025
+    [city] => القدس
+    [payment] => visa
+    [total] => 1200
+    [paymentDetails] => Array
+        (
+            [nameOnCard] => maher ashour
+            [cardNumber] => 1234567890123456
+            [expiryDate] => 2026-10
+            [phone] => 0595340025
+            [cvv] => 123
+            [holderId] => 409973416
+        )
+
+)
+
+Inserting order...
+Order inserted successfully with ID: 28
+Fetching cart items...
+Inserting order items...
+Adding product_id: 19, quantity: 1
+Item inserted for product 19 successfully
+Clearing cart items...
+Order process finished successfully
+========== New Request ==========
+[2025-05-28 09:15:58] Script started
+User ID from session: 2
+Database connected
+Raw input: {"fname":"moh","lname":"ash","address":"p2344","email":"mohash@gmail.com","phone":"0595340025","city":"الخليل","payment":"cash","total":13939}
+Decoded data: Array
+(
+    [fname] => moh
+    [lname] => ash
+    [address] => p2344
+    [email] => mohash@gmail.com
+    [phone] => 0595340025
+    [city] => الخليل
+    [payment] => cash
+    [total] => 13939
+)
+
+Inserting order...
+Order inserted successfully with ID: 29
+Fetching cart items...
+Inserting order items...
+Adding product_id: 39, quantity: 2
+Item inserted for product 39 successfully
+Adding product_id: 40, quantity: 1
+Item inserted for product 40 successfully
+Clearing cart items...
+Order process finished successfully
+========== New Request ==========
+[2025-05-31 15:51:09] Script started
+User ID from session: 1
+Database connected
+Raw input: {"fname":"maher","lname":"ashour","address":"2352252","email":"maherashoor48@gmail.com","phone":"52352352","city":"قلقيلية","payment":"cash","total":300}
+Decoded data: Array
+(
+    [fname] => maher
+    [lname] => ashour
+    [address] => 2352252
+    [email] => maherashoor48@gmail.com
+    [phone] => 52352352
+    [city] => قلقيلية
+    [payment] => cash
+    [total] => 300
+)
+
+Inserting order...
+Order inserted successfully with ID: 30
+Fetching cart items...
+Inserting order items...
+Adding product_id: 28, quantity: 2
+Item inserted for product 28 successfully
+Clearing cart items...
+Order process finished successfully
+========== New Request ==========
+[2025-06-01 12:30:01] Script started
+User ID from session: 1
+Database connected
+Raw input: {"fname":"maher","lname":"ashour","address":"p123456","email":"maherashoor48@gmail.com","phone":"0595340025","city":"طولكرم","payment":"visa","total":928,"paymentDetails":{"nameOnCard":"maher ashour","cardNumber":"1234567890123456","expiryDate":"2027-06","phone":"0595340025","cvv":"123","holderId":"4099222221"}}
+Decoded data: Array
+(
+    [fname] => maher
+    [lname] => ashour
+    [address] => p123456
+    [email] => maherashoor48@gmail.com
+    [phone] => 0595340025
+    [city] => طولكرم
+    [payment] => visa
+    [total] => 928
+    [paymentDetails] => Array
+        (
+            [nameOnCard] => maher ashour
+            [cardNumber] => 1234567890123456
+            [expiryDate] => 2027-06
+            [phone] => 0595340025
+            [cvv] => 123
+            [holderId] => 4099222221
+        )
+
+)
+
+Inserting order...
+Order inserted successfully with ID: 31
+Fetching cart items...
+Inserting order items...
+Adding product_id: 35, quantity: 1
+Item inserted for product 35 successfully
+Adding product_id: 28, quantity: 2
+Item inserted for product 28 successfully
+Clearing cart items...
+Order process finished successfully
+========== New Request ==========
+[2025-06-01 13:41:41] Script started
+User ID from session: 5
+Database connected
+Raw input: {"fname":"osa","lname":"osa","address":"p1334444","email":"osa@gmail.com","phone":"0595340025","city":"طولكرم","payment":"visa","total":4000,"paymentDetails":{"nameOnCard":"osa osa","cardNumber":"1234567890123456789","expiryDate":"2027-10","phone":"0595340025","cvv":"123","holderId":"409976524"}}
+Decoded data: Array
+(
+    [fname] => osa
+    [lname] => osa
+    [address] => p1334444
+    [email] => osa@gmail.com
+    [phone] => 0595340025
+    [city] => طولكرم
+    [payment] => visa
+    [total] => 4000
+    [paymentDetails] => Array
+        (
+            [nameOnCard] => osa osa
+            [cardNumber] => 1234567890123456789
+            [expiryDate] => 2027-10
+            [phone] => 0595340025
+            [cvv] => 123
+            [holderId] => 409976524
+        )
+
+)
+
+Inserting order...
+Order inserted successfully with ID: 32
+Fetching cart items...
+Inserting order items...
+Adding product_id: 14, quantity: 1
+Item inserted for product 14 successfully
+Adding product_id: 46, quantity: 1
+Item inserted for product 46 successfully
+Clearing cart items...
+Order process finished successfully
+========== New Request ==========
+[2025-06-05 11:45:01] Script started
+User ID from session: 1
+Database connected
+Raw input: {"fname":"maher","lname":"ashour","address":"45645634","email":"maherashoor48@gmail.com","phone":"63678","city":"القدس","payment":"cash","total":890}
+Decoded data: Array
+(
+    [fname] => maher
+    [lname] => ashour
+    [address] => 45645634
+    [email] => maherashoor48@gmail.com
+    [phone] => 63678
+    [city] => القدس
+    [payment] => cash
+    [total] => 890
+)
+
+Inserting order...
+Order inserted successfully with ID: 33
+Fetching cart items...
+Inserting order items...
+Adding product_id: 8, quantity: 1
+Item inserted for product 8 successfully
+Clearing cart items...
+Order process finished successfully
+========== New Request ==========
+[2025-06-08 17:23:03] Script started
+User ID from session: 1
+Database connected
+Raw input: {"fname":"maher","lname":"ashour","address":"hjjhj","email":"maherashoor48@gmail.com","phone":"hjhjh","city":"القدس","payment":"cash","total":4000}
+Decoded data: Array
+(
+    [fname] => maher
+    [lname] => ashour
+    [address] => hjjhj
+    [email] => maherashoor48@gmail.com
+    [phone] => hjhjh
+    [city] => القدس
+    [payment] => cash
+    [total] => 4000
+)
+
+Inserting order...
+Order inserted successfully with ID: 34
+Fetching cart items...
+Inserting order items...
+Adding product_id: 19, quantity: 5
+Item inserted for product 19 successfully
+Clearing cart items...
+Order process finished successfully

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VISA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="./styles/visa.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+<body>
+<header>
+
+    <a href="index.html" class="logo aa">
+        <span class="outlined-text">Data Coming</span><span>.</span>
+    </a>
+    <nav class="navbar">
+        <div class="home-btn"><a href="index.html" class="fas fa-home"> Home</a></div>
+
+        <div class="pc-btn">
+            <a href="#" class="fas fa-desktop"> PC</a>
+            <div class="dropdown-multicolumn">
+                <div class="column">
+                    <a href="case.html">CASE</a>
+                    <a href="mother.html">MOTHER BOARD</a>
+                    <a href="cpu.html">CPU</a>
+                    <a href="gui.html">GRAPHIC CARDS</a>
+
+                </div>
+                <div class="column">
+                    <a href="ssd.html">SSD</a>
+                    <a href="ram.html">MEMORY</a>
+                    <a href="harddisk.html">HARD DISK</a>
+                    <a href="power.html">POWER SUPPLY</a>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="laptop-btn"><a href="laptop.html" class="fas fa-laptop"> laptop</a></div>
+        <div class="console-btn"><a href="xbox.html" class="fab fa-xbox"> console</a></div>
+        <div class="cata-btn">
+            <a href="#" class="fas fa-mouse"> ACCESSORIES</a>
+            <div class="dropdown-multicolumn2">
+                <div class="column">
+                    <a href="headset.html">HEAD SET</a>
+                    <a href="mouse.html">MOUSE</a>
+                    <a href="keyboard.html">KEYBOARD</a>
+
+                </div>
+                <div class="column">
+                    <a href="chair.html">CHAIR</a>
+                    <a href="monitor.html">MONITOR</a>
+                    <a href="hdmi.html">CABLES AND PORTS</a>
+                </div>
+            </div>
+        </div>
+        <div class="search-btn"><a href="#" onclick="document.getElementById('search1').style.display='block'; return false;" class="fas fa-search "></a></div>
+
+
+        <div class="search" id="search1">
+            <input type="text" placeholder="search...">
+            <i class="fas fa-search"></i>
+            <button id="closeSearch" class="close-btn">✖</button>
+        </div>
+    </nav>
+
+    <div class="icons">
+        <a href="https://www.facebook.com/profile.php?id=61556946718232" class="fab fa-facebook-f" target="_blank"></a>
+        <a href="https://www.instagram.com/datac0ming?igsh=MThhMWs5ZHA5MTZneA==" class="fab fa-instagram" target="_blank"></a>
+        <a href="cart.php" class="fas fa-shopping-cart"></a>
+        <a href="login.html" class="fas fa-user"></a>
+    </div>
+</header>
+
+<main style="padding-top: 70px">
+    <div class="payment-form">
+        <div class="form-title">Pay With Credit Card</div>
+        <label>Name on card</label>
+        <input type="text" placeholder="enter name">
+
+        <label>Card Number</label>
+        <input type="text" placeholder="1234 5678 9012 3456">
+
+        <label>Expiry Date</label>
+        <input type="month" placeholder="MM / YY">
+
+
+
+        <label>Phone Number</label>
+        <input type="tel" placeholder="05XXXXXXXX">
+
+        <label>CVV</label>
+        <input type="text" placeholder="123">
+
+        <label>Holder ID</label>
+        <input type="text" placeholder="ID number">
+
+
+
+        <button class="confirm-btn">Confirm Payment</button>
+    </div>
+
+    <table >
+        <tr><td>Order number :</td><td>180737</td></tr>
+        <tr><td>Date :</td><td id="current-date"></td></tr>
+        <tr><td>Total :</td><td id="order-total"></td></tr>
+
+        <tr><td>Payment method :</td><td>Secured payment by credit card</td></tr>
+    </table>
+</main>
+
+
+
+
+<script>
+    const today = new Date();
+    const formattedDate = today.toLocaleDateString('en-GB'); // dd/mm/yyyy
+    document.getElementById("current-date").textContent = formattedDate;
+</script>
+<script>
+
+    const total = localStorage.getItem('cartTotal') || '₪0.00';
+    document.getElementById('order-total').textContent = total;
+</script>
+
+
+
+
+
+</body>
+</html>
