@@ -626,30 +626,19 @@ header .icons a:hover {
     font-weight: bold;
     display: block;
 }
-
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
 .single-price {
     font-size: 18px;
     font-weight: bold;
     color: #333;
 }
 @media (max-width: 768px) {
-    .category-card {
-        width: 170px !important;
-        margin: 10px auto !important;
 
-        font-size: 30px !important;
-    }
-
-    .category-card img {
-        width: 90% !important;
-        height: auto !important;
-    }
-
-    .categories {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
 
     nav.navbar {
         display: none;
@@ -698,6 +687,45 @@ header .icons a:hover {
         height: auto;
     }
 }
+.categories {
+    display: grid;
+    gap: 30px;
+    justify-content: center;
+    padding: 40px 0;
+}
+
+@media (min-width: 1201px) {
+    .categories {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    .card-bg{
+
+    }
+}
+
+@media (min-width: 901px) and (max-width: 1200px) {
+    .categories {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .categories {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .card-bg img{
+        width: 220px;
+    }
+    .category-card{
+        height: 430px;
+    }
+    .card-bg{
+        height: 200px;
+    }
+}
+
+
+
 
 
 .icons a {
@@ -805,7 +833,6 @@ header .icons a:hover {
     margin: 0;
 }
 
-/* responsive behavior */
 @media (max-width: 600px) {
     .side-menu-item {
         width: 45%;
@@ -984,5 +1011,6 @@ header .icons a:hover {
         transform: translateX(-50%) translateY(-20px);
     }
 }
+
 
 

@@ -15,6 +15,8 @@ if (!$result) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <meta charset="UTF-8">
     <title>Console | Data Coming</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
@@ -80,15 +82,154 @@ if (!$result) {
             </div>
         </nav>
         <div class="icons">
-            <a href="https://www.facebook.com/profile.php?id=61556946718232" class="fab fa-facebook-f" target="_blank"></a>
-            <a href="https://www.instagram.com/datac0ming" class="fab fa-instagram" target="_blank"></a>
-            <a href="cart.php" class="fas fa-shopping-cart"></a>
-            <a href="login.php" class="fas fa-user"></a>
+            <a href="https://www.facebook.com/profile.php?id=61556946718232" class="fab fa-facebook-f social-icon" target="_blank"></a>
+            <a href="https://www.instagram.com/datac0ming?igsh=MThhMWs5ZHA5MTZneA==" class="fab fa-instagram social-icon" target="_blank"></a>
+            <a href="cart.php" class="fas fa-shopping-cart main-icon"></a>
+            <a href="login.php" class="fas fa-user main-icon"></a>
         </div>
     </header>
+    <div id="side-menu" class="side-menu">
+        <a href="#" class="logo aa">
+            <span class="outlined-text">PC Section</span><span>.</span>
+        </a>
 
+        <div class="back-container">
+            <span class="outlined-text">Data Coming</span><span>.</span>
+        </div>
+
+        <div class="side-menu-grid">
+            <a href="index.php" class="side-menu-item">
+                <i class="fas fa-home"></i>
+                <p>Home</p>
+            </a>
+
+            <a href="#" class="side-menu-item" onclick="openPcMenu(); return false;">
+                <i class="fas fa-desktop"></i>
+                <p>PC</p>
+            </a>
+
+
+
+
+            <a href="laptop.php" class="side-menu-item">
+                <i class="fas fa-laptop"></i>
+                <p>Laptop</p>
+            </a>
+
+            <a href="xbox.php" class="side-menu-item">
+                <i class="fab fa-xbox"></i>
+                <p>Console</p>
+            </a>
+
+            <a href="#" class="side-menu-item" onclick="openAccessoriesMenu(); return false;">
+                <i class="fas fa-mouse"></i>
+                <p>Accessories</p>
+            </a>
+        </div>
+    </div>
+    <div id="pc-side-menu" class="side-menu">
+        <a href="#" class="logo aa">
+            <span class="outlined-text">PC Section</span><span>.</span>
+        </a>
+
+        <div class="back-container">
+            <button class="back-button" onclick="backToMainMenu()">
+                <i class="fas fa-arrow-left"></i> Back
+            </button>
+            <span class="menu-label">PC Section</span>
+        </div>
+
+
+
+        <div class="side-menu-grid">
+            <a href="case.php" class="side-menu-item">
+                <i class="fas fa-box"></i>
+                <p>Case</p>
+            </a>
+
+            <a href="mother.php" class="side-menu-item">
+                <i class="fas fa-network-wired"></i>
+                <p>Motherboard</p>
+            </a>
+
+            <a href="cpu.php" class="side-menu-item">
+                <i class="fas fa-microchip"></i>
+                <p>CPU</p>
+            </a>
+
+            <a href="gui.php" class="side-menu-item">
+                <i class="fas fa-video"></i>
+                <p>Graphic Cards</p>
+            </a>
+
+            <a href="ssd.php" class="side-menu-item">
+                <i class="fas fa-hdd"></i>
+                <p>SSD</p>
+            </a>
+
+            <a href="ram.php" class="side-menu-item">
+                <i class="fas fa-memory"></i>
+                <p>Memory</p>
+            </a>
+
+            <a href="harddisk.php" class="side-menu-item">
+                <i class="fas fa-database"></i>
+                <p>Hard Disk</p>
+            </a>
+
+            <a href="power.php" class="side-menu-item">
+                <i class="fas fa-plug"></i>
+                <p>Power Supply</p>
+            </a>
+        </div>
+    </div>
+    <div id="accessories-side-menu" class="side-menu" >
+        <a href="#" class="logo aa">
+            <span class="outlined-text">Accessories</span><span>.</span>
+        </a>
+
+        <div class="back-container">
+            <button class="back-button" onclick="backToMainMenu()">
+                <i class="fas fa-arrow-left"></i> Back
+            </button>
+            <span class="menu-label">Accessories Section</span>
+        </div>
+
+        <div class="side-menu-grid">
+            <a href="headset.php" class="side-menu-item">
+                <i class="fas fa-headphones"></i>
+                <p>Headset</p>
+            </a>
+
+            <a href="mouse.php" class="side-menu-item">
+                <i class="fas fa-mouse"></i>
+                <p>Mouse</p>
+            </a>
+
+            <a href="keayboard.php" class="side-menu-item">
+                <i class="fas fa-keyboard"></i>
+                <p>Keyboard</p>
+            </a>
+
+            <a href="chair.php" class="side-menu-item">
+                <i class="fas fa-chair"></i>
+                <p>Chair</p>
+            </a>
+
+            <a href="monitor.php" class="side-menu-item">
+                <i class="fas fa-desktop"></i>
+                <p>Monitor</p>
+            </a>
+
+            <a href="hdmi.php" class="side-menu-item">
+                <i class="fas fa-plug"></i>
+                <p>Cables and Ports</p>
+            </a>
+        </div>
+    </div>
     <main style="padding-top: 70px">
         <div id="messageBox"></div>
+        <div class="container">
         <div class="categories">
             <?php while ($row = $result->fetch_assoc()):
                 $final_price = ($row['discount_price'] !== null && floatval($row['discount_price']) > 0 && floatval($row['discount_price']) < floatval($row['price']))
@@ -126,6 +267,7 @@ if (!$result) {
                     <?php endif; ?>
                 </div>
             <?php endwhile; ?>
+        </div>
         </div>
     </main>
 </div>

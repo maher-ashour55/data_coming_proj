@@ -168,3 +168,33 @@ document.addEventListener("DOMContentLoaded", function () {
         }, index * 200);
     });
 });
+const hamburger = document.getElementById('hamburger');
+const sideMenu = document.getElementById('side-menu');
+const pcSideMenu = document.getElementById('pc-side-menu');
+const accessoriesSideMenu = document.getElementById('accessories-side-menu');
+
+hamburger.addEventListener('click', () => {
+    if (sideMenu.classList.contains('active') || pcSideMenu.classList.contains('active') || accessoriesSideMenu.classList.contains('active')) {
+        sideMenu.classList.remove('active');
+        pcSideMenu.classList.remove('active');
+        accessoriesSideMenu.classList.remove('active');
+    } else {
+        sideMenu.classList.add('active');
+    }
+});
+
+function openPcMenu() {
+    sideMenu.classList.remove('active');
+    pcSideMenu.classList.add('active');
+}
+
+function openAccessoriesMenu() {
+    sideMenu.classList.remove('active');
+    accessoriesSideMenu.classList.add('active');
+}
+
+function backToMainMenu() {
+    pcSideMenu.classList.remove('active');
+    accessoriesSideMenu.classList.remove('active');
+    sideMenu.classList.add('active');
+}

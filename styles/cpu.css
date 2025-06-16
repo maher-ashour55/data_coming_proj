@@ -426,7 +426,6 @@ header .icons a:hover {
     overflow: hidden;
 }
 
-/* الخلفية البنفسجية مع القص */
 .bg-shape {
     position: absolute;
     width: 100%;
@@ -609,14 +608,14 @@ header .icons a:hover {
     }
 
     .menu-toggle {
-        display: block; /* زر الهمبرغر */
+        display: block;
     }
     .slideshow-container {
-        display: none; /* أخفي السلايد شو */
+        display: none;
     }
 
     .static-mobile-image {
-        display: block; /* أظهر الصورة الثابتة */
+        display: block;
     }
     header {
         flex-direction: column;
@@ -662,6 +661,9 @@ header .icons a:hover {
     .categories {
         grid-template-columns: repeat(4, 1fr);
     }
+    .card-bg{
+
+    }
 }
 
 @media (min-width: 901px) and (max-width: 1200px) {
@@ -670,17 +672,21 @@ header .icons a:hover {
     }
 }
 
-@media (min-width: 601px) and (max-width: 900px) {
+@media (max-width: 900px) {
     .categories {
         grid-template-columns: repeat(2, 1fr);
     }
-}
-
-@media (max-width: 600px) {
-    .categories {
-        grid-template-columns: 1fr;
+    .card-bg img{
+        width: 220px;
+    }
+    .category-card{
+        height: 430px;
+    }
+    .card-bg{
+        height: 200px;
     }
 }
+
 
 
 
