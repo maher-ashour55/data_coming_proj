@@ -159,3 +159,13 @@ document.addEventListener("DOMContentLoaded", () => {
     attachBuyNowEvents();
     observeCards();
 });
+
+// JavaScript (ممكن تحطه بنهاية الصفحة)
+document.addEventListener("DOMContentLoaded", function () {
+    const cards = document.querySelectorAll('.category-card');
+    cards.forEach((card, index) => {
+        setTimeout(() => {
+            card.classList.add('show');
+        }, index * 200); // كل كرت يظهر بعد 200ms
+    });
+});

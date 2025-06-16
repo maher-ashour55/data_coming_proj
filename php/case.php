@@ -29,9 +29,17 @@ if (!$result) {
 <div class="main-content">
 <header>
 
+    <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+
     <a href="index.php" class="logo aa">
         <span class="outlined-text">Data Coming</span><span>.</span>
     </a>
+    <div class="welcome-message">!نورتوا متجرنا</div>
     <nav class="navbar">
         <div class="home-btn"><a href="index.php" class="fas fa-home"> Home</a></div>
 
@@ -96,6 +104,8 @@ if (!$result) {
     <!-- المنتجات -->
     <main style="padding-top: 70px">
         <div id="messageBox"></div>
+        <div class="container">
+
         <div class="categories">
             <?php while ($row = $result->fetch_assoc()):
                 // حساب السعر النهائي بناءً على الخصم إذا موجود
@@ -133,6 +143,7 @@ if (!$result) {
                     <?php endif; ?>
                 </div>
             <?php endwhile; ?>
+        </div>
         </div>
     </main>
 </div>

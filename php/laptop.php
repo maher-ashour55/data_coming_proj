@@ -26,9 +26,17 @@ if (!$result) {
 <body>
 <div class="main-content">
     <header>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+
         <a href="index.php" class="logo aa">
             <span class="outlined-text">Data Coming</span><span>.</span>
         </a>
+        <div class="welcome-message">!نورتوا متجرنا</div>
         <nav class="navbar">
             <div class="home-btn"><a href="index.php" class="fas fa-home"> Home</a></div>
 
