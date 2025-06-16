@@ -6,7 +6,6 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// التحقق من وجود التوكن في الرابط
 if (!isset($_GET['token'])) {
     die("Invalid request! No token provided.");
 }
@@ -15,7 +14,6 @@ $token = $_GET['token'];
 $message = "";
 $show_form = true;
 
-// التحقق من صحة التوكن وصلاحيته
 $stmt = $conn->prepare("SELECT email, expires FROM password_resets WHERE token = ?");
 $stmt->bind_param("s", $token);
 $stmt->execute();
@@ -33,7 +31,6 @@ if (strtotime($expires) < time()) {
     die("The reset link has expired.");
 }
 
-// إذا النموذج أرسل (تحديث كلمة المرور)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reset_password'])) {
     $password1 = $_POST['password'] ?? '';
     $password2 = $_POST['password_confirm'] ?? '';
@@ -43,14 +40,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reset_password'])) {
     } elseif (strlen($password1) < 6) {
         $message = "Password must be at least 6 characters!";
     } else {
-        // تحديث كلمة المرور
         $hashedPassword = password_hash($password1, PASSWORD_DEFAULT);
 
         $updateSQL = "UPDATE users SET password = ? WHERE email = ?";
         $updateStmt = $conn->prepare($updateSQL);
         $updateStmt->bind_param("ss", $hashedPassword, $email);
         if ($updateStmt->execute()) {
-            // حذف التوكن بعد التحديث
             $delStmt = $conn->prepare("DELETE FROM password_resets WHERE token = ?");
             $delStmt->bind_param("s", $token);
             $delStmt->execute();
@@ -121,7 +116,7 @@ $conn->close();
         const pass2 = this.password_confirm.value.trim();
 
         if (pass1 !== pass2) {
-            e.preventDefault(); // إيقاف الإرسال
+            e.preventDefault();
             showMessage('Passwords do not match!', false);
         }
     });

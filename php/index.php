@@ -91,7 +91,6 @@
         <span class="outlined-text">PC Section</span><span>.</span>
     </a>
 
-    <!-- زر الرجوع -->
     <div class="back-container">
         <span class="outlined-text">Data Coming</span><span>.</span>
     </div>
@@ -126,13 +125,11 @@
         </a>
     </div>
 </div>
-<!-- قائمة خاصة بـ PC -->
 <div id="pc-side-menu" class="side-menu">
     <a href="#" class="logo aa">
         <span class="outlined-text">PC Section</span><span>.</span>
     </a>
 
-    <!-- زر الرجوع -->
     <div class="back-container">
         <button class="back-button" onclick="backToMainMenu()">
             <i class="fas fa-arrow-left"></i> Back
@@ -213,7 +210,7 @@
         </a>
 
         <a href="chair.php" class="side-menu-item">
-            <i class="fas fa-chair"></i> <!-- ممكن تستبدل بأيقونة مناسبة -->
+            <i class="fas fa-chair"></i>
             <p>Chair</p>
         </a>
 
@@ -235,7 +232,6 @@
 
 
 <main class="main-content">
-    <!-- slideshow       -->
     <div class="slideshow-container">
 
         <div class="mySlides fade">
@@ -268,11 +264,9 @@
         </div>
 
 
-        <!-- أزرار التالي والسابق -->
         <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
         <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
-        <!-- الدوائر -->
         <div class="dots" style="text-align:center">
             <span class="dot" onclick="currentSlide(1)"></span>
             <span class="dot" onclick="currentSlide(2)"></span>
@@ -285,7 +279,6 @@
         <img src="../img/datacom (4).jpg" style="width:100%; height: 300px; padding-top: 30px;">
     </div>
     <br>
-    <!-- feature       -->
     <div class="feature">
         <div class="container">
             <div class="benefit-col">
@@ -345,7 +338,6 @@
     </div>
     <br>
     <br>
-    <!--  product      -->
     <div class="container">
 
         <div class="categories">
@@ -512,7 +504,6 @@
         slides[slideIndex - 1].style.display = "block";
         dots[slideIndex - 1].classList.add("active");
 
-        // Reset timer
         clearTimeout(slideTimer);
         slideTimer = setTimeout(() => plusSlides(1), 6000);
     }
@@ -525,17 +516,14 @@
         showSlides(slideIndex = n);
     }
 
-    // أول تحميل
     window.onload = () => {
         showSlides(slideIndex);
     }
 </script>
 <script>
-    // حفظ المنتجات الأصلية عند تحميل الصفحة
     const originalProductsHTML = document.querySelector(".categories").innerHTML;
     const searchInput = document.getElementById("searchInput");
 
-    // عند الكتابة في البحث
     searchInput.addEventListener("input", function () {
         const query = searchInput.value.trim();
 
@@ -564,14 +552,13 @@
             });
     });
 
-    // عند الضغط على زر إغلاق البحث
     document.getElementById("closeSearch").addEventListener("click", function () {
         searchInput.value = "";
         document.getElementById("search1").style.display = "none";
         restoreOriginalProducts();
     });
 
-    // استرجاع المنتجات الأصلية
+
     function restoreOriginalProducts() {
         const container = document.querySelector(".categories");
         container.innerHTML = originalProductsHTML;
@@ -579,7 +566,6 @@
         observeCards();
     }
 
-    // عرض نتائج البحث
     function displayResults(products) {
         const container = document.querySelector(".categories");
         container.innerHTML = "";
@@ -608,7 +594,6 @@
         observeCards();
     }
 
-        // تفعيل زر الشراء
         function attachBuyNowEvents() {
             const buttons = document.querySelectorAll('.buy-now-btn');
 
@@ -642,7 +627,6 @@
             });
         }
 
-        // عرض الرسالة المؤقتة
         function showMessage(text, success = true) {
             const messageBox = document.getElementById('messageBox');
             messageBox.textContent = text;
@@ -654,7 +638,6 @@
             }, 3000);
         }
 
-        // أنميشن عند الظهور
         function observeCards() {
             const cards = document.querySelectorAll('.category-card');
 
@@ -675,7 +658,6 @@
             });
         }
 
-        // تحميل أولي
         document.addEventListener("DOMContentLoaded", () => {
             attachBuyNowEvents();
             observeCards();
@@ -689,7 +671,6 @@
     const visibleImgs = 4;
     const imgWidth = imgs[0].offsetWidth;
 
-    // نكرر الصور في نهاية الشريط لكي نعطي إحساس الدوران
     for (let i = 0; i < visibleImgs; i++) {
         const clone = imgs[i].cloneNode(true);
         carousel.appendChild(clone);
@@ -702,13 +683,12 @@
         carousel.style.transition = 'transform 0.5s ease-in-out';
         carousel.style.transform = translateX(-${index * imgWidth}px);
 
-        // عند الوصول إلى نهاية الصور المكررة، نعيد الوضع للبدء من الأصل بدون حركة انتقالية لعدم ملاحظة الفجوة
         if (index >= imgCount) {
             setTimeout(() => {
                 carousel.style.transition = 'none';
                 carousel.style.transform = 'translateX(0)';
                 index = 0;
-            }, 600); // 600ms أكثر من وقت الانتقال
+            }, 600);
         }
     }
 
@@ -724,7 +704,7 @@
                 if (entry.isIntersecting) {
                     entry.target.classList.add('show');
                 } else {
-                    entry.target.classList.remove('show'); // هيك بيروح الترانزيشن لما يطلع
+                    entry.target.classList.remove('show');
                 }
             });
         }, {
@@ -745,12 +725,10 @@
 
     hamburger.addEventListener('click', () => {
         if (sideMenu.classList.contains('active') || pcSideMenu.classList.contains('active') || accessoriesSideMenu.classList.contains('active')) {
-            // إغلاق كل القوائم
             sideMenu.classList.remove('active');
             pcSideMenu.classList.remove('active');
             accessoriesSideMenu.classList.remove('active');
         } else {
-            // فتح القائمة الرئيسية
             sideMenu.classList.add('active');
         }
     });

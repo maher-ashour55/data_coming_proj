@@ -125,7 +125,6 @@
     document.querySelector('.confirm-btn').addEventListener('click', function(e) {
         e.preventDefault();
 
-        // جلب بيانات البطاقة من الحقول
         const nameOnCard = document.querySelector('input[placeholder="enter name"]').value.trim();
         const cardNumber = document.querySelector('input[placeholder="1234 5678 9012 3456"]').value.trim();
         const expiryDate = document.querySelector('input[type="month"]').value.trim();
@@ -133,7 +132,6 @@
         const cvv = document.querySelector('input[placeholder="123"]').value.trim();
         const holderId = document.querySelector('input[placeholder="ID number"]').value.trim();
 
-        // تحقق مبدئي
         if (!nameOnCard || !cardNumber || !expiryDate || !phone || !cvv || !holderId) {
             alert("Please fill all payment fields.");
             return;
@@ -149,7 +147,6 @@
             return;
         }
 
-        // استرجاع بيانات الطلب المؤقتة من localStorage
         const pendingOrder = localStorage.getItem('pendingOrder');
         if (!pendingOrder) {
             alert("Order data missing.");
@@ -158,7 +155,6 @@
 
         const orderData = JSON.parse(pendingOrder);
 
-        // دمج بيانات الدفع مع بيانات الطلب
         const fullOrderData = {
             ...orderData,
             paymentDetails: {
@@ -171,7 +167,6 @@
             }
         };
 
-        // إرسال بيانات الطلب + الدفع للسيرفر (place_order.php)
         fetch('place_order.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -182,7 +177,7 @@
                 if (data.status === 'success') {
                     alert("Payment successful, order placed!");
                     localStorage.removeItem('pendingOrder');
-                    window.location.href = 'index.php'; // صفحة شكراً/تأكيد الطلب
+                    window.location.href = 'index.php';
                 } else {
                     alert("Payment failed: " + (data.message || "Unknown error"));
                 }

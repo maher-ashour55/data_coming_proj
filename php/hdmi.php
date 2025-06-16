@@ -101,12 +101,10 @@ if (!$result) {
     </div>
 </header>
 
-    <!-- المنتجات -->
     <main style="padding-top: 70px">
         <div id="messageBox"></div>
         <div class="categories">
             <?php while ($row = $result->fetch_assoc()):
-                // حساب السعر النهائي بناءً على الخصم إذا موجود
                 $final_price = ($row['discount_price'] !== null && floatval($row['discount_price']) > 0 && floatval($row['discount_price']) < floatval($row['price']))
                     ? $row['discount_price']
                     : $row['price'];
@@ -147,7 +145,6 @@ if (!$result) {
 
 <footer>© 2024 Data Coming . All Rights Reserved</footer>
 
-<!-- سكريبت البحث والسلة -->
 <script src="../js/jss.js"></script>
 </body>
 </html>

@@ -1,36 +1,28 @@
 <?php
-// بدء الجلسة
 session_start();
 
-// التحقق إذا كان المستخدم قد سجل الدخول مسبقًا
 if (isset($_SESSION['user_id'])) {
-    header("Location: dashboard.php"); // إذا كان المستخدم مسجلاً بالفعل، التوجه إلى الـ Dashboard
+    header("Location: dashboard.php");
     exit();
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // الاتصال بقاعدة البيانات
     $servername = "localhost";
     $username = "root";
     $password = "";
     $dbname = "datacoming";
 
-    // إنشاء الاتصال
     $conn = new mysqli($servername, $username, $password, $dbname);
 
-    // التحقق من الاتصال
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    // استلام البيانات من الفورم
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // تأمين البيانات ضد هجمات SQL Injection
     $email = $conn->real_escape_string($email);
 
-    // استعلام للتحقق من البيانات المدخلة مع جلب دور المستخدم
     $sql = "SELECT * FROM users WHERE email = '$email'";
 
     $result = $conn->query($sql);
@@ -38,15 +30,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
 
-        // التحقق من كلمة المرور باستخدام دالة password_verify
         if (password_verify($password, $user['password'])) {
-            // تخزين بيانات المستخدم في الجلسة
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['first_name'] = $user['first_name'];
             $_SESSION['last_name'] = $user['last_name'];
-            $_SESSION['role'] = $user['role']; // تخزين الدور في الجلسة
+            $_SESSION['role'] = $user['role'];
 
-            // إعادة التوجيه إلى صفحة الـ Dashboard
             header("Location: dashboard.php");
             exit();
         } else {
@@ -56,7 +45,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = "البريد الإلكتروني غير موجود!";
     }
 
-    // إغلاق الاتصال
     $conn->close();
 }
 ?>
@@ -90,7 +78,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="title_login">Login</div>
     </div>
     <?php
-    // عرض رسالة الخطأ إذا كانت موجودة
     if (isset($error)) {
         echo "<div class='error-message'>$error</div>";
     }

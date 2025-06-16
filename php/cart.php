@@ -2,14 +2,12 @@
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
-    // إذا المستخدم مش مسجل دخول، حوله لصفحة تسجيل الدخول
     header('Location: login.php');
     exit;
 }
 
 $user_id = $_SESSION['user_id'];
 
-// اتصال بقاعدة البيانات
 $conn = new mysqli('localhost', 'root', '', 'datacoming');
 $user_info = ['first_name' => '', 'last_name' => '', 'email' => ''];
 
@@ -27,7 +25,6 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// استعلام لجلب المنتجات في سلة المشتريات لهذا المستخدم
 $sql = "SELECT p.id, p.name, p.image, p.stock, c.quantity, c.price
         FROM cart_items c
         JOIN product p ON c.product_id = p.id

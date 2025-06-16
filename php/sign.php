@@ -1,48 +1,39 @@
 <?php
-// الاتصال بقاعدة البيانات
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "datacoming";
 
-// إنشاء الاتصال
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// التحقق من الاتصال
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // استلام البيانات من الفورم
     $firstname = $_POST['reg-firstname'];
     $lastname = $_POST['reg-lastname'];
     $email = $_POST['reg-email'];
     $password = $_POST['reg-password'];
     $confirm_password = $_POST['reg-confirm'];
 
-    // التحقق إذا كانت كلمات المرور متطابقة
     if ($password == $confirm_password) {
-        // تأمين البيانات ضد هجمات SQL injection
         $firstname = $conn->real_escape_string($firstname);
         $lastname = $conn->real_escape_string($lastname);
         $email = $conn->real_escape_string($email);
-        $password = password_hash($password, PASSWORD_DEFAULT); // تشفير كلمة المرور
+        $password = password_hash($password, PASSWORD_DEFAULT);
 
-        // التحقق إذا كان البريد الإلكتروني موجودًا بالفعل
         $sql_check_email = "SELECT * FROM users WHERE email = '$email'";
         $result_check = $conn->query($sql_check_email);
 
         if ($result_check->num_rows > 0) {
-            // إذا كان البريد موجودًا
             $error_message = "البريد الإلكتروني هذا مسجل بالفعل. الرجاء استخدام بريد آخر.";
         } else {
-            // إدخال البيانات في قاعدة البيانات
             $sql = "INSERT INTO users (first_name, last_name, email, password) VALUES ('$firstname', '$lastname', '$email', '$password')";
 
             if ($conn->query($sql) === TRUE) {
                 echo "تم التسجيل بنجاح!";
-                header("Location: login.php"); // إعادة التوجيه إلى صفحة تسجيل الدخول
+                header("Location: login.php");
                 exit();
             } else {
                 echo "خطأ في التسجيل: " . $conn->error;
@@ -53,7 +44,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// إغلاق الاتصال
 $conn->close();
 ?>
 

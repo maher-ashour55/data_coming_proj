@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// اتصال بقاعدة البيانات باستخدام PDO
 $host = 'localhost';
 $db   = 'datacoming';
 $user = 'root';
@@ -20,7 +19,6 @@ try {
     die("فشل الاتصال بقاعدة البيانات: " . $e->getMessage());
 }
 
-// استدعاء PHPMailer
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 require 'PHPMailer-master/src/PHPMailer.php';

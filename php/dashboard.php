@@ -21,7 +21,6 @@ $conn->set_charset("utf8");
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order_id'])) {
     $cancel_id = intval($_POST['cancel_order_id']);
 
-    // تأكد أن الطلب مازال قابل للإلغاء (Pending أو Processing فقط)
     $sql_check_status = "SELECT status FROM orders WHERE id = ? AND user_id = ?";
     $stmt_check = $conn->prepare($sql_check_status);
     $stmt_check->bind_param("ii", $cancel_id, $user_id);
@@ -48,7 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order_id'])) {
     $stmt_check->close();
 }
 
-// جلب الطلبات الخاصة بالمستخدم
 $sql_orders = "SELECT id, order_date, total, status FROM orders WHERE user_id = ? ORDER BY order_date DESC";
 $stmt_orders = $conn->prepare($sql_orders);
 
@@ -140,15 +138,15 @@ $result_orders = $stmt_orders->get_result();
             font-weight: bold;
         }
         .status-processing {
-            color: #2980b9; /* أزرق */
+            color: #2980b9;
             font-weight: bold;
         }
         .status-shipped {
-            color: #8e44ad; /* بنفسجي */
+            color: #8e44ad;
             font-weight: bold;
         }
         .status-delivered {
-            color: #27ae60; /* أخضر */
+            color: #27ae60;
             font-weight: bold;
         }
         .status-cancelled {
@@ -293,7 +291,6 @@ $result_orders = $stmt_orders->get_result();
                     </td>
                     <td data-label="Action">
                         <?php
-                        // السماح بالإلغاء فقط إذا كانت الحالة Pending أو Processing
                         if ($order['status'] === 'Pending' || $order['status'] === 'Processing') {
                             echo '
                                 <form method="post" action="">
@@ -329,7 +326,6 @@ $result_orders = $stmt_orders->get_result();
 <!--</div>-->
 
 <script>
-    // تحديث الرسائل كل 3 ثواني
     setInterval(fetchMessages, 3000);
 
     function fetchMessages() {
@@ -341,12 +337,11 @@ $result_orders = $stmt_orders->get_result();
             });
     }
 
-    fetchMessages(); // أول تحميل
+    fetchMessages();
 </script>
 <script>
     document.getElementById('chat-form').addEventListener('submit', function(e) {
-        e.preventDefault(); // ما يرسل النموذج بشكل عادي
-
+        e.preventDefault();
         const messageInput = document.getElementById('message');
         const message = messageInput.value.trim();
 
@@ -361,8 +356,8 @@ $result_orders = $stmt_orders->get_result();
         })
             .then(res => res.text())
             .then(data => {
-                messageInput.value = ""; // نظف الحقل
-                getMessages(); // رجع أحدث رسائل
+                messageInput.value = "";
+                getMessages();
             })
             .catch(err => console.error('Send Error:', err));
     });

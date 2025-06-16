@@ -1,5 +1,4 @@
 <?php
-// 1. اتصال بقاعدة البيانات
 $conn = new mysqli("localhost", "root", "", "datacoming");
 if ($conn->connect_error) {
     die("فشل الاتصال: " . $conn->connect_error);
@@ -105,7 +104,6 @@ if (!$result) {
         <div id="messageBox"></div>
         <div class="categories">
             <?php while ($row = $result->fetch_assoc()):
-                // حساب السعر النهائي بناءً على الخصم إذا موجود
                 $final_price = ($row['discount_price'] !== null && floatval($row['discount_price']) > 0 && floatval($row['discount_price']) < floatval($row['price']))
                     ? $row['discount_price']
                     : $row['price'];

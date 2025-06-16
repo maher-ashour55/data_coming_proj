@@ -389,7 +389,7 @@ $out_of_stock = $product['stock'] == 0;
         .dropdown-multicolumn2 {
             opacity: 0;
             transform: translateY(10px);
-            pointer-events: none; /* تمنع التفاعل قبل الظهور */
+            pointer-events: none;
             transition: opacity 0.4s ease, transform 0.4s ease;
             position: absolute;
             top: 55px;
@@ -401,7 +401,7 @@ $out_of_stock = $product['stock'] == 0;
             gap: 40px;
             z-index: 1000;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            display: flex; /* خليه دائمًا موجود بس مخفي */
+            display: flex;
             visibility: hidden;
         }
 
@@ -437,16 +437,16 @@ $out_of_stock = $product['stock'] == 0;
         #messageBox {
             display: none;
             position: fixed;
-            top: 80px; /* تحت الهيدر */
+            top: 80px;
             left: 50%;
             transform: translateX(-50%);
             background-color: #4CAF50;
             color: white;
-            padding: 20px 30px; /* أكبر */
+            padding: 20px 30px;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             font-weight: 700;
-            font-size: 18px; /* تكبير الخط */
+            font-size: 18px;
             z-index: 1001;
             max-width: 90%;
             text-align: center;

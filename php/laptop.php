@@ -1,5 +1,4 @@
 <?php
-// اتصال بقاعدة البيانات
 $conn = new mysqli("localhost", "root", "", "datacoming");
 if ($conn->connect_error) {
     die("فشل الاتصال: " . $conn->connect_error);
@@ -93,7 +92,6 @@ if (!$result) {
         </div>
     </header>
 
-    <!-- المنتجات -->
     <main style="padding-top: 70px">
         <div id="messageBox"></div>
         <div class="categories">
