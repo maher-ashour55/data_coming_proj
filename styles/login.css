@@ -15,7 +15,7 @@ body {
 
 .outer {
     background: white;
-    width: 420px; /* تم تكبير العرض */
+    width: 420px;
     padding: 70px 40px 50px;
 
     border-radius: 20px;
@@ -144,7 +144,6 @@ body {
     color: #5d376e;
     transform: scale(1.2);
 }
-/* الرسالة الخارجية */
 .error-message {
     background-color: #ffe0e0;
     color: #c0392b;
@@ -158,4 +157,64 @@ body {
     font-size: 16px;
     font-weight: 600;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+@media (max-width: 600px) {
+    body {
+        align-items: flex-start;
+        padding: 20px;
+        height: auto;
+    }
+
+    .outer {
+        width: 100%;
+        padding: 50px 20px 30px;
+        border-radius: 0;
+        box-shadow: none;
+        min-height: 100vh;
+    }
+
+    .title {
+        font-size: 16px;
+        padding: 10px 20px;
+        border-radius: 0 0 15px 15px;
+    }
+
+    .input-field {
+        padding: 14px 45px 14px 15px;
+        font-size: 15px;
+    }
+
+    .icon {
+        font-size: 18px;
+        right: 15px;
+    }
+
+    .forgot {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    .login-btn {
+        padding: 14px;
+        font-size: 16px;
+    }
+
+    .register {
+        font-size: 14px;
+        margin-top: 20px;
+    }
+
+    .social-media p {
+        font-size: 14px;
+    }
+
+    .social-icons a {
+        font-size: 36px;
+    }
+
+    .error-message {
+        font-size: 14px;
+        padding: 10px;
+        margin: 15px auto;
+    }
 }

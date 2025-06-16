@@ -1,8 +1,7 @@
-// حفظ المنتجات الأصلية عند تحميل الصفحة
 const originalProductsHTML = document.querySelector(".categories").innerHTML;
 const searchInput = document.getElementById("searchInput");
 
-// عند الكتابة في البحث
+
 searchInput.addEventListener("input", function () {
     const query = searchInput.value.trim();
 
@@ -30,14 +29,14 @@ searchInput.addEventListener("input", function () {
         });
 });
 
-// عند الضغط على زر إغلاق البحث
+
 document.getElementById("closeSearch").addEventListener("click", function () {
     searchInput.value = "";
     document.getElementById("search1").style.display = "none";
     restoreOriginalProducts();
 });
 
-// استرجاع المنتجات الأصلية
+
 function restoreOriginalProducts() {
     const container = document.querySelector(".categories");
     container.innerHTML = originalProductsHTML;
@@ -45,7 +44,7 @@ function restoreOriginalProducts() {
     observeCards();
 }
 
-// عرض نتائج البحث
+
 function displayResults(products) {
     const container = document.querySelector(".categories");
     container.innerHTML = "";
@@ -53,7 +52,7 @@ function displayResults(products) {
     products.forEach(product => {
         const grayscaleClass = product.stock == 0 ? 'grayscale' : '';
 
-        // حساب السعر النهائي لكل منتج في نتائج البحث (خصم أو السعر الأصلي)
+
         let finalPrice = (product.discount_price !== null && parseFloat(product.discount_price) > 0 && parseFloat(product.discount_price) < parseFloat(product.price))
             ? product.discount_price
             : product.price;
@@ -85,7 +84,7 @@ function displayResults(products) {
     observeCards();
 }
 
-// تفعيل زر الشراء
+
 function attachBuyNowEvents() {
     const buttons = document.querySelectorAll('.buy-now-btn');
 
@@ -121,7 +120,7 @@ function attachBuyNowEvents() {
     });
 }
 
-// عرض الرسالة المؤقتة
+
 function showMessage(text, success = true) {
     const messageBox = document.getElementById('messageBox');
     messageBox.textContent = text;
@@ -133,7 +132,7 @@ function showMessage(text, success = true) {
     }, 3000);
 }
 
-// أنميشن عند الظهور
+
 function observeCards() {
     const cards = document.querySelectorAll('.category-card');
 
@@ -154,18 +153,18 @@ function observeCards() {
     });
 }
 
-// تحميل أولي
+
 document.addEventListener("DOMContentLoaded", () => {
     attachBuyNowEvents();
     observeCards();
 });
 
-// JavaScript (ممكن تحطه بنهاية الصفحة)
+
 document.addEventListener("DOMContentLoaded", function () {
     const cards = document.querySelectorAll('.category-card');
     cards.forEach((card, index) => {
         setTimeout(() => {
             card.classList.add('show');
-        }, index * 200); // كل كرت يظهر بعد 200ms
+        }, index * 200);
     });
 });

@@ -306,7 +306,7 @@ header .icons a:hover {
 .dropdown-multicolumn2 {
     opacity: 0;
     transform: translateY(10px);
-    pointer-events: none; /* تمنع التفاعل قبل الظهور */
+    pointer-events: none;
     transition: opacity 0.4s ease, transform 0.4s ease;
     position: absolute;
     top: 55px;
@@ -318,7 +318,7 @@ header .icons a:hover {
     gap: 40px;
     z-index: 1000;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-    display: flex; /* خليه دائمًا موجود بس مخفي */
+    display: flex;
     visibility: hidden;
 }
 
@@ -389,7 +389,7 @@ main table td {
 
 main .payment-form {
     order: 2;
-    width: 400px; /* ثبّت العرض بدلاً من flex */
+    width: 400px;
     max-width: 100%;
     background: #fff;
     padding: 25px;

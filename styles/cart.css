@@ -310,7 +310,7 @@ header .icons a:hover {
 .dropdown-multicolumn2 {
     opacity: 0;
     transform: translateY(10px);
-    pointer-events: none; /* تمنع التفاعل قبل الظهور */
+    pointer-events: none;
     transition: opacity 0.4s ease, transform 0.4s ease;
     position: absolute;
     top: 55px;
@@ -322,7 +322,7 @@ header .icons a:hover {
     gap: 40px;
     z-index: 1000;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-    display: flex; /* خليه دائمًا موجود بس مخفي */
+    display: flex;
     visibility: hidden;
 }
 
@@ -407,7 +407,6 @@ header .icons a:hover {
     gap: 20px;
 }
 
-/* قسم المعلومات */
 .info {
     flex: 1 1 45%;
     background-color: #ffffff;
@@ -419,7 +418,7 @@ header .icons a:hover {
     text-align: center;
     position: relative;
     padding-bottom: 60px;
-    max-height: 600px; /* حدد الارتفاع الذي ترغب فيه */
+    max-height: 600px;
 
 
 
@@ -428,8 +427,8 @@ header .icons a:hover {
     height: 100%;
 }
 .items-container {
-    flex-grow: 1; /* يعني أن هذا القسم سيأخذ المساحة المتاحة */
-    overflow-y: auto; /* يضيف شريط التمرير عند الحاجة */
+    flex-grow: 1;
+    overflow-y: auto;
     height: 600px;
 }
 .items-container * {
@@ -500,7 +499,6 @@ header .icons a:hover {
 
 }
 
-/* المجموع */
 .total {
     display: flex;
     justify-content: space-between;
@@ -518,7 +516,6 @@ header .icons a:hover {
     margin-top: auto;
 }
 
-/* قسم الدفع */
 .payment {
     flex: 1 1 45%;
     background-color: #ffffff;
@@ -637,12 +634,12 @@ button a {
 .item > div:first-of-type {
     flex-grow: 1;
     display: flex;
-    flex-direction: column; /* الاسم تحت السعر */
+    flex-direction: column;
     justify-content: center;
 }
 
 .product_info {
-    margin: 0; /* تأكد إنه مافي هوامش زائدة */
+    margin: 0;
     font-weight: bold;
 }
 
@@ -660,7 +657,7 @@ button a {
     padding: 4px 8px;
     font-family: sans-serif;
     background-color: #FFFFFF;
-    margin-left: auto; /* يدفع الكبسات يمين */
+    margin-left: auto;
 }
 
 .quantity-selector button {
@@ -700,16 +697,16 @@ button a {
 #messageBox {
     display: none;
     position: fixed;
-    top: 80px; /* تحت الهيدر */
+    top: 80px;
     left: 50%;
     transform: translateX(-50%);
     background-color: #4CAF50;
     color: white;
-    padding: 20px 30px; /* أكبر */
+    padding: 20px 30px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     font-weight: 700;
-    font-size: 18px; /* تكبير الخط */
+    font-size: 18px;
     z-index: 1001;
     max-width: 90%;
     text-align: center;
