@@ -1,13 +1,11 @@
 <?php
 session_start();
 
-// تحقق من صلاحية الدخول
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header("Location: ../login.php");
     exit();
 }
 
-// معلومات الاتصال بقاعدة البيانات
 $host = "localhost";
 $username = "root";
 $password = "";
@@ -18,11 +16,10 @@ if ($conn->connect_error) {
     die("Database connection failed: " . $conn->connect_error);
 }
 
-// جلب كل الطلبات من جدول orders
 $sql = "SELECT * FROM orders ORDER BY order_date DESC";
 $result = $conn->query($sql);
 
-// دالة لجلب عناصر الطلب باستخدام prepared statement
+
 function getOrderItems($conn, $order_id) {
     $stmt = $conn->prepare("SELECT oi.quantity, p.name AS product_name, p.price, p.id AS product_id
                             FROM order_items oi
@@ -48,7 +45,6 @@ function getOrderItems($conn, $order_id) {
     <title>View Orders - Admin Panel</title>
 
     <style>
-        /* نفس التصميم السابق مع إضافة تعديل بسيط */
         :root {
             --main-color: #9265a6;
             --accent-color: #ffb74d;
@@ -261,7 +257,6 @@ function getOrderItems($conn, $order_id) {
         }
     </style>
 
-    <!-- مكتبة أيقونات Boxicons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
 </head>
@@ -294,15 +289,12 @@ function getOrderItems($conn, $order_id) {
                 <p><strong>Total:</strong> $<?= number_format($order['total'], 2) ?></p>
                 <p><strong>Order Date:</strong> <?= $order['order_date'] ?></p>
 
-                <!-- طريقة الدفع: -->
                 <p><strong>Payment Method:</strong> <?= htmlspecialchars($order['payment_method'] ?? 'Not specified') ?></p>
 
-                <!-- حالة الدفع: -->
                 <p><strong>Payment Status:</strong>
                     <?= ($order['payment_method'] === 'visa') ? 'Paid' : htmlspecialchars($order['payment_status'] ?? 'Pending') ?>
                 </p>
 
-                <!-- حالة الطلب الحالية: -->
                 <p><strong>Current Order Status:</strong> <?= htmlspecialchars($order['status'] ?? 'Pending') ?></p>
 
                 <form class="status-update" method="POST" action="update_order_status.php">

@@ -7,7 +7,6 @@ if ($conn->connect_error) {
     exit;
 }
 
-// استلام البيانات مع التحقق
 $id = intval($_POST['id']);
 $name = $_POST['product_name'] ?? '';
 $price = floatval($_POST['price'] ?? 0);
@@ -16,7 +15,6 @@ $stock = intval($_POST['stock'] ?? 0);
 $category = $_POST['category'] ?? '';
 $description = $_POST['description'] ?? '';
 
-// تحقق من وجود بيانات أساسية
 if (!$id || !$name) {
     echo json_encode(['success' => false, 'msg' => 'Missing required fields.']);
     exit;
@@ -25,7 +23,6 @@ if (!$id || !$name) {
 $imageName = null;
 $targetDir = "uploads/";
 
-// التحقق من رفع صورة جديدة
 if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
     $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
     $maxFileSize = 2 * 1024 * 1024; // 2 ميجابايت
@@ -51,7 +48,6 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
     }
 }
 
-// تجهيز استعلام التحديث مع prepared statement
 if ($imageName !== null) {
     $stmt = $conn->prepare("UPDATE product SET name=?, price=?, discount_price=?, stock=?, category=?, description=?, image=? WHERE id=?");
     $stmt->bind_param("sddisssi", $name, $price, $discount_price, $stock, $category, $description, $imageName, $id);

@@ -14,13 +14,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id'])) {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    // حذف عناصر الطلب أولاً
     $stmt = $conn->prepare("DELETE FROM order_items WHERE order_id = ?");
     $stmt->bind_param("i", $order_id);
     $stmt->execute();
     $stmt->close();
 
-    // ثم حذف الطلب نفسه
     $stmt = $conn->prepare("DELETE FROM orders WHERE id = ?");
     $stmt->bind_param("i", $order_id);
     $stmt->execute();

@@ -10,17 +10,14 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// التحقق من صلاحيات الأدمن
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header("Location: ../login.php");
     exit();
 }
 
-// جلب التصنيفات لعرضها في القائمة المنسدلة
 $category_sql = "SELECT DISTINCT category FROM product";
 $category_result = $conn->query($category_sql);
 
-// التحقق من وجود تصنيف مُختار
 $selected_category = isset($_GET['category']) ? $_GET['category'] : '';
 
 if ($selected_category !== '') {
@@ -33,12 +30,10 @@ if ($selected_category !== '') {
     $result = $conn->query($sql);
 }
 
-// بيانات الأدمن من السيشن
 $first_name = $_SESSION['first_name'];
 $last_name = $_SESSION['last_name'];
 ?>
 
-<!-- HTML page starts here -->
 <!DOCTYPE html>
 <html lang="en">
 <head>

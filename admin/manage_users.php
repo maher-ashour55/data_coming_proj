@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// تأكد أن المستخدم مسجل واداري
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header("Location: ../login.php");
     exit();
@@ -17,10 +16,8 @@ if ($conn->connect_error) {
     die("Database connection failed: " . $conn->connect_error);
 }
 
-// حذف مستخدم اذا تم ارسال طلب حذف مع معرفه
 if (isset($_GET['delete_id'])) {
     $delete_id = intval($_GET['delete_id']);
-    // حماية عدم حذف نفسك (المسجل حالياً)
     if ($delete_id !== $_SESSION['user_id']) {
         $conn->query("DELETE FROM users WHERE id = $delete_id");
         header("Location: manage_users.php");
@@ -29,21 +26,17 @@ if (isset($_GET['delete_id'])) {
         $error = "You cannot delete your own account!";
     }
 }
-// معالجة تحديث الدور
 if (isset($_POST['update_role']) && isset($_POST['user_id']) && isset($_POST['role'])) {
     $user_id = intval($_POST['user_id']);
     $new_role = $_POST['role'];
 
-    // لا تسمح بتغيير دور نفسك
     if ($user_id !== $_SESSION['user_id']) {
-        // تحقق من صحة الدور (فقط user أو admin)
         if (in_array($new_role, ['user', 'admin'])) {
             $stmt = $conn->prepare("UPDATE users SET role = ? WHERE id = ?");
             $stmt->bind_param("si", $new_role, $user_id);
             $stmt->execute();
             $stmt->close();
 
-            // إعادة تحميل الصفحة لتحديث البيانات
             header("Location: manage_users.php");
             exit();
         } else {
@@ -54,7 +47,6 @@ if (isset($_POST['update_role']) && isset($_POST['user_id']) && isset($_POST['ro
     }
 }
 
-// جلب جميع المستخدمين
 $sql = "SELECT id, first_name, last_name, email, role, created_at FROM users ORDER BY created_at DESC";
 $result = $conn->query($sql);
 
@@ -67,9 +59,8 @@ $result = $conn->query($sql);
     <title>Manage Users - Admin Panel</title>
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <style>
-        /* حاوية الجدول مع تحديد ارتفاع وسكرول عمودي */
         .table-wrapper {
-            max-height: 630px; /* ارتفاع ثابت */
+            max-height: 630px;
             overflow-y: auto;
             border: 1px solid #ddd;
             border-radius: 8px;
@@ -90,7 +81,6 @@ $result = $conn->query($sql);
             text-align: center;
             word-wrap: break-word;
 
-            /* تثبيت الرأس */
             position: sticky;
             top: 0;
             z-index: 10;

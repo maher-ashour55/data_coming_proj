@@ -1,11 +1,9 @@
 <?php
-// الاتصال بقاعدة البيانات
 $conn = new mysqli("localhost", "root", "", "datacoming");
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// التأكد من وجود ID المنتج
 if (!isset($_GET['id'])) {
     die("Product ID is required");
 }
@@ -29,7 +27,6 @@ $product = $result->fetch_assoc();
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet" />
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <style>
-        /* نفس ستايل صفحة add.html */
         :root {
             --main-color: #9265a6;
             --accent-color: #ffb74d;
@@ -298,7 +295,6 @@ $product = $result->fetch_assoc();
 </div>
 
 <script>
-    // عند تحميل الصفحة، تحكم تفعيل حقل الخصم بناءً على checkbox
     const discountInput = document.getElementById('discount_price');
     const enableDiscount = document.getElementById('enable_discount');
     const priceInput = document.getElementById('price');
@@ -316,7 +312,6 @@ $product = $result->fetch_assoc();
 
     enableDiscount.addEventListener('change', toggleDiscountInput);
 
-    // لتحديث المعاينة عند رفع صورة جديدة
     document.getElementById('product_image').addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (!file) return;
@@ -327,10 +322,8 @@ $product = $result->fetch_assoc();
         reader.readAsDataURL(file);
     });
 
-    // تفعيل/تعطيل حقل الخصم أول مرة حسب قيمة الكبسة
     toggleDiscountInput();
 
-    // التحقق عند الإرسال
     document.getElementById('editForm').addEventListener('submit', function(e) {
         e.preventDefault();
 
@@ -355,7 +348,6 @@ $product = $result->fetch_assoc();
             discountError.style.display = 'none';
         }
 
-        // إذا الكبسة غير مفعلة، نجعل الخصم صفر
         if (!discountEnabled) {
             discountInput.value = 0;
         }
@@ -381,7 +373,6 @@ $product = $result->fetch_assoc();
     });
     const messageBox = document.getElementById('message-box');
 
-    // دالة إظهار رسالة منبثقة
     function showMessage(text, success = true) {
         messageBox.textContent = text;
         messageBox.style.backgroundColor = success ? '#4CAF50' : '#f44336';

@@ -1,8 +1,6 @@
 <?php
-// تأكد من بدء الجلسة إذا كنت تستخدم جلسة لتسجيل الدخول
 session_start();
 
-// مثال: التحقق من صلاحية الادمن (لو حابب تضيف حماية)
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     http_response_code(403);
     echo "Unauthorized access.";
@@ -28,7 +26,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $category = trim($conn->real_escape_string($_POST['category']));
     $description = trim($conn->real_escape_string($_POST['description']));
 
-    // تحقق من القيم المطلوبة
     if (empty($name) || $price <= 0 || $stock < 0 || empty($category) || empty($description)) {
         http_response_code(400);
         echo "Please fill in all required fields with valid values.";
@@ -52,7 +49,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         }
 
-        // التحقق من نوع الملف الحقيقي (حماية إضافية)
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $mime = finfo_file($finfo, $file_tmp);
         finfo_close($finfo);

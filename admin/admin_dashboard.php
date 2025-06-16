@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Ensure user is logged in and is an admin
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header("Location: ../login.php");
     exit();
@@ -10,7 +9,6 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
 $first_name = $_SESSION['first_name'];
 $last_name = $_SESSION['last_name'];
 
-// Database connection
 $host = "localhost";
 $username = "root";
 $password = "";
@@ -21,7 +19,6 @@ if ($conn->connect_error) {
     die("Database connection failed: " . $conn->connect_error);
 }
 
-// Query to count users
 $user_count = 0;
 $sql_users = "SELECT COUNT(*) AS total_users FROM users";
 $result_users = $conn->query($sql_users);
@@ -29,7 +26,6 @@ if ($result_users && $row = $result_users->fetch_assoc()) {
     $user_count = $row['total_users'];
 }
 
-// Query to count products
 $product_count = 0;
 $sql_products = "SELECT COUNT(*) AS total_products FROM product";
 $result_products = $conn->query($sql_products);
@@ -37,7 +33,6 @@ if ($result_products && $row = $result_products->fetch_assoc()) {
     $product_count = $row['total_products'];
 }
 
-// Query to count completed & paid orders
 $order_count = 0;
 $sql = "SELECT COUNT(*) as total_orders FROM orders WHERE status = 'Completed' AND payment_status = 'Paid'";
 $result = $conn->query($sql);
@@ -197,7 +192,6 @@ $conn->close();
 </head>
 <body>
 
-<!-- Sidebar navigation -->
 <div class="sidebar">
     <h2>Admin Panel</h2>
     <a href="#" class="active"><i class='bx bx-home'></i> HOME</a>
@@ -210,13 +204,11 @@ $conn->close();
     </div>
 </div>
 
-<!-- Main dashboard content -->
 <div class="main">
     <div class="main-header">
         Welcome Admin, <?php echo htmlspecialchars($first_name . ' ' . $last_name); ?>
     </div>
 
-    <!-- Cards for overview -->
     <div class="cards">
         <div class="card">
             <i class='bx bx-user'></i>
