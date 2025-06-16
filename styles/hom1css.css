@@ -929,13 +929,12 @@ header .icons a:hover {
     font-size: 16px;
     user-select: none;
 }
-/* تظهر زر الهامبرغر فقط على الشاشات الصغيرة */
 @media (max-width: 768px) {
     .hamburger {
         display: flex;
     }
     nav.navbar {
-        display: none; /* نخفي القائمة الأصلية */
+        display: none;
     }
     .logo {
         display: none;
@@ -953,7 +952,7 @@ header .icons a:hover {
         display: flex;
     }
     nav.navbar {
-        display: none; /* نخفي القائمة الأصلية */
+        display: none;
     }
     .logo {
         display: none;
@@ -965,16 +964,14 @@ header .icons a:hover {
 }
 @media (max-width: 768px) {
     .main-content {
-        padding-top: 30px; /* أو أي قيمة بدك إياها */
+        padding-top: 30px;
     }
 }
-/* نبدأ بإخفاء رسالة الترحيب على الشاشات الكبيرة */
-/* إخفاء رسالة الترحيب افتراضياً */
+
 .welcome-message {
     display: none;
 }
 
-/* على الجوال فقط */
 @media (max-width: 767px) {
     .welcome-message {
         display: block;
@@ -986,80 +983,64 @@ header .icons a:hover {
         color: white;
         padding: 8px 15px;
         border-radius: 20px;
-        font-size: 2rem;
+        font-size: 2.3rem;
         font-weight: 600;
         z-index: 9999;
-        animation: slideInRepeat 6s ease infinite;
+        animation: zigzagSlideDown 7s ease infinite;
         pointer-events: none;
         box-shadow: 0 0 10px rgba(146, 101, 166, 0.7);
         white-space: nowrap;
     }
 }
 
-@media (max-width: 1060px) {
+@media (max-width: 1065px) and (min-width: 768px){
     .welcome-message {
         display: block;
-        position: fixed;  /* ثابت على الشاشة */
-        top: 2px;        /* بمسافة بسيطة من الأعلى */
-        left: 45%;        /* مركز أفقياً */
+        position: fixed;
+        top: 2px;
+        left: 45%;
         transform: translateX(-50%);
-        background: rgba(146, 101, 166, 0.9); /* خلفية شبه شفافة */
+        background: rgba(146, 101, 166, 0.9);
         color: white;
         padding: 8px 15px;
         border-radius: 20px;
         font-size: 3rem;
         font-weight: 600;
         z-index: 9999;
-        animation: fadeInDown 1s ease forwards;
-        pointer-events: none; /* حتى لا تؤثر على التفاعل مع العناصر أسفلها */
+        animation: zigzagSlideDown 7s ease infinite;
+        pointer-events: none;
         box-shadow: 0 0 10px rgba(146, 101, 166, 0.7);
         white-space: nowrap;
     }
 }
 
-/* انيميشن انزلاق وتلاشي */
-@keyframes slideInRepeat {
+@keyframes zigzagSlideDown {
     0% {
         opacity: 0;
         transform: translateX(-50%) translateY(-20px);
     }
-    14% {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-    }
     20% {
         opacity: 1;
-        transform: translateX(calc(-50% - 5px)) translateY(0);
+        transform: translateX(calc(-50% - 10px)) translateY(0);
     }
-    26% {
+    40% {
         opacity: 1;
-        transform: translateX(calc(-50% + 5px)) translateY(0);
+        transform: translateX(calc(-50% + 10px)) translateY(0);
     }
-    32% {
+    60% {
         opacity: 1;
-        transform: translateX(calc(-50% - 5px)) translateY(0);
+        transform: translateX(calc(-50% - 10px)) translateY(0);
     }
-    38% {
+    80% {
         opacity: 1;
-        transform: translateX(calc(-50% + 5px)) translateY(0);
-    }
-    44% {
-        opacity: 1;
-        transform: translateX(calc(-50% - 2px)) translateY(0);
-    }
-    50% {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-    }
-    86% {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
+        transform: translateX(calc(-50% + 10px)) translateY(0);
     }
     100% {
         opacity: 0;
         transform: translateX(-50%) translateY(-20px);
     }
 }
+
 
 
 
