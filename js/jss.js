@@ -102,16 +102,19 @@ function attachBuyNowEvents() {
                     product_id: productId,
                     quantity: 1,
                     price: price
-                })
+                }),
+                credentials: 'include'
             })
+
                 .then(res => res.json())
                 .then(data => {
                     if (data.success) {
-                        showMessage("The product has been added to the cart ✅");
+                        showMessage(data.message || "The product has been added to the cart ✅");
                     } else {
-                        showMessage("User not logged in ❌", false);
+                        showMessage(data.message || "Something went wrong ❌", false);
                     }
                 })
+
                 .catch(error => {
                     console.error(error);
                     showMessage("Failed to connect to server ❌", false);

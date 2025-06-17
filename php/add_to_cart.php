@@ -28,16 +28,15 @@ $stmt_check->execute();
 $result = $stmt_check->get_result();
 
 if ($result->num_rows > 0) {
-    $sql_update = "UPDATE cart_items SET quantity = quantity + ?, price = ? WHERE user_id = ? AND product_id = ?";
-    $stmt_update = $conn->prepare($sql_update);
-    $stmt_update->bind_param("diii", $quantity, $price, $user_id, $product_id);
-    $stmt_update->execute();
+    echo json_encode(["success" => false, "message" => "Product already in cart"]);
+    exit;
 } else {
     $sql_insert = "INSERT INTO cart_items (user_id, product_id, quantity, price, added_at) VALUES (?, ?, ?, ?, NOW())";
     $stmt_insert = $conn->prepare($sql_insert);
     $stmt_insert->bind_param("iiid", $user_id, $product_id, $quantity, $price);
     $stmt_insert->execute();
-}
 
-echo json_encode(["success" => true]);
+    echo json_encode(["success" => true, "message" => "Product added to cart"]);
+    exit;
+}
 ?>
