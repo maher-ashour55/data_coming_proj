@@ -485,3 +485,30 @@ Adding product_id: 19, quantity: 5
 Item inserted for product 19 successfully
 Clearing cart items...
 Order process finished successfully
+========== New Request ==========
+[2025-06-18 17:10:47] Script started
+User ID from session: 2
+Database connected
+Raw input: {"fname":"moh","lname":"ash","address":"2222332","email":"mohash@gmail.com","phone":"055334334","city":"Tulkarm","payment":"cash","total":6500}
+Decoded data: Array
+(
+    [fname] => moh
+    [lname] => ash
+    [address] => 2222332
+    [email] => mohash@gmail.com
+    [phone] => 055334334
+    [city] => Tulkarm
+    [payment] => cash
+    [total] => 6500
+)
+
+Inserting order...
+Order inserted successfully with ID: 35
+Fetching cart items...
+Inserting order items...
+Adding product_id: 41, quantity: 1
+Item inserted for product 41 successfully
+Adding product_id: 42, quantity: 1
+Item inserted for product 42 successfully
+Clearing cart items...
+Order process finished successfully

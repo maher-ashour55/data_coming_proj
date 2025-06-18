@@ -51,15 +51,27 @@ $stmt->close();
 $stmt_items->close();
 $conn->close();
 
-
 class PDF extends FPDF {
-    // رأس الصفحة
     function Header() {
-        $this->SetFont('Arial', 'B', 14);
-        $this->Cell(0, 10, 'Invoice', 0, 1, 'C');
-        $this->Ln(5);
-    }
+        // الصورة على اليسار
+        $this->Image('../img/data2-removebg-preview.png', 10, 6, 30);
 
+        // عنوان الفاتورة في المنتصف
+        $this->SetFont('Arial', 'B', 16);
+        $this->Cell(0, 10, 'Data Coming Invoice', 0, 1, 'C');
+
+        // السطر الفارغ
+        $this->Ln(5);
+
+        // التاريخ واسم المتجر فوق بعض على جهة اليمين
+        $this->SetFont('Arial', '', 12);
+        $this->SetXY(130, 15);
+        $this->Cell(0, 6, 'Date: ' . date("Y-m-d"), 0, 1, 'R');
+        $this->SetXY(130, 21);
+        $this->Cell(0, 6, 'Store: Data Coming', 0, 1, 'R');
+
+        $this->Ln(10);
+    }
 
     function Footer() {
         $this->SetY(-15);
@@ -68,28 +80,43 @@ class PDF extends FPDF {
     }
 }
 
+// دالة لاقتطاع النصوص الطويلة
+function truncateText($text, $maxLength = 35) {
+    if (strlen($text) > $maxLength) {
+        return substr($text, 0, $maxLength - 3) . '...';
+    }
+    return $text;
+}
+
 $pdf = new PDF();
 $pdf->AddPage();
 $pdf->SetFont('Arial', '', 12);
 
-$pdf->Cell(40, 10, 'Order ID: ' . $order['id']);
-$pdf->Ln();
-$pdf->Cell(40, 10, 'Customer Name: ' . $order['fname'] . ' ' . $order['lname']);
-$pdf->Ln();
-$pdf->Cell(40, 10, 'Email: ' . $order['email']);
-$pdf->Ln();
-$pdf->Cell(40, 10, 'Phone: ' . $order['phone']);
-$pdf->Ln();
-$pdf->Cell(40, 10, 'City: ' . $order['city']);
-$pdf->Ln();
-$pdf->Cell(40, 10, 'Address: ' . $order['address']);
-$pdf->Ln(15);
-
+// معلومات الطلب
 $pdf->SetFont('Arial', 'B', 12);
-$pdf->Cell(80, 10, 'Product');
-$pdf->Cell(30, 10, 'Quantity', 0, 0, 'C');
-$pdf->Cell(40, 10, 'Price', 0, 0, 'R');
-$pdf->Cell(40, 10, 'Total', 0, 1, 'R');
+$pdf->Cell(40, 10, 'Order Information:');
+$pdf->Ln();
+$pdf->SetFont('Arial', '', 12);
+$pdf->Cell(80, 8, 'Order ID: ' . $order['id']);
+$pdf->Ln();
+$pdf->Cell(80, 8, 'Customer: ' . $order['fname'] . ' ' . $order['lname']);
+$pdf->Ln();
+$pdf->Cell(80, 8, 'Email: ' . $order['email']);
+$pdf->Ln();
+$pdf->Cell(80, 8, 'Phone: ' . $order['phone']);
+$pdf->Ln();
+$pdf->Cell(80, 8, 'City: ' . $order['city']);
+$pdf->Ln();
+$pdf->Cell(80, 8, 'Address: ' . $order['address']);
+$pdf->Ln(10);
+
+// جدول المنتجات
+$pdf->SetFont('Arial', 'B', 12);
+$pdf->SetFillColor(230, 230, 250);
+$pdf->Cell(80, 10, 'Product', 1, 0, 'C', true);
+$pdf->Cell(30, 10, 'Quantity', 1, 0, 'C', true);
+$pdf->Cell(40, 10, 'Price', 1, 0, 'C', true);
+$pdf->Cell(40, 10, 'Total', 1, 1, 'C', true);
 
 $pdf->SetFont('Arial', '', 12);
 $totalPrice = 0;
@@ -97,16 +124,22 @@ foreach ($items as $item) {
     $lineTotal = $item['quantity'] * $item['price'];
     $totalPrice += $lineTotal;
 
-    $pdf->Cell(80, 10, $item['name']);
-    $pdf->Cell(30, 10, $item['quantity'], 0, 0, 'C');
-    $pdf->Cell(40, 10, '$' . number_format($item['price'], 2), 0, 0, 'R');
-    $pdf->Cell(40, 10, '$' . number_format($lineTotal, 2), 0, 1, 'R');
+    $productName = truncateText($item['name'], 35);
+
+    $pdf->Cell(80, 10, $productName, 1);
+    $pdf->Cell(30, 10, $item['quantity'], 1, 0, 'C');
+    $pdf->Cell(40, 10, '$' . number_format($item['price'], 2), 1, 0, 'R');
+    $pdf->Cell(40, 10, '$' . number_format($lineTotal, 2), 1, 1, 'R');
 }
 
-$pdf->Ln(10);
-$pdf->SetFont('Arial', 'B', 14);
-$pdf->Cell(150, 10, 'Grand Total:', 0, 0, 'R');
-$pdf->Cell(40, 10, '$' . number_format($totalPrice, 2), 0, 1, 'R');
+$pdf->Ln(5);
 
+// المجموع الكلي
+$pdf->SetFont('Arial', 'B', 13);
+$pdf->SetFillColor(240, 240, 240);
+$pdf->Cell(150, 10, 'Grand Total:', 1, 0, 'R', true);
+$pdf->Cell(40, 10, '$' . number_format($totalPrice, 2), 1, 1, 'R', true);
+
+// إخراج الملف
 $pdf->Output('I', 'invoice_order_' . $order['id'] . '.pdf');
 ?>

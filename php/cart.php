@@ -321,17 +321,17 @@ $conn->close();
 
 
                 <select class="sel">
-                    <option>القدس</option>
-                    <option>رام الله</option>
-                    <option>بيت لحم</option>
-                    <option>الخليل</option>
-                    <option>نابلس</option>
-                    <option>قلقيلية</option>
-                    <option>طولكرم</option>
-                    <option>سلفيت</option>
-                    <option>جنين</option>
-                    <option>أريحا</option>
-                    <option>طوباس</option>
+                    <option>Jerusalem</option>
+                    <option>Ramallah</option>
+                    <option>Bethlehem</option>
+                    <option>Hebron</option>
+                    <option>Nablus</option>
+                    <option>Qalqilya</option>
+                    <option>Tulkarm</option>
+                    <option>Salfit</option>
+                    <option>Jenin</option>
+                    <option>Ariha</option>
+                    <option>Tubas</option>
                 </select>
                 <div>
                     <label><input type="radio" name="payment" value="cash"> <i class="fas fa-money-bill-wave"></i></label>
