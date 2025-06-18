@@ -233,33 +233,38 @@
 
 <main class="main-content">
     <div class="slideshow-container">
+        <div class="mySlides fade">
+            <div class="numbertext">1 / 6</div>
+            <img src="../img/imgg/epic-gamer-room-setup.jpg" style="width:100%; height: 650px;">
+            <div class="text"></div>
+        </div>
 
         <div class="mySlides fade">
-            <div class="numbertext">1 / 5</div>
+            <div class="numbertext">2 / 6</div>
             <img src="../img/linus-mimietz-gvptKmonylk-unsplash.jpg" style="width:100%; height: 650px;">
             <div class="text"></div>
         </div>
 
         <div class="mySlides fade">
-            <div class="numbertext">2 / 5</div>
+            <div class="numbertext">3 / 6</div>
             <img src="../img/hard.jpg" style="width:100%; height: 650px;">
             <div class="text"></div>
         </div>
 
         <div class="mySlides fade">
-            <div class="numbertext">3 / 5</div>
+            <div class="numbertext">4 / 6</div>
             <img src="../img/sam-pak-X6QffKLwyoQ-unsplash.jpg" style="width:100%; height: 650px;">
             <div class="text"></div>
         </div>
 
         <div class="mySlides fade">
-            <div class="numbertext">4 / 5</div>
+            <div class="numbertext">5 / 6</div>
             <img src="../img/martin-katler-7wCxlBfGMdk-unsplash.jpg" style="width:100%; height: 650px;">
             <div class="text"></div>
         </div>
         <div class="mySlides fade">
-            <div class="numbertext">5 / 5</div>
-            <img src="../img/arto-suraj-cIxE9fk7B2c-unsplash.jpg" style="width:100%; height: 650px;">
+            <div class="numbertext">6 / 6</div>
+            <img src="../img/imgg/epic-gamer-battlestation.jpg" style="width:100%; height: 650px;">
             <div class="text"></div>
         </div>
 
@@ -273,6 +278,7 @@
             <span class="dot" onclick="currentSlide(3)"></span>
             <span class="dot" onclick="currentSlide(4)"></span>
             <span class="dot" onclick="currentSlide(5)"></span>
+            <span class="dot" onclick="currentSlide(6)"></span>
         </div>
     </div>
     <div class="static-mobile-image">
@@ -301,37 +307,38 @@
     <div class="cc">
         <div class="small-carousel-wrapper">
             <div class="small-carousel">
-                <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.34_d1cced53.jpg" loading="lazy"/>
+                <img src="../img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.14.29_0173f0a3.jpg" loading="lazy"/>
                 <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.35_8b34e1b2.jpg" loading="lazy"/>
-                <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2014.25.23_27cf2ef6.jpg" loading="lazy"/>
-                <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.36_ae9ba192.jpg" loading="lazy"/>
-                <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.43_fab4329b.jpg" loading="lazy"/>
-                <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.44_27d0205d.jpg" loading="lazy"/>
-                <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.44_b51dccc6.jpg" loading="lazy"/>
-                <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2014.25.05_1253ef4b.jpg" loading="lazy"/>
-                <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2014.25.13_9b7c894b.jpg" loading="lazy"/>
-
-
                 <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.34_d1cced53.jpg" loading="lazy"/>
-                <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.35_8b34e1b2.jpg" loading="lazy"/>
-                <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2014.25.23_27cf2ef6.jpg" loading="lazy"/>
-                <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.36_ae9ba192.jpg" loading="lazy"/>
-                <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.43_fab4329b.jpg" loading="lazy"/>
                 <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.44_27d0205d.jpg" loading="lazy"/>
-                <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.44_b51dccc6.jpg" loading="lazy"/>
                 <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2014.25.05_1253ef4b.jpg" loading="lazy"/>
-                <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2014.25.13_9b7c894b.jpg" loading="lazy"/>
+                <img src="../img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.30.29_0c81c343.jpg" loading="lazy"/>
+                <img src="../img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.35.35_9fc233c1.jpg" loading="lazy"/>
+                <img src="../img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.14.29_409ff953.jpg" loading="lazy"/>
+                <img src="../img/imgg/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.35_e9a817ee.jpg" loading="lazy"/>
 
 
-                <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.34_d1cced53.jpg" />
-                <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.35_8b34e1b2.jpg" />
-                <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2014.25.23_27cf2ef6.jpg" />
-                <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.36_ae9ba192.jpg" />
-                <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.43_fab4329b.jpg" />
-                <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.44_27d0205d.jpg" />
-                <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.44_b51dccc6.jpg" />
-                <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2014.25.05_1253ef4b.jpg" />
-                <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2014.25.13_9b7c894b.jpg" />
+
+                <img src="../img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.14.29_0173f0a3.jpg" loading="lazy"/>
+                <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.35_8b34e1b2.jpg" loading="lazy"/>
+                <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.34_d1cced53.jpg" loading="lazy"/>
+                <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.44_27d0205d.jpg" loading="lazy"/>
+                <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2014.25.05_1253ef4b.jpg" loading="lazy"/>
+                <img src="../img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.30.29_0c81c343.jpg" loading="lazy"/>
+                <img src="../img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.35.35_9fc233c1.jpg" loading="lazy"/>
+                <img src="../img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.14.29_409ff953.jpg" loading="lazy"/>
+                <img src="../img/imgg/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.35_e9a817ee.jpg" loading="lazy"/>
+
+
+                <img src="../img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.14.29_0173f0a3.jpg" loading="lazy"/>
+                <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.35_8b34e1b2.jpg" loading="lazy"/>
+                <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.34_d1cced53.jpg" loading="lazy"/>
+                <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.44_27d0205d.jpg" loading="lazy"/>
+                <img src="../img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2014.25.05_1253ef4b.jpg" loading="lazy"/>
+                <img src="../img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.30.29_0c81c343.jpg" loading="lazy"/>
+                <img src="../img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.35.35_9fc233c1.jpg" loading="lazy"/>
+                <img src="../img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.14.29_409ff953.jpg" loading="lazy"/>
+                <img src="../img/imgg/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.35_e9a817ee.jpg" loading="lazy"/>
 
             </div>
         </div>

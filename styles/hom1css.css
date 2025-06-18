@@ -629,7 +629,7 @@ header .icons a:hover {
 }
 
 .small-carousel img {
-    width: 325px;
+    width: 360px;
     height: 400px;
     object-fit: cover;
     border-radius: 4px;
@@ -747,6 +747,9 @@ header .icons a:hover {
     .mySlides img,
     .static-mobile-image {
         height: auto;
+    }
+    .main-content{
+
     }
 }
 
@@ -954,11 +957,11 @@ header .icons a:hover {
 
 }
 .main-content {
-    padding-top: 70px;
+    padding-top: 69px;
 }
 @media (max-width: 768px) {
     .main-content {
-        padding-top: 30px;
+        padding-top: 26px;
     }
 }
 
