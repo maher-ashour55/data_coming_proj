@@ -381,12 +381,14 @@ header .icons a:hover {
 
 .categories {
     display: grid;
-    grid-template-columns: repeat(4, auto);
+    grid-template-columns: repeat(4, 1fr);
     column-gap: 60px;
     row-gap: 60px;
     padding: 60px 0;
     justify-content: center;
 }
+
+
 
 
 
@@ -698,9 +700,6 @@ header .icons a:hover {
     .categories {
         grid-template-columns: repeat(4, 1fr);
     }
-    .card-bg{
-
-    }
 }
 
 @media (min-width: 901px) and (max-width: 1200px) {
@@ -709,20 +708,33 @@ header .icons a:hover {
     }
 }
 
-@media (max-width: 900px) {
+@media (min-width: 761px) and (max-width: 900px) {
     .categories {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .card-bg img{
-        width: 220px;
-    }
-    .category-card{
-        height: 430px;
-    }
-    .card-bg{
-        height: 200px;
+        grid-template-columns: repeat(3, 1fr);
     }
 }
+
+@media (max-width: 760px) {
+    .categories {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    }
+
+    .card-bg img {
+        width: 100%;
+        height: auto;
+    }
+
+    .category-card {
+        width: auto;
+        height: auto;
+
+    }
+
+    .card-bg {
+        height: auto;
+    }
+}
+
 
 
 

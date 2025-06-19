@@ -512,3 +512,51 @@ Adding product_id: 42, quantity: 1
 Item inserted for product 42 successfully
 Clearing cart items...
 Order process finished successfully
+========== New Request ==========
+[2025-06-19 15:12:35] Script started
+User ID from session: 17
+Database connected
+Raw input: {"fname":"Amr","lname":"Shalabi","address":"Palestine","email":"044amrsh@gmail.com","phone":"597079565","city":"Jerusalem","payment":"cash","total":1680}
+Decoded data: Array
+(
+    [fname] => Amr
+    [lname] => Shalabi
+    [address] => Palestine
+    [email] => 044amrsh@gmail.com
+    [phone] => 597079565
+    [city] => Jerusalem
+    [payment] => cash
+    [total] => 1680
+)
+
+Inserting order...
+Order inserted successfully with ID: 36
+Fetching cart items...
+Inserting order items...
+Adding product_id: 11, quantity: 1
+Item inserted for product 11 successfully
+Clearing cart items...
+Order process finished successfully
+========== New Request ==========
+[2025-06-19 15:12:37] Script started
+User ID from session: 17
+Database connected
+Raw input: {"fname":"Amr","lname":"Shalabi","address":"Palestine","email":"044amrsh@gmail.com","phone":"597079565","city":"Jerusalem","payment":"cash","total":1680}
+Decoded data: Array
+(
+    [fname] => Amr
+    [lname] => Shalabi
+    [address] => Palestine
+    [email] => 044amrsh@gmail.com
+    [phone] => 597079565
+    [city] => Jerusalem
+    [payment] => cash
+    [total] => 1680
+)
+
+Inserting order...
+Order inserted successfully with ID: 37
+Fetching cart items...
+Inserting order items...
+Clearing cart items...
+Order process finished successfully

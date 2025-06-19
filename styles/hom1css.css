@@ -387,7 +387,7 @@ header .icons a:hover {
     width: 100%;
     height: 650px;
 
-    max-width: 500px;
+
     margin: 0 auto;
 
 }
@@ -747,10 +747,9 @@ header .icons a:hover {
     .mySlides img,
     .static-mobile-image {
         height: auto;
+        width: 100%;
     }
-    .main-content{
 
-    }
 }
 
 
