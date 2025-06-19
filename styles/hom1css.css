@@ -975,7 +975,6 @@ header .icons a:hover {
         top: 5px;
         left: 45%;
         transform: translateX(-50%);
-        background: rgba(146, 101, 166, 0.9);
         color: white;
         padding: 8px 15px;
         border-radius: 20px;
@@ -984,7 +983,6 @@ header .icons a:hover {
         z-index: 9999;
         animation: zigzagSlideDown 7s ease infinite;
         pointer-events: none;
-        box-shadow: 0 0 10px rgba(146, 101, 166, 0.7);
         white-space: nowrap;
     }
 }
@@ -996,7 +994,6 @@ header .icons a:hover {
         top: 2px;
         left: 45%;
         transform: translateX(-50%);
-        background: rgba(146, 101, 166, 0.9);
         color: white;
         padding: 8px 15px;
         border-radius: 20px;
@@ -1005,7 +1002,6 @@ header .icons a:hover {
         z-index: 9999;
         animation: zigzagSlideDown 7s ease infinite;
         pointer-events: none;
-        box-shadow: 0 0 10px rgba(146, 101, 166, 0.7);
         white-space: nowrap;
     }
 }

@@ -560,3 +560,28 @@ Fetching cart items...
 Inserting order items...
 Clearing cart items...
 Order process finished successfully
+========== New Request ==========
+[2025-06-19 16:11:24] Script started
+User ID from session: 1
+Database connected
+Raw input: {"fname":"maher","lname":"ashour","address":"sdagfsda","email":"maherashoor48@gmail.com","phone":"gfadsffsasf","city":"Jerusalem","payment":"cash","total":2250}
+Decoded data: Array
+(
+    [fname] => maher
+    [lname] => ashour
+    [address] => sdagfsda
+    [email] => maherashoor48@gmail.com
+    [phone] => gfadsffsasf
+    [city] => Jerusalem
+    [payment] => cash
+    [total] => 2250
+)
+
+Inserting order...
+Order inserted successfully with ID: 38
+Fetching cart items...
+Inserting order items...
+Adding product_id: 48, quantity: 3
+Item inserted for product 48 successfully
+Clearing cart items...
+Order process finished successfully
