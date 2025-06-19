@@ -8,9 +8,9 @@ if (isset($_SESSION['user_id'])) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "datacoming";
+    $username = "u251541401_maher_user";
+    $password = "Datacomin12345";
+    $dbname = "u251541401_datacoming";
 
     $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -24,10 +24,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $conn->real_escape_string($email);
 
     $sql = "SELECT * FROM users WHERE email = '$email'";
-
     $result = $conn->query($sql);
 
-    if ($result->num_rows > 0) {
+    if ($result && $result->num_rows > 0) {
         $user = $result->fetch_assoc();
 
         if (password_verify($password, $user['password'])) {
@@ -48,6 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->close();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

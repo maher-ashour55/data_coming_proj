@@ -1,11 +1,12 @@
 <?php
-$conn = new mysqli("localhost", "root", "", "datacoming");
+$conn = new mysqli("localhost", "u251541401_maher_user", "Datacomin12345", "u251541401_datacoming");
 if ($conn->connect_error) {
     die("فشل الاتصال: " . $conn->connect_error);
 }
+
 $conn->set_charset("utf8");
 
-
+// جلب المنتجات من فئة SSD
 $sql = "SELECT * FROM product WHERE category = 'ssd'";
 $result = $conn->query($sql);
 
@@ -13,6 +14,7 @@ if (!$result) {
     die("خطأ في الاستعلام: " . $conn->error);
 }
 ?>
+
 
 
 <!DOCTYPE html>

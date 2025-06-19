@@ -10,9 +10,9 @@ $first_name = $_SESSION['first_name'];
 $last_name = $_SESSION['last_name'];
 
 $host = "localhost";
-$username = "root";
-$password = "";
-$dbname = "datacoming";
+$dbname = "u251541401_datacoming";
+$username = "u251541401_maher_user";
+$password = "Datacomin12345";
 
 $conn = new mysqli($host, $username, $password, $dbname);
 if ($conn->connect_error) {
