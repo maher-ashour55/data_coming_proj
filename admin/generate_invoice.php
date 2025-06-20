@@ -1,7 +1,4 @@
 <?php
-
-use php\fpdf186\fpdf186\FPDF;
-
 session_start();
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
@@ -66,7 +63,7 @@ class PDF extends FPDF {
         // السطر الفارغ
         $this->Ln(5);
 
-        // التاريخ واسم المتجر فوق بعض على جهة اليمين
+        // التاريخ واسم المتجر على اليمين
         $this->SetFont('Arial', '', 12);
         $this->SetXY(130, 15);
         $this->Cell(0, 6, 'Date: ' . date("Y-m-d"), 0, 1, 'R');
@@ -91,7 +88,7 @@ function truncateText($text, $maxLength = 35) {
     return $text;
 }
 
-$pdf = new \php\fpdf186\fpdf186\tutorial\PDF();
+$pdf = new PDF();
 $pdf->AddPage();
 $pdf->SetFont('Arial', '', 12);
 
