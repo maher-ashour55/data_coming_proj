@@ -5,7 +5,7 @@ session_start();
 $host = 'localhost';        // غالباً localhost على Hostinger
 $db   = 'u251541401_datacoming'; // اسم قاعدة البيانات
 $user = 'u251541401_maher_user'; // اسم مستخدم قاعدة البيانات
-$pass = 'Datacomin12345';        // كلمة المرور
+$pass = 'Datacoming12345';        // كلمة المرور
 $charset = 'utf8mb4';
 
 // إعداد PDO

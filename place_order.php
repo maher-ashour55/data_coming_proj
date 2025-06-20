@@ -19,7 +19,7 @@ file_put_contents("log.txt", "User ID from session: $user_id\n", FILE_APPEND);
 
 $servername = "localhost";
 $username = "u251541401_maher_user";
-$password = "Datacomin12345";
+$password = "Datacoming12345";
 $dbname = "u251541401_datacoming";
 
 $conn = new mysqli($servername, $username, $password, $dbname);

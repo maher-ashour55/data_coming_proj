@@ -349,7 +349,7 @@ $conn->close();
 
     </div>
 </main>
-<footer>© 2024 data coming . All Rights Reserved</footer>
+<footer>© 2025 data coming . All Rights Reserved</footer>
 <script src="./js/cart.js"></script>
 
 </body>
