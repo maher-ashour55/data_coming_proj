@@ -1,11 +1,10 @@
 <?php
 session_start();
 
-// إعدادات قاعدة البيانات - غيّر القيم حسب بيانات الاستضافة عندك
-$host = 'localhost';        // غالباً localhost على Hostinger
-$db   = 'u251541401_datacoming'; // اسم قاعدة البيانات
-$user = 'u251541401_maher_user'; // اسم مستخدم قاعدة البيانات
-$pass = 'Datacoming12345';        // كلمة المرور
+$host = 'localhost';
+$db   = 'u251541401_datacoming';
+$user = 'u251541401_maher_user';
+$pass = 'Datacoming12345';
 $charset = 'utf8mb4';
 
 // إعداد PDO
