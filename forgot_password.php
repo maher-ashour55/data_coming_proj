@@ -20,12 +20,13 @@ try {
     die("فشل الاتصال بقاعدة البيانات: " . $e->getMessage());
 }
 
-use master\src\PHPMailer;
-use master\src\Exception;
-
-require 'PHPMailer-master/src/PHPMailer.php';
 require 'PHPMailer-master/src/Exception.php';
+require 'PHPMailer-master/src/PHPMailer.php';
 require 'PHPMailer-master/src/SMTP.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 
 $feedback = "";
 
@@ -101,8 +102,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <title>Forgot Password</title>
     <style>
-        }
-
         .reset-form {
             background-color: white;
             padding: 30px 40px;
