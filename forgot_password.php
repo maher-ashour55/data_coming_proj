@@ -24,13 +24,13 @@ try {
     die("فشل الاتصال بقاعدة البيانات: " . $e->getMessage());
 }
 
+// استدعاء PHPMailer
 require './php/PHPMailer-master/src/Exception.php';
 require './php/PHPMailer-master/src/PHPMailer.php';
 require './php/PHPMailer-master/src/SMTP.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-
 
 $feedback = "";
 
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $token = bin2hex(random_bytes(32));
         $expires = date("Y-m-d H:i:s", strtotime('+30 minutes'));
 
-        // حذف أي رموز قديمة لنفس البريد
+        // حذف رموز قديمة
         $conn->prepare("DELETE FROM password_resets WHERE email = ?")->execute([$email]);
         $conn->prepare("INSERT INTO password_resets (email, token, expires) VALUES (?, ?, ?)")->execute([$email, $token, $expires]);
 
@@ -53,14 +53,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $mail = new PHPMailer(true);
         try {
             $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com';
+            $mail->Host = 'smtp.hostinger.com'; // ✅ إعداد SMTP الصحيح من Hostinger
             $mail->SMTPAuth = true;
-            $mail->Username = 'maherashoor48@gmail.com';
-            $mail->Password = 'zsfpmrackwswronn';
+            $mail->Username = 'datacoming@datacoming.store'; // ✅ بريدك الرسمي
+            $mail->Password = 'Datacoming_1212'; // ✅ كلمة المرور لهذا البريد
             $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
 
-            $mail->setFrom('maherashoor48@gmail.com', 'Data Coming');
+            $mail->setFrom('datacoming@datacoming.store', 'Data Coming');
             $mail->addAddress($email);
             $mail->Subject = 'Reset Your Password';
             $mail->isHTML(true);
@@ -102,7 +102,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <meta charset="UTF-8">
     <title>Forgot Password</title>
     <style>
@@ -114,6 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             text-align: center;
             width: 100%;
             max-width: 400px;
+            margin: 50px auto;
         }
 
         .reset-form h2 {
