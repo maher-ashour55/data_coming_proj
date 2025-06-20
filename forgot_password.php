@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $conn->prepare("DELETE FROM password_resets WHERE email = ?")->execute([$email]);
         $conn->prepare("INSERT INTO password_resets (email, token, expires) VALUES (?, ?, ?)")->execute([$email, $token, $expires]);
 
-        $reset_link = "https://datacoming.store/data_coming_proj/php/reset_password.php?token=$token";
+        $reset_link = "https://datacoming.store/reset_password.php?token=$token";
 
         $mail = new PHPMailer(true);
         try {
