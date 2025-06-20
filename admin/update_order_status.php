@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die("Invalid input data.");
     }
 
-    $conn = new mysqli("localhost", "root", "", "datacoming");
+    $conn = new mysqli("localhost", "u251541401_maher_user", "Datacoming12345", "u251541401_datacoming");
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }

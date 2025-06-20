@@ -7,9 +7,9 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
 }
 
 $host = "localhost";
-$username = "root";
-$password = "";
-$dbname = "datacoming";
+$dbname = "u251541401_datacoming";
+$username = "u251541401_maher_user";
+$password = "Datacoming12345";
 
 $conn = new mysqli($host, $username, $password, $dbname);
 if ($conn->connect_error) {
@@ -271,7 +271,7 @@ function getOrderItems($conn, $order_id) {
     <a href="manage_users.php"><i class='bx bx-group'></i> Manage Users</a>
 
     <div class="logout">
-        <a href="../php/logout.php"><i class='bx bx-log-out'></i> Logout</a>
+        <a href="../logout.php"><i class='bx bx-log-out'></i> Logout</a>
     </div>
 </div>
 

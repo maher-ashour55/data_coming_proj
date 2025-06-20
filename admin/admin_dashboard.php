@@ -12,7 +12,7 @@ $last_name = $_SESSION['last_name'];
 $host = "localhost";
 $dbname = "u251541401_datacoming";
 $username = "u251541401_maher_user";
-$password = "Datacomin12345";
+$password = "Datacoming12345";
 
 $conn = new mysqli($host, $username, $password, $dbname);
 if ($conn->connect_error) {
@@ -200,7 +200,7 @@ $conn->close();
     <a href="view_orders.php"><i class='bx bx-cart'></i> View Orders</a>
     <a href="manage_users.php"><i class='bx bx-group'></i> Manage Users</a>
     <div class="logout">
-        <a href="../php/logout.php"><i class='bx bx-log-out'></i> Logout</a>
+        <a href="../logout.php"><i class='bx bx-log-out'></i> Logout</a>
     </div>
 </div>
 

@@ -7,10 +7,11 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     exit();
 }
 
+
 $servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "datacoming";
+$dbname = "u251541401_datacoming";
+$username = "u251541401_maher_user";
+$password = "Datacoming12345";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {

@@ -14,9 +14,9 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 $product_id = intval($_GET['id']);
 
 $host = "localhost";
-$username = "root";
-$password = "";
-$dbname = "datacoming";
+$dbname = "u251541401_datacoming";
+$username = "u251541401_maher_user";
+$password = "Datacoming12345";
 
 $conn = new mysqli($host, $username, $password, $dbname);
 if ($conn->connect_error) {

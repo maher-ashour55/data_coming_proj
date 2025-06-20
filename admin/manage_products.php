@@ -1,9 +1,9 @@
 <?php
 session_start();
 $host = "localhost";
-$username = "root";
-$password = "";
-$dbname = "datacoming";
+$dbname = "u251541401_datacoming";
+$username = "u251541401_maher_user";
+$password = "Datacoming12345";
 
 $conn = new mysqli($host, $username, $password, $dbname);
 if ($conn->connect_error) {
@@ -324,7 +324,7 @@ $last_name = $_SESSION['last_name'];
     <a href="manage_users.php"><i class='bx bx-group'></i> Manage Users</a>
 
     <div class="logout">
-        <a href="../php/logout.php"><i class='bx bx-log-out'></i> Logout</a>
+        <a href="../logout.php"><i class='bx bx-log-out'></i> Logout</a>
     </div>
 </div>
 

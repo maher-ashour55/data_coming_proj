@@ -1,5 +1,5 @@
 <?php
-$conn = new mysqli("localhost", "root", "", "datacoming");
+$conn = new mysqli("localhost", "u251541401_maher_user", "Datacoming12345", "u251541401_datacoming");
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -215,7 +215,7 @@ $product = $result->fetch_assoc();
     <a href="view_orders.php"><i class='bx bx-cart'></i> View Orders</a>
 
     <div class="logout">
-        <a href="../php/logout.php"><i class='bx bx-log-out'></i> Logout</a>
+        <a href="../logout.php"><i class='bx bx-log-out'></i> Logout</a>
     </div>
 </div>
 

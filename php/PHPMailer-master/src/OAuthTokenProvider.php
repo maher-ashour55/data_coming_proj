@@ -19,7 +19,7 @@
  * FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-namespace PHPMailer\PHPMailer;
+namespace PHPMailer-master\src;
 
 /**
  * OAuthTokenProvider - OAuth2 token provider interface.

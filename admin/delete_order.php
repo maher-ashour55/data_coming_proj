@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id'])) {
     $order_id = intval($_POST['order_id']);
 
-    $conn = new mysqli("localhost", "root", "", "datacoming");
+    $conn = new mysqli("localhost", "u251541401_maher_user", "Datacoming12345", "u251541401_datacoming");
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }

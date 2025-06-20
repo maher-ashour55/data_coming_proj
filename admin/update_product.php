@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json');
 
-$conn = new mysqli("localhost", "root", "", "datacoming");
+$conn = new mysqli("localhost", "u251541401_maher_user", "Datacoming12345", "u251541401_datacoming");
 if ($conn->connect_error) {
     echo json_encode(['success' => false, 'msg' => "Connection failed: " . $conn->connect_error]);
     exit;

@@ -1,4 +1,7 @@
 <?php
+
+use php\fpdf186\fpdf186\FPDF;
+
 session_start();
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
@@ -9,9 +12,9 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
 require_once "../php/fpdf186/fpdf.php";
 
 $host = "localhost";
-$username = "root";
-$password = "";
-$dbname = "datacoming";
+$dbname = "u251541401_datacoming";
+$username = "u251541401_maher_user";
+$password = "Datacoming12345";
 
 $conn = new mysqli($host, $username, $password, $dbname);
 if ($conn->connect_error) {
@@ -88,7 +91,7 @@ function truncateText($text, $maxLength = 35) {
     return $text;
 }
 
-$pdf = new PDF();
+$pdf = new \php\fpdf186\fpdf186\tutorial\PDF();
 $pdf->AddPage();
 $pdf->SetFont('Arial', '', 12);
 
