@@ -713,11 +713,11 @@ button a {
     .right-controls {
         display: flex;
         flex-direction: row;
-        justify-content: center;     /* يوسّط العناصر */
+        justify-content: center;
         align-items: center;
         gap: 10px;
-        width: fit-content;          /* ✅ مهم جداً: يمنع التمدد الكامل */
-        margin: 0 auto;              /* ✅ يوسّط العنصر نفسه */
+        width: fit-content;
+        margin: 0 auto;
     }
 
 
@@ -727,9 +727,7 @@ button a {
         gap: 10px;
     }
 
-    .remove-item {
-        margin: 0;
-    }
+
 }
 
 
