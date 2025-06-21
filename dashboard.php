@@ -69,6 +69,8 @@ $result_orders = $stmt_orders->get_result();
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="image/png" href="./img/data2-removebg-preview.png">
+
     <meta charset="UTF-8" />
     <title>Dashboard</title>
     <link rel="stylesheet" href="./styles/dashboard.css" />
