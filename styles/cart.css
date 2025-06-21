@@ -443,6 +443,8 @@ header .icons a:hover {
 
 .info {
     flex: 1 1 45%;
+    display: flex;
+    flex-direction: column;
     background-color: #ffffff;
     padding: 20px;
     border-radius: 12px;
@@ -450,20 +452,19 @@ header .icons a:hover {
     border: 3px solid #9265a6;
     align-items: center;
     text-align: center;
-    position: relative;
-    padding-bottom: 60px;
-    max-height: 600px;
-
-
-
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+    min-height: 600px;
 }
+@media (min-width: 1024px) {
+    .info {
+        max-height: 80vh; /* أو 600px مثلاً */
+        overflow-y: auto;
+    }
+}
+
 .items-container {
-    flex-grow: 1;
+    flex: 1;
     overflow-y: auto;
-    height: 600px;
+    width: 100%;
 }
 .items-container * {
     direction: ltr;
@@ -539,15 +540,9 @@ header .icons a:hover {
     padding: 15px;
     font-weight: bold;
     border-top: 2px solid #ddd;
-
     font-size: 20px;
     color: #794e8c;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    text-align: center;
-    margin-top: auto;
+    width: 100%;
 }
 
 .payment {
