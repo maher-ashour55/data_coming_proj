@@ -1127,7 +1127,7 @@ $out_of_stock = $product['stock'] == 0;
         </div>
 
         <?php if ($out_of_stock): ?>
-            <div class="stock-status">❌ Out of Stock</div>
+            <div class="stock-status">❌ SOLD OUT</div>
         <?php else: ?>
             <form id="addToCartForm">
                 <input type="hidden" name="product_id" value="<?= $product['id'] ?>">

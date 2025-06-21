@@ -271,7 +271,7 @@ if (!$result) {
                     <?php endif; ?>
 
                     <?php if ($row['stock'] == 0): ?>
-                        <button class="buy-now-btn" disabled>OUT OF STOCK</button>
+                        <button class="buy-now-btn" disabled>SOLD OUT</button>
                     <?php else: ?>
                         <button class="buy-now-btn"
                                 data-product-id="<?= $row['id'] ?>"
