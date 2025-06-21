@@ -678,6 +678,7 @@ button a {
         max-height: 80vh;
         overflow-y: auto;
     }
+
     .image-wrapper {
         width: 100%;
         display: flex;
@@ -689,7 +690,9 @@ button a {
         width: 100px;
         height: auto;
     }
+
     .item {
+        display: flex;
         flex-direction: column;
         align-items: center;
         height: auto;
@@ -698,9 +701,7 @@ button a {
         box-sizing: border-box;
         gap: 10px;
         text-align: center;
-        display: flex;
     }
-
 
     .item > div,
     .product_info,
@@ -709,12 +710,30 @@ button a {
         width: 100%;
     }
 
-    .quantity-selector,
     .right-controls {
-        justify-content: center;
-        margin: 10px 0;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;     /* يوسّط العناصر */
+        align-items: center;
+        gap: 10px;
+        width: fit-content;          /* ✅ مهم جداً: يمنع التمدد الكامل */
+        margin: 0 auto;              /* ✅ يوسّط العنصر نفسه */
+    }
+
+
+
+    .quantity-selector {
+        display: flex;
+        gap: 10px;
+    }
+
+    .remove-item {
+        margin: 0;
     }
 }
+
+
+
 
 
 
