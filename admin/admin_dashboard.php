@@ -200,6 +200,26 @@ $conn->close();
     <a href="view_orders.php"><i class='bx bx-cart'></i> View Orders</a>
     <a href="manage_users.php"><i class='bx bx-group'></i> Manage Users</a>
     <div class="logout">
+        <a href="../index.php" class="home-link" style="
+    background-color: transparent;
+    padding: 12px 20px;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+"
+           onmouseover="this.style.backgroundColor='rgba(255, 255, 255, 0.2)';"
+           onmouseout="this.style.backgroundColor='transparent';"
+        >
+            <i class='bx bx-home' style="font-size: 22px;"></i> home/customer
+        </a>
         <a href="../logout.php"><i class='bx bx-log-out'></i> Logout</a>
     </div>
 </div>

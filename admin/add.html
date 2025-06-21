@@ -262,6 +262,32 @@
             margin-right: 12px;
             font-size: 22px;
         }
+        .home-link {
+            background-color: #9265a6;
+            padding: 12px 20px;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 16px;
+            box-shadow: 0 4px 8px rgba(146, 101, 166, 0.3);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .home-link i {
+            margin-right: 10px;
+            font-size: 22px;
+        }
+
+        .home-link:hover {
+            background-color: #7b4d8f;
+            box-shadow: 0 6px 12px rgba(123, 77, 143, 0.6);
+        }
 
     </style>
 </head>
@@ -279,6 +305,29 @@
 
 
     <div class="logout">
+        <a href="../index.php" class="home-link" style="
+    background-color: transparent;
+    padding: 12px 20px;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+"
+           onmouseover="this.style.backgroundColor='rgba(255, 255, 255, 0.2)';"
+           onmouseout="this.style.backgroundColor='transparent';"
+        >
+            <i class='bx bx-home' style="font-size: 22px;"></i> home/customer
+        </a>
+
+
+
         <a href="../php/logout.php"><i class='bx bx-log-out'></i> Logout</a>
     </div>
 </div>
