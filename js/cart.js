@@ -168,7 +168,7 @@ document.getElementById('doneButton').addEventListener('click', function(event) 
 
                     if (data.status === 'success') {
                         showMessage("Order submitted successfully!");
-                        setTimeout(() => window.location.href = 'cart.php', 1500);
+                        setTimeout(() => window.location.href = 'home.php', 1500);
 
                     } else {
                         showMessage(data.message || "Something went wrong!", false);
