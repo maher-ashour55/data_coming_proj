@@ -219,7 +219,7 @@ $result_orders = $stmt_orders->get_result();
     <?php if ($role === 'admin'): ?>
         <a href="./admin/admin_dashboard.php" class="btn">Admin Control Panel</a>
     <?php endif; ?>
-    <a href="index.php" class="btn">Browse</a>
+    <a href="index.php" class="btn">HOME</a>
     <a href="logout.php" class="btn logout-btn">Logout</a>
 
     <h2>My Orders</h2>
