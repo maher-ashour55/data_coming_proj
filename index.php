@@ -2,16 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>data coming</title>
-    <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="icon" type="image/png" href="./img/data2-removebg-preview.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- عنوان الصفحة (مهم جداً للسيو) -->
+    <title>data coming | داتا كامينغ</title>
+
+    <!-- الأيقونة (favicon) -->
+    <link rel="icon" type="image/png" href="https://datacoming.store/img/data2-removebg-preview.png">
+
+    <!-- وصف الموقع (يظهر في Google غالبًا) -->
+    <meta name="description" content="data coming | وجهتك الأولى لقطع الكمبيوتر الأصلية والتجميعات الاحترافية. اكتشف أقوى المعالجات، كروت الشاشة، الذواكر، وأكثر بأسعار منافسة.">
+
+    <!-- Open Graph (للسوشال ميديا) -->
+    <meta property="og:title" content="data coming | داتا كامينغ">
+    <meta property="og:description" content="data coming | وجهتك الأولى لقطع الكمبيوتر الأصلية والتجميعات الاحترافية. اكتشف أقوى المعالجات، كروت الشاشة، الذواكر، وأكثر بأسعار منافسة.">
+    <meta property="og:image" content="https://datacoming.store/img/data2-removebg-preview.png">
+    <meta property="og:url" content="https://datacoming.store">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="data coming | داتا كامينغ">
+    <meta name="twitter:description" content="data coming | وجهتك الأولى لقطع الكمبيوتر الأصلية والتجميعات الاحترافية. اكتشف أقوى المعالجات، كروت الشاشة، الذواكر، وأكثر بأسعار منافسة.">
+    <meta name="twitter:image" content="https://datacoming.store/img/data2-removebg-preview.png">
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "data coming",
+            "url": "https://datacoming.store",
+            "logo": "https://datacoming.store/img/data2-removebg-preview.png"
+        }
+    </script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="./styles/hom1css.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-
 </head>
+
 <body>
 
 <header>
@@ -237,36 +266,36 @@
     <div class="slideshow-container">
         <div class="mySlides fade">
             <div class="numbertext">1 / 6</div>
-            <img src="./img/imgg/epic-gamer-room-setup.jpg" style="width:100%; height: 650px;">
+            <img src="./img/imgg/epic-gamer-room-setup.jpg" loading="lazy" style="width:100%; height: 650px;">
             <div class="text"></div>
         </div>
 
         <div class="mySlides fade">
             <div class="numbertext">2 / 6</div>
-            <img src="./img/linus-mimietz-gvptKmonylk-unsplash.jpg" style="width:100%; height: 650px;">
+            <img src="./img/linus-mimietz-gvptKmonylk-unsplash.jpg" loading="lazy" style="width:100%; height: 650px;">
             <div class="text"></div>
         </div>
 
         <div class="mySlides fade">
             <div class="numbertext">3 / 6</div>
-            <img src="./img/hard.jpg" style="width:100%; height: 650px;">
+            <img src="./img/hard.jpg" loading="lazy" style="width:100%; height: 650px;">
             <div class="text"></div>
         </div>
 
         <div class="mySlides fade">
             <div class="numbertext">4 / 6</div>
-            <img src="./img/sam-pak-X6QffKLwyoQ-unsplash.jpg" style="width:100%; height: 650px;">
+            <img src="./img/sam-pak-X6QffKLwyoQ-unsplash.jpg" loading="lazy" style="width:100%; height: 650px;">
             <div class="text"></div>
         </div>
 
         <div class="mySlides fade">
             <div class="numbertext">5 / 6</div>
-            <img src="./img/martin-katler-7wCxlBfGMdk-unsplash.jpg" style="width:100%; height: 650px;">
+            <img src="./img/martin-katler-7wCxlBfGMdk-unsplash.jpg" loading="lazy" style="width:100%; height: 650px;">
             <div class="text"></div>
         </div>
         <div class="mySlides fade">
             <div class="numbertext">6 / 6</div>
-            <img src="./img/imgg/epic-gamer-battlestation.jpg" style="width:100%; height: 650px;">
+            <img src="./img/imgg/epic-gamer-battlestation.jpg " loading="lazy" style="width:100%; height: 650px;">
             <div class="text"></div>
         </div>
 
