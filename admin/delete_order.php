@@ -14,31 +14,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id'])) {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    // 1. Get all items in the order
-    $stmt = $conn->prepare("SELECT product_id, quantity FROM order_items WHERE order_id = ?");
-    $stmt->bind_param("i", $order_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    // ✅ 1. Get order status first
+    $stmt_status = $conn->prepare("SELECT status FROM orders WHERE id = ?");
+    $stmt_status->bind_param("i", $order_id);
+    $stmt_status->execute();
+    $result_status = $stmt_status->get_result();
+    $order_data = $result_status->fetch_assoc();
+    $stmt_status->close();
 
-    // 2. Return stock for each item
-    while ($row = $result->fetch_assoc()) {
-        $product_id = $row['product_id'];
-        $quantity = $row['quantity'];
+    $current_status = $order_data['status'] ?? '';
 
-        $updateStmt = $conn->prepare("UPDATE product SET stock = stock + ? WHERE id = ?");
-        $updateStmt->bind_param("ii", $quantity, $product_id);
-        $updateStmt->execute();
-        $updateStmt->close();
+    // ✅ 2. Return stock ONLY if the order is NOT already cancelled
+    if ($current_status !== 'Cancelled') {
+        $stmt_items = $conn->prepare("SELECT product_id, quantity FROM order_items WHERE order_id = ?");
+        $stmt_items->bind_param("i", $order_id);
+        $stmt_items->execute();
+        $result_items = $stmt_items->get_result();
+
+        while ($row = $result_items->fetch_assoc()) {
+            $product_id = $row['product_id'];
+            $quantity = $row['quantity'];
+
+            $updateStmt = $conn->prepare("UPDATE product SET stock = stock + ? WHERE id = ?");
+            $updateStmt->bind_param("ii", $quantity, $product_id);
+            $updateStmt->execute();
+            $updateStmt->close();
+        }
+
+        $stmt_items->close();
     }
-    $stmt->close();
 
-    // 3. Delete from order_items
+    // ✅ 3. Delete order_items
     $stmt = $conn->prepare("DELETE FROM order_items WHERE order_id = ?");
     $stmt->bind_param("i", $order_id);
     $stmt->execute();
     $stmt->close();
 
-    // 4. Delete from orders
+    // ✅ 4. Delete order
     $stmt = $conn->prepare("DELETE FROM orders WHERE id = ?");
     $stmt->bind_param("i", $order_id);
     $stmt->execute();
@@ -46,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id'])) {
 
     $conn->close();
 
-    // 5. Redirect with success
+    // ✅ 5. Redirect with success
     header("Location: view_orders.php?deleted=1");
     exit();
 
