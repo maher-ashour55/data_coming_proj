@@ -23,17 +23,43 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "DELETE FROM product WHERE id = ?";
-$stmt = $conn->prepare($sql);
+// تحقق إذا المنتج مرتبط بأي طلبات في order_items
+$stmt = $conn->prepare("SELECT COUNT(*) AS cnt FROM order_items WHERE product_id = ?");
 $stmt->bind_param("i", $product_id);
-if ($stmt->execute()) {
-    $stmt->close();
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+$stmt->close();
+
+if ($row['cnt'] > 0) {
+    // المنتج مرتبط بطلبات، نعرض alert ونرجع
+    echo "<script>
+        alert('لا يمكن حذف المنتج لأنه مرتبط بطلبات سابقة.');
+        window.location.href = 'manage_products.php';
+    </script>";
     $conn->close();
-    header("Location: manage_products.php?msg=deleted");
     exit();
 } else {
-    $stmt->close();
-    $conn->close();
-    echo "Error deleting product: " . $conn->error;
+    // المنتج غير مرتبط بطلبات، يمكن حذفه
+    $stmt = $conn->prepare("DELETE FROM product WHERE id = ?");
+    $stmt->bind_param("i", $product_id);
+    if ($stmt->execute()) {
+        $stmt->close();
+        $conn->close();
+        // بعد الحذف نرجع مع رسالة alert
+        echo "<script>
+            alert('تم حذف المنتج بنجاح.');
+            window.location.href = 'manage_products.php?msg=deleted';
+        </script>";
+        exit();
+    } else {
+        $stmt->close();
+        $conn->close();
+        echo "<script>
+            alert('حدث خطأ أثناء حذف المنتج: " . addslashes($conn->error) . "');
+            window.location.href = 'manage_products.php';
+        </script>";
+        exit();
+    }
 }
 ?>
