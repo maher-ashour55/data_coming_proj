@@ -3,10 +3,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-
 session_start();
-
-
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -36,16 +33,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order_id'])) {
     if ($result_check->num_rows > 0) {
         $row = $result_check->fetch_assoc();
         if ($row['status'] === 'Pending' || $row['status'] === 'Processing') {
-            $sql_cancel = "UPDATE orders SET status = 'Cancelled' WHERE id = ? AND user_id = ?";
-            $stmt_cancel = $conn->prepare($sql_cancel);
-            if ($stmt_cancel) {
-                $stmt_cancel->bind_param("ii", $cancel_id, $user_id);
-                $stmt_cancel->execute();
-                $stmt_cancel->close();
-                header("Location: " . $_SERVER['PHP_SELF']);
-                exit();
+            // جلب المنتجات والكميات المرتبطة بالطلب
+            $sql_items = "SELECT product_id, quantity FROM order_items WHERE order_id = ?";
+            $stmt_items = $conn->prepare($sql_items);
+            if ($stmt_items) {
+                $stmt_items->bind_param("i", $cancel_id);
+                $stmt_items->execute();
+                $result_items = $stmt_items->get_result();
+
+                // زيادة المخزون لكل منتج
+                while ($item = $result_items->fetch_assoc()) {
+                    $sql_update_stock = "UPDATE product SET stock = stock + ? WHERE id = ?";
+                    $stmt_update = $conn->prepare($sql_update_stock);
+                    if ($stmt_update) {
+                        $stmt_update->bind_param("ii", $item['quantity'], $item['product_id']);
+                        $stmt_update->execute();
+                        $stmt_update->close();
+                    } else {
+                        echo "Error preparing stock update query: (" . $conn->errno . ") " . $conn->error;
+                    }
+                }
+                $stmt_items->close();
+
+                // تحديث حالة الطلب إلى Cancelled
+                $sql_cancel = "UPDATE orders SET status = 'Cancelled' WHERE id = ? AND user_id = ?";
+                $stmt_cancel = $conn->prepare($sql_cancel);
+                if ($stmt_cancel) {
+                    $stmt_cancel->bind_param("ii", $cancel_id, $user_id);
+                    $stmt_cancel->execute();
+                    $stmt_cancel->close();
+                    header("Location: " . $_SERVER['PHP_SELF']);
+                    exit();
+                } else {
+                    echo "Error preparing cancel query: (" . $conn->errno . ") " . $conn->error;
+                }
             } else {
-                echo "Error preparing cancel query: (" . $conn->errno . ") " . $conn->error;
+                echo "Error preparing items query: (" . $conn->errno . ") " . $conn->error;
             }
         } else {
             echo "<p style='color:red; text-align:center;'>This order cannot be cancelled.</p>";
@@ -322,17 +345,6 @@ $result_orders = $stmt_orders->get_result();
         <p>No orders found yet.</p>
     <?php endif; ?>
 </div>
-<!--<div style="margin-top: 50px; text-align:left;">-->
-<!--    <h2>Chat with Admin</h2>-->
-<!--    <div id="chat-box" style="height: 250px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; background: #f9f9f9;"></div>-->
-<!---->
-<!--    <form id="chat-form">-->
-<!--        <input type="hidden" name="receiver_id" value="1">  نفترض أن الادمن هو user_id = 1 -->
-<!--        <textarea id="message" name="message" required style="width: 100%; height: 60px;" placeholder="Type your message here..."></textarea>-->
-<!--        <button type="submit" class="btn" style="margin-top:10px;">Send</button>-->
-<!--    </form>-->
-<!---->
-<!--</div>-->
 
 <script>
     setInterval(fetchMessages, 3000);
@@ -371,7 +383,6 @@ $result_orders = $stmt_orders->get_result();
             .catch(err => console.error('Send Error:', err));
     });
 </script>
-
 
 </body>
 </html>

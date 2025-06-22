@@ -22,6 +22,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die("Connection failed: " . $conn->connect_error);
     }
 
+    // Get current order status before updating
+    $stmt_current = $conn->prepare("SELECT status FROM orders WHERE id = ?");
+    $stmt_current->bind_param("i", $order_id);
+    $stmt_current->execute();
+    $result = $stmt_current->get_result();
+    $current_status = $result->fetch_assoc()['status'] ?? '';
+    $stmt_current->close();
+
+    // Update order
     $stmt = $conn->prepare("UPDATE orders SET payment_status = ?, status = ?, updated_at = NOW() WHERE id = ?");
     if (!$stmt) {
         die("Prepare failed: " . $conn->error);
@@ -32,6 +41,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     if ($stmt->execute()) {
+
+        // ✅ Restore stock if status changed to Cancelled (and it was not Cancelled before)
+        if ($order_status === 'Cancelled' && $current_status !== 'Cancelled') {
+            $stmt_items = $conn->prepare("SELECT product_id, quantity FROM order_items WHERE order_id = ?");
+            $stmt_items->bind_param("i", $order_id);
+            $stmt_items->execute();
+            $result_items = $stmt_items->get_result();
+
+            while ($item = $result_items->fetch_assoc()) {
+                $stmt_update_stock = $conn->prepare("UPDATE product SET stock = stock + ? WHERE id = ?");
+                $stmt_update_stock->bind_param("ii", $item['quantity'], $item['product_id']);
+                $stmt_update_stock->execute();
+                $stmt_update_stock->close();
+            }
+
+            $stmt_items->close();
+        }
+
         header("Location: view_orders.php?success=1");
         exit();
     } else {
