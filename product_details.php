@@ -1234,6 +1234,6 @@ $out_of_stock = $product['stock'] == 0;
 
 
 </script>
-<footer>© 2024 Data Coming . All Rights Reserved</footer>
+<footer>© 2025 Data Coming . All Rights Reserved</footer>
 </body>
 </html>
