@@ -192,7 +192,7 @@
     function slide() {
     index++;
     carousel.style.transition = 'transform 0.5s ease-in-out';
-    carousel.style.transform = translateX(-${index * imgWidth}px);
+        carousel.style.transform = `translateX(-${index * imgWidth}px)`;
 
     if (index >= imgCount) {
     setTimeout(() => {
