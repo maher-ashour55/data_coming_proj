@@ -6,7 +6,7 @@ if ($conn->connect_error) {
 $conn->set_charset("utf8");
 
 // استعلام المنتجات
-$sql = "SELECT * FROM product WHERE category = 'console'";
+$sql = "SELECT * FROM product WHERE category = 'console' AND is_active = 1";
 $result = $conn->query($sql);
 if (!$result) {
     die("خطأ في الاستعلام: " . $conn->error);

@@ -15,6 +15,18 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     exit();
 }
 
+// ✅ تفعيل/إلغاء تفعيل المنتج
+if (isset($_GET['toggle_active']) && isset($_GET['id'])) {
+    $toggle_id = intval($_GET['id']);
+    $new_status = intval($_GET['toggle_active']);
+    $stmt = $conn->prepare("UPDATE product SET is_active = ? WHERE id = ?");
+    $stmt->bind_param("ii", $new_status, $toggle_id);
+    $stmt->execute();
+    $stmt->close();
+    header("Location: manage_products.php");
+    exit();
+}
+
 $category_sql = "SELECT DISTINCT category FROM product";
 $category_result = $conn->query($category_sql);
 
@@ -33,6 +45,7 @@ if ($selected_category !== '') {
 $first_name = $_SESSION['first_name'];
 $last_name = $_SESSION['last_name'];
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -382,16 +395,21 @@ $last_name = $_SESSION['last_name'];
                     <td data-label="Name" class="name-col"><?php echo htmlspecialchars($row['name']); ?></td>
                     <td data-label="Price" class="price-col"><?php echo $row['price']; ?></td>
                     <td data-label="Category" class="category-col"><?php echo htmlspecialchars($row['category']); ?></td>
-                    <td data-label="Stock" class="stock-col"><?php echo $row['stock']; ?></td> <!-- السطر الجديد -->
+                    <td data-label="Stock" class="stock-col"><?php echo $row['stock']; ?></td>
                     <td data-label="Image" class="image-col">
                         <img src="uploads/<?php echo $row['image']; ?>" alt="Product Image" />
                     </td>
                     <td data-label="Actions" class="actions-col">
                         <div class="action-buttons">
                             <a class="btn edit" href="edit_product.php?id=<?php echo $row['id']; ?>">Edit</a>
-                            <a class="btn delete" href="delete_product.php?id=<?php echo $row['id']; ?>" onclick="return confirm('Are you sure you want to delete this product?');">Delete</a>
+                            <?php if ($row['is_active'] == 1): ?>
+                                <a class="btn delete" href="?toggle_active=0&id=<?php echo $row['id']; ?>" onclick="return confirm('Are you sure you want to deactivate this product?');">Deactivate</a>
+                            <?php else: ?>
+                                <a class="btn edit" style="background-color: #2ecc71;" href="?toggle_active=1&id=<?php echo $row['id']; ?>" onclick="return confirm('Do you want to activate this product again?');">Activate</a>
+                            <?php endif; ?>
                         </div>
                     </td>
+
 
                 </tr>
             <?php endwhile; ?>

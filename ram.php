@@ -6,7 +6,7 @@ if ($conn->connect_error) {
 $conn->set_charset("utf8");
 
 
-$sql = "SELECT * FROM product WHERE category = 'ram'";
+$sql = "SELECT * FROM product WHERE category = 'ram' AND is_active = 1";
 $result = $conn->query($sql);
 
 if (!$result) {

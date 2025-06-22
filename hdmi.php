@@ -7,7 +7,7 @@ if ($conn->connect_error) {
 $conn->set_charset("utf8");
 
 
-$sql = "SELECT * FROM product WHERE category = 'CABLES AND PORTS'";
+$sql = "SELECT * FROM product WHERE category = 'CABLES AND PORTS' AND is_active = 1";
 $result = $conn->query($sql);
 
 if (!$result) {
@@ -286,7 +286,7 @@ if (!$result) {
     </main>
 </div>
 
-<footer>© 2024 Data Coming . All Rights Reserved</footer>
+<footer>© 2025 Data Coming . All Rights Reserved</footer>
 
 <script src="./js/jss.js"></script>
 </body>
