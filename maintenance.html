@@ -5,16 +5,55 @@
     <title>الموقع تحت الصيانة</title>
     <style>
         body {
-            background-color: #f4f4f4;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding-top: 100px;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #9265A6, #6A4C93);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             direction: rtl;
         }
+
+        .container {
+            text-align: center;
+            max-width: 600px;
+            padding: 40px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+        }
+
+        .gear {
+            font-size: 80px;
+            animation: spin 3s linear infinite;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
     </style>
 </head>
 <body>
-<h1>الموقع تحت الصيانة حالياً</h1>
-<p>نعتذر عن الإزعاج، سنعود قريباً جداً!</p>
+<div class="container">
+    <div class="gear">⚙️</div>
+    <h1>الموقع تحت الصيانة حالياً</h1>
+    <p>نعتذر عن الإزعاج، نعمل على تحسين تجربتكم. سنعود قريباً جداً!</p>
+</div>
 </body>
 </html>
