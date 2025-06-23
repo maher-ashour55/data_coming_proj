@@ -261,36 +261,36 @@
     <div class="slideshow-container">
         <div class="mySlides fade">
             <div class="numbertext">1 / 6</div>
-            <img src="./img/imgg/epic-gamer-room-setup.jpg" loading="lazy" style="width:100%; height: 650px;">
+            <img src="./img/imgg/epic-gamer-room-setup.jpg" loading="lazy" style="width:100%;">
             <div class="text"></div>
         </div>
 
         <div class="mySlides fade">
             <div class="numbertext">2 / 6</div>
-            <img src="./img/linus-mimietz-gvptKmonylk-unsplash.jpg" loading="lazy" style="width:100%; height: 650px;">
+            <img src="./img/linus-mimietz-gvptKmonylk-unsplash.jpg" loading="lazy" style="width:100%;">
             <div class="text"></div>
         </div>
 
         <div class="mySlides fade">
             <div class="numbertext">3 / 6</div>
-            <img src="./img/hard.jpg" loading="lazy" style="width:100%; height: 650px;">
+            <img src="./img/hard.jpg" loading="lazy" style="width:100%;">
             <div class="text"></div>
         </div>
 
         <div class="mySlides fade">
             <div class="numbertext">4 / 6</div>
-            <img src="./img/sam-pak-X6QffKLwyoQ-unsplash.jpg" loading="lazy" style="width:100%; height: 650px;">
+            <img src="./img/sam-pak-X6QffKLwyoQ-unsplash.jpg" loading="lazy" style="width:100%;">
             <div class="text"></div>
         </div>
 
         <div class="mySlides fade">
             <div class="numbertext">5 / 6</div>
-            <img src="./img/martin-katler-7wCxlBfGMdk-unsplash.jpg" loading="lazy" style="width:100%; height: 650px;">
+            <img src="./img/martin-katler-7wCxlBfGMdk-unsplash.jpg" loading="lazy" style="width:100%;">
             <div class="text"></div>
         </div>
         <div class="mySlides fade">
             <div class="numbertext">6 / 6</div>
-            <img src="./img/imgg/epic-gamer-battlestation.jpg " loading="lazy" style="width:100%; height: 650px;">
+            <img src="./img/imgg/epic-gamer-battlestation.jpg " loading="lazy" style="width:100%;">
             <div class="text"></div>
         </div>
 
