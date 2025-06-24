@@ -330,45 +330,7 @@
         </div>
     </div>
 
-    <div class="cc">
-        <div class="small-carousel-wrapper">
-            <div class="small-carousel">
-                <img src="./img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.14.29_0173f0a3.jpg" loading="lazy"/>
-                <img src="./img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.35_8b34e1b2.jpg" loading="lazy"/>
-                <img src="./img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.34_d1cced53.jpg" loading="lazy"/>
-                <img src="./img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.44_27d0205d.jpg" loading="lazy"/>
-                <img src="./img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2014.25.05_1253ef4b.jpg" loading="lazy"/>
-                <img src="./img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.30.29_0c81c343.jpg" loading="lazy"/>
-                <img src="./img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.35.35_9fc233c1.jpg" loading="lazy"/>
-                <img src="./img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.14.29_409ff953.jpg" loading="lazy"/>
-                <img src="./img/imgg/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.35_e9a817ee.jpg" loading="lazy"/>
 
-
-
-                <img src="./img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.14.29_0173f0a3.jpg" loading="lazy"/>
-                <img src="./img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.35_8b34e1b2.jpg" loading="lazy"/>
-                <img src="./img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.34_d1cced53.jpg" loading="lazy"/>
-                <img src="./img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.44_27d0205d.jpg" loading="lazy"/>
-                <img src="./img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2014.25.05_1253ef4b.jpg" loading="lazy"/>
-                <img src="./img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.30.29_0c81c343.jpg" loading="lazy"/>
-                <img src="./img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.35.35_9fc233c1.jpg" loading="lazy"/>
-                <img src="./img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.14.29_409ff953.jpg" loading="lazy"/>
-                <img src="./img/imgg/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.35_e9a817ee.jpg" loading="lazy"/>
-
-
-                <img src="./img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.14.29_0173f0a3.jpg" loading="lazy"/>
-                <img src="./img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.35_8b34e1b2.jpg" loading="lazy"/>
-                <img src="./img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.34_d1cced53.jpg" loading="lazy"/>
-                <img src="./img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.44_27d0205d.jpg" loading="lazy"/>
-                <img src="./img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2014.25.05_1253ef4b.jpg" loading="lazy"/>
-                <img src="./img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.30.29_0c81c343.jpg" loading="lazy"/>
-                <img src="./img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.35.35_9fc233c1.jpg" loading="lazy"/>
-                <img src="./img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.14.29_409ff953.jpg" loading="lazy"/>
-                <img src="./img/imgg/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.35_e9a817ee.jpg" loading="lazy"/>
-
-            </div>
-        </div>
-    </div>
     <br>
     <br>
     <div class="container">
@@ -507,6 +469,45 @@
                 </div>
                 <h3>MOTHER BOARD</h3>
                 <button onclick="location.href='mother.php'">Browse</button>
+            </div>
+        </div>
+    </div>
+    <div class="cc">
+        <div class="small-carousel-wrapper">
+            <div class="small-carousel">
+                <img src="./img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.14.29_0173f0a3.jpg" loading="lazy"/>
+                <img src="./img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.35_8b34e1b2.jpg" loading="lazy"/>
+                <img src="./img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.34_d1cced53.jpg" loading="lazy"/>
+                <img src="./img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.44_27d0205d.jpg" loading="lazy"/>
+                <img src="./img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2014.25.05_1253ef4b.jpg" loading="lazy"/>
+                <img src="./img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.30.29_0c81c343.jpg" loading="lazy"/>
+                <img src="./img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.35.35_9fc233c1.jpg" loading="lazy"/>
+                <img src="./img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.14.29_409ff953.jpg" loading="lazy"/>
+                <img src="./img/imgg/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.35_e9a817ee.jpg" loading="lazy"/>
+
+
+
+                <img src="./img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.14.29_0173f0a3.jpg" loading="lazy"/>
+                <img src="./img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.35_8b34e1b2.jpg" loading="lazy"/>
+                <img src="./img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.34_d1cced53.jpg" loading="lazy"/>
+                <img src="./img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.44_27d0205d.jpg" loading="lazy"/>
+                <img src="./img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2014.25.05_1253ef4b.jpg" loading="lazy"/>
+                <img src="./img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.30.29_0c81c343.jpg" loading="lazy"/>
+                <img src="./img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.35.35_9fc233c1.jpg" loading="lazy"/>
+                <img src="./img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.14.29_409ff953.jpg" loading="lazy"/>
+                <img src="./img/imgg/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.35_e9a817ee.jpg" loading="lazy"/>
+
+
+                <img src="./img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.14.29_0173f0a3.jpg" loading="lazy"/>
+                <img src="./img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.35_8b34e1b2.jpg" loading="lazy"/>
+                <img src="./img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.34_d1cced53.jpg" loading="lazy"/>
+                <img src="./img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.44_27d0205d.jpg" loading="lazy"/>
+                <img src="./img/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2014.25.05_1253ef4b.jpg" loading="lazy"/>
+                <img src="./img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.30.29_0c81c343.jpg" loading="lazy"/>
+                <img src="./img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.35.35_9fc233c1.jpg" loading="lazy"/>
+                <img src="./img/imgg/صورة%20واتساب%20بتاريخ%201446-12-21%20في%2015.14.29_409ff953.jpg" loading="lazy"/>
+                <img src="./img/imgg/صورة%20واتساب%20بتاريخ%201446-11-26%20في%2013.39.35_e9a817ee.jpg" loading="lazy"/>
+
             </div>
         </div>
     </div>
