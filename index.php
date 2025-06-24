@@ -1,3 +1,27 @@
+<?php
+session_start();
+$cart_count = 0;
+
+if (isset($_SESSION['user_id'])) {
+    $conn = new mysqli("localhost", "u251541401_maher_user", "Datacoming12345", "u251541401_datacoming");
+    if (!$conn->connect_error) {
+        $conn->set_charset("utf8");
+        $user_id = $_SESSION['user_id'];
+
+        $stmt = $conn->prepare("SELECT SUM(quantity) as total FROM cart_items WHERE user_id = ?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($row = $result->fetch_assoc()) {
+            $cart_count = $row['total'] ?? 0;
+        }
+        $stmt->close();
+        $conn->close();
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -95,28 +119,7 @@
             <a href="https://www.facebook.com/profile.php?id=61556946718232" target="_blank" class="social-link" title="Facebook"><i class="fab fa-facebook-f"></i></a>
             <a href="https://www.instagram.com/datac0ming?igsh=MThhMWs5ZHA5MTZneA==" target="_blank" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
 
-            <?php
-            session_start();
-            $cart_count = 0;
 
-            if (isset($_SESSION['user_id'])) {
-                $conn = new mysqli("localhost", "u251541401_maher_user", "Datacoming12345", "u251541401_datacoming");
-                if (!$conn->connect_error) {
-                    $conn->set_charset("utf8");
-                    $user_id = $_SESSION['user_id'];
-
-                    $stmt = $conn->prepare("SELECT SUM(quantity) as total FROM cart_items WHERE user_id = ?");
-                    $stmt->bind_param("i", $user_id);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    if ($row = $result->fetch_assoc()) {
-                        $cart_count = $row['total'] ?? 0;
-                    }
-                    $stmt->close();
-                    $conn->close();
-                }
-            }
-            ?>
             <a href="cart.php" class="cart" title="Cart">
                 <i class="fas fa-shopping-cart"></i>
                 <span class="cart-count"><?php echo $cart_count; ?></span>

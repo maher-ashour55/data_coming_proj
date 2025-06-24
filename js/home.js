@@ -205,6 +205,26 @@ function backToMainMenu() {
 
 
 
+function updateCartCount() {
+    fetch('get_cart_count.php')
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                const countSpan = document.querySelector('.cart-count');
+                countSpan.textContent = data.count;
+            }
+        })
+        .catch(err => console.error('Error fetching cart count:', err));
+}
+if (data.success) {
+    showMessage("The product has been added to the cart ✅");
+    updateCartCount();
+}
+
+
+
+
+
 document.addEventListener("DOMContentLoaded", () => {
     const searchInput = document.getElementById("search-input");
 

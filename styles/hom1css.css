@@ -308,7 +308,7 @@ html, body {
     position: absolute;
     top: -8px;
     right: -10px;
-    background: #e94e77;
+    background: #9265A6;
     width: 20px;
     height: 20px;
     font-size: 1.6rem;
@@ -318,7 +318,7 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0 5px #e94e77;
+    box-shadow: 0 0 5px #9265A6;
 }
 
 .menu-toggle {
