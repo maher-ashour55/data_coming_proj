@@ -31,228 +31,165 @@
         }
     </script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="./styles/hom1css.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 </head>
 
 <body>
 
-<header>
+<header class="header-glass">
+    <div class="container">
+        <div class="left-section">
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <a href="index.php" class="logo">
+                <img src="./img/data2-removebg-preview.png" alt="Logo" class="imgg" /> <span>Data Coming</span>
+            </a>
+        </div>
 
-    <div class="hamburger" id="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
+        <div class="welcome-message">!نورتوا متجرنا</div>
 
-
-    <a href="index.php" class="logo aa">
-        <span class="outlined-text">Data Coming</span><span>.</span>
-    </a>
-    <div class="welcome-message">!نورتوا متجرنا</div>
-
-    <nav class="navbar">
-        <div class="home-btn"><a href="index.php" class="fas fa-home"> Home</a></div>
-
-        <div class="pc-btn">
-            <a href="#" class="fas fa-desktop"> PC</a>
-            <div class="dropdown-multicolumn">
-                <div class="column">
-                    <a href="case.php">CASE</a>
-                    <a href="mother.php">MOTHER BOARD</a>
-                    <a href="cpu.php">CPU</a>
-                    <a href="gui.php">GRAPHIC CARDS</a>
-
+        <div class="center-section">
+            <nav class="nav-links">
+                <div class="dropdown">
+                    <a href="#">PC <i class="fas fa-chevron-down "></i></a>
+                    <div class="dropdown-content">
+                        <a href="case.php">CASE</a>
+                        <a href="mother.php">MOTHER BOARD</a>
+                        <a href="cpu.php">CPU</a>
+                        <a href="gui.php">GRAPHIC CARDS</a>
+                        <a href="ssd.php">SSD</a>
+                        <a href="ram.php">MEMORY</a>
+                        <a href="harddisk.php">HARD DISK</a>
+                        <a href="power.php">POWER SUPPLY</a>
+                    </div>
                 </div>
-                <div class="column">
-                    <a href="ssd.php">SSD</a>
-                    <a href="ram.php">MEMORY</a>
-                    <a href="harddisk.php">HARD DISK</a>
-                    <a href="power.php">POWER SUPPLY</a>
+                <a href="laptop.php">Laptop</a>
+                <a href="xbox.php">Console</a>
+                <div class="dropdown">
+                    <a href="#">Accessories <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="headset.php">HEAD SET</a>
+                        <a href="mouse.php">MOUSE</a>
+                        <a href="keayboard.php">KEYBOARD</a>
+                        <a href="chair.php">CHAIR</a>
+                        <a href="monitor.php">MONITOR</a>
+                        <a href="hdmi.php">CABLES AND PORTS</a>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="search-bar">
+                <button id="search-toggle"><i class="fas fa-search"></i></button>
+                <div class="search-input-wrapper">
+                    <input type="text" id="search-input" placeholder="Search for products..." />
                 </div>
             </div>
         </div>
 
+        <div class="right-section icons">
+            <a href="https://www.facebook.com/profile.php?id=61556946718232" target="_blank" class="social-link" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/datac0ming?igsh=MThhMWs5ZHA5MTZneA==" target="_blank" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
 
+            <?php
+            session_start();
+            $cart_count = 0;
 
+            if (isset($_SESSION['user_id'])) {
+                $conn = new mysqli("localhost", "u251541401_maher_user", "Datacoming12345", "u251541401_datacoming");
+                if (!$conn->connect_error) {
+                    $conn->set_charset("utf8");
+                    $user_id = $_SESSION['user_id'];
 
-        <div class="laptop-btn"><a href="laptop.php" class="fas fa-laptop"> laptop</a></div>
-        <div class="console-btn"><a href="xbox.php" class="fab fa-xbox"> console</a></div>
-        <div class="cata-btn">
-            <a href="#" class="fas fa-mouse"> ACCESSORIES</a>
-            <div class="dropdown-multicolumn2">
-                <div class="column">
-                    <a href="headset.php">HEAD SET</a>
-                    <a href="mouse.php">MOUSE</a>
-                    <a href="keayboard.php">KEYBOARD</a>
+                    $stmt = $conn->prepare("SELECT SUM(quantity) as total FROM cart_items WHERE user_id = ?");
+                    $stmt->bind_param("i", $user_id);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    if ($row = $result->fetch_assoc()) {
+                        $cart_count = $row['total'] ?? 0;
+                    }
+                    $stmt->close();
+                    $conn->close();
+                }
+            }
+            ?>
+            <a href="cart.php" class="cart" title="Cart">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count"><?php echo $cart_count; ?></span>
+            </a>
 
-                </div>
-                <div class="column">
-                    <a href="chair.php">CHAIR</a>
-                    <a href="monitor.php">MONITOR</a>
-                    <a href="hdmi.php">CABLES AND PORTS</a>
-                </div>
-            </div>
+            <a href="login.php" title="Account"><i class="fas fa-user"></i></a>
         </div>
-        <div class="search-btn"><a href="#" onclick="document.getElementById('search1').style.display='block'; return false;" class="fas fa-search "></a></div>
-
-        <div class="search" id="search1">
-            <input type="text" id="searchInput" placeholder="search...">
-            <i class="fas fa-search"></i>
-            <button id="closeSearch" class="close-btn">✖</button>
-        </div>
-    </nav>
-
-    <div class="icons">
-        <a href="https://www.facebook.com/profile.php?id=61556946718232" class="fab fa-facebook-f social-icon" target="_blank"></a>
-        <a href="https://www.instagram.com/datac0ming?igsh=MThhMWs5ZHA5MTZneA==" class="fab fa-instagram social-icon" target="_blank"></a>
-        <a href="cart.php" class="fas fa-shopping-cart main-icon"></a>
-        <a href="login.php" class="fas fa-user main-icon"></a>
     </div>
 </header>
 
 <div id="side-menu" class="side-menu">
-    <a href="#" class="logo aa">
-        <span class="outlined-text">PC Section</span><span>.</span>
-    </a>
-
     <div class="back-container">
         <span class="outlined-text">Data Coming</span><span>.</span>
     </div>
-
     <div class="side-menu-grid">
         <a href="index.php" class="side-menu-item">
             <i class="fas fa-home"></i>
             <p>Home</p>
         </a>
-
         <a href="#" class="side-menu-item" onclick="openPcMenu(); return false;">
             <i class="fas fa-desktop"></i>
             <p>PC</p>
         </a>
-
-
-
-
         <a href="laptop.php" class="side-menu-item">
             <i class="fas fa-laptop"></i>
             <p>Laptop</p>
         </a>
-
         <a href="xbox.php" class="side-menu-item">
             <i class="fab fa-xbox"></i>
             <p>Console</p>
         </a>
-
         <a href="#" class="side-menu-item" onclick="openAccessoriesMenu(); return false;">
             <i class="fas fa-mouse"></i>
             <p>Accessories</p>
         </a>
     </div>
 </div>
-<div id="pc-side-menu" class="side-menu">
-    <a href="#" class="logo aa">
-        <span class="outlined-text">PC Section</span><span>.</span>
-    </a>
 
+<div id="pc-side-menu" class="side-menu">
     <div class="back-container">
         <button class="back-button" onclick="backToMainMenu()">
             <i class="fas fa-arrow-left"></i> Back
         </button>
         <span class="menu-label">PC Section</span>
     </div>
-
-
-
     <div class="side-menu-grid">
-        <a href="case.php" class="side-menu-item">
-            <i class="fas fa-box"></i>
-            <p>Case</p>
-        </a>
-
-        <a href="mother.php" class="side-menu-item">
-            <i class="fas fa-network-wired"></i>
-            <p>Motherboard</p>
-        </a>
-
-        <a href="cpu.php" class="side-menu-item">
-            <i class="fas fa-microchip"></i>
-            <p>CPU</p>
-        </a>
-
-        <a href="gui.php" class="side-menu-item">
-            <i class="fas fa-video"></i>
-            <p>Graphic Cards</p>
-        </a>
-
-        <a href="ssd.php" class="side-menu-item">
-            <i class="fas fa-hdd"></i>
-            <p>SSD</p>
-        </a>
-
-        <a href="ram.php" class="side-menu-item">
-            <i class="fas fa-memory"></i>
-            <p>Memory</p>
-        </a>
-
-        <a href="harddisk.php" class="side-menu-item">
-            <i class="fas fa-database"></i>
-            <p>Hard Disk</p>
-        </a>
-
-        <a href="power.php" class="side-menu-item">
-            <i class="fas fa-plug"></i>
-            <p>Power Supply</p>
-        </a>
+        <a href="case.php" class="side-menu-item"><i class="fas fa-box"></i><p>Case</p></a>
+        <a href="mother.php" class="side-menu-item"><i class="fas fa-network-wired"></i><p>Motherboard</p></a>
+        <a href="cpu.php" class="side-menu-item"><i class="fas fa-microchip"></i><p>CPU</p></a>
+        <a href="gui.php" class="side-menu-item"><i class="fas fa-video"></i><p>Graphic Cards</p></a>
+        <a href="ssd.php" class="side-menu-item"><i class="fas fa-hdd"></i><p>SSD</p></a>
+        <a href="ram.php" class="side-menu-item"><i class="fas fa-memory"></i><p>Memory</p></a>
+        <a href="harddisk.php" class="side-menu-item"><i class="fas fa-database"></i><p>Hard Disk</p></a>
+        <a href="power.php" class="side-menu-item"><i class="fas fa-plug"></i><p>Power Supply</p></a>
     </div>
 </div>
-<div id="accessories-side-menu" class="side-menu" >
-    <a href="#" class="logo aa">
-        <span class="outlined-text">Accessories</span><span>.</span>
-    </a>
 
+<div id="accessories-side-menu" class="side-menu" >
     <div class="back-container">
         <button class="back-button" onclick="backToMainMenu()">
             <i class="fas fa-arrow-left"></i> Back
         </button>
         <span class="menu-label">Accessories Section</span>
     </div>
-
     <div class="side-menu-grid">
-        <a href="headset.php" class="side-menu-item">
-            <i class="fas fa-headphones"></i>
-            <p>Headset</p>
-        </a>
-
-        <a href="mouse.php" class="side-menu-item">
-            <i class="fas fa-mouse"></i>
-            <p>Mouse</p>
-        </a>
-
-        <a href="keayboard.php" class="side-menu-item">
-            <i class="fas fa-keyboard"></i>
-            <p>Keyboard</p>
-        </a>
-
-        <a href="chair.php" class="side-menu-item">
-            <i class="fas fa-chair"></i>
-            <p>Chair</p>
-        </a>
-
-        <a href="monitor.php" class="side-menu-item">
-            <i class="fas fa-desktop"></i>
-            <p>Monitor</p>
-        </a>
-
-        <a href="hdmi.php" class="side-menu-item">
-            <i class="fas fa-plug"></i>
-            <p>Cables and Ports</p>
-        </a>
+        <a href="headset.php" class="side-menu-item"><i class="fas fa-headphones"></i><p>Headset</p></a>
+        <a href="mouse.php" class="side-menu-item"><i class="fas fa-mouse"></i><p>Mouse</p></a>
+        <a href="keayboard.php" class="side-menu-item"><i class="fas fa-keyboard"></i><p>Keyboard</p></a>
+        <a href="chair.php" class="side-menu-item"><i class="fas fa-chair"></i><p>Chair</p></a>
+        <a href="monitor.php" class="side-menu-item"><i class="fas fa-desktop"></i><p>Monitor</p></a>
+        <a href="hdmi.php" class="side-menu-item"><i class="fas fa-plug"></i><p>Cables and Ports</p></a>
     </div>
 </div>
-
-
 
 
 
@@ -312,27 +249,23 @@
     </div>
     <br>
     <div class="feature">
-        <div class="container">
-            <div class="benefit-col">
-                <span class="material-symbols-outlined ico"> workspace_premium</span>
-                <p><strong>كفالة مضمونة  </strong>   الكفالة الرسمية لجميع المنتجات مضمونة</p>
+        <div class="container1 benefit-container">
+            <div class="benefit-col glass-box">
+                <span class="material-symbols-outlined ico">workspace_premium</span>
+                <p><strong>كفالة مضمونة</strong><br>الكفالة الرسمية لجميع المنتجات مضمونة</p>
             </div>
 
-            <div class="benefit-col">
-                <span class="material-symbols-outlined ico"> payments</span>
-                <p><strong> الدفع نقداً عند التسليم </strong>   يمكنك الدفع نقداً عند التسليم.</p>
+            <div class="benefit-col glass-box">
+                <span class="material-symbols-outlined ico">payments</span>
+                <p><strong>الدفع نقداً عند التسليم</strong><br>يمكنك الدفع نقداً عند التسليم.</p>
             </div>
 
-            <div class="benefit-col">
-                <span class="material-symbols-outlined ico"> local_shipping</span>
-                <p><strong>توصيل سريع  </strong>   توصيل من يوم إلى ثلاثة أيام لجميع مناطق الضفة و القدس</p>
+            <div class="benefit-col glass-box">
+                <span class="material-symbols-outlined ico">local_shipping</span>
+                <p><strong>توصيل سريع</strong><br>من يوم إلى ثلاثة أيام لجميع مناطق الضفة والقدس</p>
             </div>
         </div>
     </div>
-
-
-    <br>
-    <br>
     <div class="container">
 
         <div class="categories">
