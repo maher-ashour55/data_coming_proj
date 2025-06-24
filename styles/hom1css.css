@@ -193,12 +193,12 @@ html, body {
     display: flex;
     align-items: center;
     gap: 10px;
+
 }
 
 /* الزر */
 .search-bar button {
     background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: saturate(180%) blur(20px);
     border: none;
     padding: 10px;
     border-radius: 50%;
@@ -223,6 +223,7 @@ html, body {
     z-index: 1;
     width: 500px; /* ✅ العرض الكبير */
     max-width: 80vw; /* يستجيب لو الشاشة أصغر */
+
 }
 
 /* حقل البحث */

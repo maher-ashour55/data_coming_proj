@@ -1,4 +1,4 @@
-// عرض السلايد شو
+// ===================== سلايدر =====================
 let slideIndex = 1;
 let slideTimer;
 
@@ -32,7 +32,7 @@ function currentSlide(n) {
     showSlides(slideIndex = n);
 }
 
-// كروت المنتجات
+// ===================== المنتجات =====================
 function restoreOriginalProducts() {
     const container = document.querySelector(".categories");
     container.innerHTML = originalProductsHTML;
@@ -67,6 +67,7 @@ function displayResults(products) {
     observeCards();
 }
 
+// ===================== إضافة للسلة =====================
 function attachBuyNowEvents() {
     const buttons = document.querySelectorAll('.buy-now-btn');
     buttons.forEach(button => {
@@ -79,7 +80,12 @@ function attachBuyNowEvents() {
             })
                 .then(res => res.json())
                 .then(data => {
-                    showMessage(data.success ? "تم إضافة المنتج إلى السلة ✅" : "User not logged in ❌", data.success);
+                    if (data.success) {
+                        showMessage("تم إضافة المنتج إلى السلة ✅", true);
+                        updateCartCount();
+                    } else {
+                        showMessage("User not logged in ❌", false);
+                    }
                 })
                 .catch(error => {
                     console.error(error);
@@ -87,6 +93,18 @@ function attachBuyNowEvents() {
                 });
         });
     });
+}
+
+function updateCartCount() {
+    fetch('get_cart_count.php')
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                const countSpan = document.querySelector('.cart-count');
+                countSpan.textContent = data.count;
+            }
+        })
+        .catch(err => console.error('Error fetching cart count:', err));
 }
 
 function showMessage(text, success = true) {
@@ -97,6 +115,7 @@ function showMessage(text, success = true) {
     setTimeout(() => { messageBox.style.display = 'none'; }, 3000);
 }
 
+// ===================== مراقبة الكروت =====================
 function observeCards() {
     const cards = document.querySelectorAll('.category-card');
     const observer = new IntersectionObserver((entries) => {
@@ -108,7 +127,7 @@ function observeCards() {
     cards.forEach(card => observer.observe(card));
 }
 
-// كود عرض الصور المتحركة الصغير
+// ===================== الكاروسيل =====================
 const carousel = document.querySelector('.small-carousel');
 if (carousel) {
     const imgs = Array.from(carousel.children);
@@ -137,31 +156,80 @@ if (carousel) {
     }
     setInterval(slide, 5000);
 }
+// ===================== شريط البحث =====================
+// حفظ النسخة الأصلية من الكروت
+let originalProductsHTML = "";
+document.addEventListener("DOMContentLoaded", () => {
+    originalProductsHTML = document.querySelector(".categories").innerHTML;
+});
 
-// Search Bar Toggle
 const toggleBtn = document.getElementById('search-toggle');
 const searchBar = document.querySelector('.search-bar');
 const searchInput = document.getElementById('search-input');
 
+// فتح أو إغلاق البحث
 toggleBtn.addEventListener('click', (e) => {
     e.stopPropagation();
+    const wasActive = searchBar.classList.contains('active');
     searchBar.classList.toggle('active');
+
     if (searchBar.classList.contains('active')) {
         setTimeout(() => searchInput.focus(), 100);
+    } else {
+        searchInput.value = ""; // إفراغ الحقل
+        restoreOriginalProducts(); // رجّع المنتجات
     }
 });
 
+// الضغط خارج البحث
 document.addEventListener('click', (e) => {
     if (!searchBar.contains(e.target)) {
-        searchBar.classList.remove('active');
+        if (searchBar.classList.contains('active')) {
+            searchBar.classList.remove('active');
+            searchInput.value = "";
+            restoreOriginalProducts();
+        }
     }
 });
 
-// Side Menu + Hamburger Toggle
+// عند الكتابة في الانبوت
+searchInput.addEventListener("input", () => {
+    const query = searchInput.value.trim();
+    const resultsContainer = document.querySelector(".categories");
+
+    if (query.length === 0) {
+        restoreOriginalProducts();
+        return;
+    }
+
+    fetch("search.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ query: query })
+    })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success && Array.isArray(data.products)) {
+                displayResults(data.products);
+            } else {
+                resultsContainer.innerHTML = "<p style='text-align:center;'>لا يوجد نتائج</p>";
+            }
+        })
+        .catch(err => {
+            console.error("Search error:", err);
+            resultsContainer.innerHTML = "<p style='text-align:center;'>حدث خطأ أثناء البحث</p>";
+        });
+});
+
+
+// ===================== سايد منيو =====================
 document.addEventListener("DOMContentLoaded", () => {
     showSlides(slideIndex);
     attachBuyNowEvents();
     observeCards();
+    updateCartCount(); // عند تحميل الصفحة
 
     const hamburger = document.getElementById("hamburger");
     const sideMenu = document.getElementById("side-menu");
@@ -185,7 +253,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// Optional functions if needed elsewhere
 function openPcMenu() {
     document.getElementById("side-menu")?.classList.remove("active");
     document.getElementById("pc-side-menu")?.classList.add("active");
@@ -201,60 +268,3 @@ function backToMainMenu() {
     document.getElementById("accessories-side-menu")?.classList.remove("active");
     document.getElementById("side-menu")?.classList.add("active");
 }
-
-
-
-
-function updateCartCount() {
-    fetch('get_cart_count.php')
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                const countSpan = document.querySelector('.cart-count');
-                countSpan.textContent = data.count;
-            }
-        })
-        .catch(err => console.error('Error fetching cart count:', err));
-}
-if (data.success) {
-    showMessage("The product has been added to the cart ✅");
-    updateCartCount();
-}
-
-
-
-
-
-document.addEventListener("DOMContentLoaded", () => {
-    const searchInput = document.getElementById("search-input");
-
-    searchInput.addEventListener("input", () => {
-        const query = searchInput.value.trim();
-        const resultsContainer = document.querySelector(".categories");
-
-        if (query.length === 0) {
-            restoreOriginalProducts();
-            return;
-        }
-
-        fetch("search.php", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ query: query })
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success && Array.isArray(data.products)) {
-                    displayResults(data.products);
-                } else {
-                    resultsContainer.innerHTML = "<p style='text-align:center;'>لا يوجد نتائج</p>";
-                }
-            })
-            .catch(err => {
-                console.error("Search error:", err);
-                resultsContainer.innerHTML = "<p style='text-align:center;'>حدث خطأ أثناء البحث</p>";
-            });
-    });
-});
