@@ -248,7 +248,7 @@ if (isset($_SESSION['user_id'])) {
         </div>
     </div>
     <div class="static-mobile-image">
-        <img src="./img/imgg/epic-gamer-room-setup.jpg" style="width:100%; height: 300px; padding-top: 30px;">
+        <img src="./img/imgg/saledata.jpg" style="width:100%; height: 300px; padding-top: 30px;">
     </div>
     <br>
     <div class="feature">
