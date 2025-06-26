@@ -201,7 +201,7 @@ if (isset($_SESSION['user_id'])) {
     <div class="slideshow-container">
         <div class="mySlides fade">
             <div class="numbertext">1 / 6</div>
-            <img src="./img/imgg/epic-gamer-room-setup.jpg" loading="lazy" style="width:100%;">
+            <img src="./img/imgg/saledata.jpg" loading="lazy" style="width:100%;">
             <div class="text"></div>
         </div>
 
