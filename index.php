@@ -125,7 +125,13 @@ if (isset($_SESSION['user_id'])) {
                 <span class="cart-count"><?php echo $cart_count; ?></span>
             </a>
 
-            <a href="login.php" title="Account"><i class="fas fa-user"></i></a>
+            <a href="login.php" title="Account" style="position: relative;">
+                <i class="fas fa-user"></i>
+                <?php if (isset($_SESSION['new_order']) && $_SESSION['new_order']): ?>
+                    <span class="cart-count">1</span>
+                    <?php unset($_SESSION['new_order']); ?>
+                <?php endif; ?>
+            </a>
         </div>
     </div>
 </header>

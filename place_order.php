@@ -79,6 +79,7 @@ if (!$stmt->execute()) {
 
 $order_id = $stmt->insert_id;
 file_put_contents("log.txt", "Order inserted successfully with ID: $order_id\n", FILE_APPEND);
+$_SESSION['new_order'] = true;  // ✅ إشعار الهيدر
 $stmt->close();
 
 file_put_contents("log.txt", "Fetching cart items...\n", FILE_APPEND);
