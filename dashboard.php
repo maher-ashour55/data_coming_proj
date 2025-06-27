@@ -1,8 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
@@ -13,7 +9,8 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $first_name = $_SESSION['first_name'];
 $last_name = $_SESSION['last_name'];
-$role = isset($_SESSION['role']) ? $_SESSION['role'] : 'user';
+$email = $_SESSION['email'];
+$role = $_SESSION['role'] ?? 'user';
 
 $conn = new mysqli("localhost", "u251541401_maher_user", "Datacoming12345", "u251541401_datacoming");
 if ($conn->connect_error) {
@@ -21,233 +18,259 @@ if ($conn->connect_error) {
 }
 $conn->set_charset("utf8");
 
-// إلغاء الطلب إذا تم إرسال POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order_id'])) {
     $cancel_id = intval($_POST['cancel_order_id']);
+    $sql_check = "SELECT status FROM orders WHERE id = ? AND user_id = ?";
+    $stmt = $conn->prepare($sql_check);
+    $stmt->bind_param("ii", $cancel_id, $user_id);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    if ($res->num_rows > 0) {
+        $row = $res->fetch_assoc();
+        if (in_array(strtolower($row['status']), ['pending', 'processing'])) {
+            // Get products and quantities for the cancelled order
+            $stmt_stock = $conn->prepare("SELECT product_id, quantity FROM order_items WHERE order_id = ?");
+            $stmt_stock->bind_param("i", $cancel_id);
+            $stmt_stock->execute();
+            $res_stock = $stmt_stock->get_result();
 
-    $sql_check_status = "SELECT status FROM orders WHERE id = ? AND user_id = ?";
-    $stmt_check = $conn->prepare($sql_check_status);
-    $stmt_check->bind_param("ii", $cancel_id, $user_id);
-    $stmt_check->execute();
-    $result_check = $stmt_check->get_result();
-    if ($result_check->num_rows > 0) {
-        $row = $result_check->fetch_assoc();
-        if ($row['status'] === 'Pending' || $row['status'] === 'Processing') {
-            // جلب المنتجات والكميات المرتبطة بالطلب
-            $sql_items = "SELECT product_id, quantity FROM order_items WHERE order_id = ?";
-            $stmt_items = $conn->prepare($sql_items);
-            if ($stmt_items) {
-                $stmt_items->bind_param("i", $cancel_id);
-                $stmt_items->execute();
-                $result_items = $stmt_items->get_result();
-
-                // زيادة المخزون لكل منتج
-                while ($item = $result_items->fetch_assoc()) {
-                    $sql_update_stock = "UPDATE product SET stock = stock + ? WHERE id = ?";
-                    $stmt_update = $conn->prepare($sql_update_stock);
-                    if ($stmt_update) {
-                        $stmt_update->bind_param("ii", $item['quantity'], $item['product_id']);
-                        $stmt_update->execute();
-                        $stmt_update->close();
-                    } else {
-                        echo "Error preparing stock update query: (" . $conn->errno . ") " . $conn->error;
-                    }
-                }
-                $stmt_items->close();
-
-                // تحديث حالة الطلب إلى Cancelled
-                $sql_cancel = "UPDATE orders SET status = 'Cancelled' WHERE id = ? AND user_id = ?";
-                $stmt_cancel = $conn->prepare($sql_cancel);
-                if ($stmt_cancel) {
-                    $stmt_cancel->bind_param("ii", $cancel_id, $user_id);
-                    $stmt_cancel->execute();
-                    $stmt_cancel->close();
-                    header("Location: " . $_SERVER['PHP_SELF']);
-                    exit();
-                } else {
-                    echo "Error preparing cancel query: (" . $conn->errno . ") " . $conn->error;
-                }
-            } else {
-                echo "Error preparing items query: (" . $conn->errno . ") " . $conn->error;
+            while ($item = $res_stock->fetch_assoc()) {
+                $conn->query("UPDATE product SET stock = stock + {$item['quantity']} WHERE id = {$item['product_id']}");
             }
-        } else {
-            echo "<p style='color:red; text-align:center;'>This order cannot be cancelled.</p>";
+
+            $update = $conn->prepare("UPDATE orders SET status = 'Cancelled' WHERE id = ?");
+            $update->bind_param("i", $cancel_id);
+            $update->execute();
+
         }
     }
-    $stmt_check->close();
+    $stmt->close();
 }
 
-$sql_orders = "SELECT id, order_date, total, status FROM orders WHERE user_id = ? ORDER BY order_date DESC";
-$stmt_orders = $conn->prepare($sql_orders);
+$sql = "SELECT id, order_date, total, status FROM orders WHERE user_id = ? ORDER BY order_date DESC";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
 
-if (!$stmt_orders) {
-    die("Prepare failed for orders: (" . $conn->errno . ") " . $conn->error);
-}
-
-$stmt_orders->bind_param("i", $user_id);
-$stmt_orders->execute();
-$result_orders = $stmt_orders->get_result();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" type="image/png" href="./img/data2-removebg-preview.png">
-
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="./styles/dashboard.css" />
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet' />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        :root {
+            --primary: #9265A6;
+            --light-bg: #f5f7fa;
+            --danger: #e74c3c;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f7f9fc;
             margin: 0;
-            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--light-bg);
         }
-        .dashboard {
-            max-width: 900px;
-            margin: 40px auto;
-            background-color: white;
-            padding: 30px 40px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-            border-radius: 8px;
+
+        header {
+            position: relative;
+            overflow: hidden;
             text-align: center;
-        }
-        h1 {
-            margin-bottom: 15px;
-            color: #333;
-        }
-        .btn {
-            display: inline-block;
-            background-color: #2c3e50;
+            padding: 60px 20px 100px;
             color: white;
-            padding: 10px 20px;
-            margin: 10px 5px;
-            border-radius: 6px;
+            background: linear-gradient(135deg, #9265A6 0%, #7f55a3 50%, #9b74b8 100%);
+        }
+
+        header h1, header p {
+            position: relative;
+            z-index: 1;
+        }
+
+        header div {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: -40px;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            padding: 10px 22px;
+            border-radius: 12px;
             text-decoration: none;
             font-weight: bold;
-            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: background 0.3s ease;
             border: none;
             cursor: pointer;
         }
+
         .btn:hover {
-            background-color: #34495e;
+            opacity: 0.9;
         }
-        .logout-btn {
-            background-color: #e74c3c;
+
+        .btn-danger {
+            background: var(--danger);
         }
-        .logout-btn:hover {
-            background-color: #c0392b;
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
         }
-        p {
-            font-size: 18px;
-            color: #555;
+
+        .dashboard-flex {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
         }
-        table {
-            margin: 30px auto 0;
+
+        .card {
+            background: linear-gradient(145deg, #ffffff, #f9f9f9);
+            padding: 24px;
+            border-radius: 14px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e4e2ee;
+        }
+
+        .card h2 {
+            font-size: 1.4rem;
+            margin-bottom: 18px;
+            color: #553f72;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-info {
+            flex: 1 1 300px;
+            max-width: 300px;
+        }
+
+        .card-orders {
+            flex: 2 1 600px;
+        }
+
+        .card-info p {
+            margin-bottom: 12px;
+            font-size: 14.5px;
+            color: #333;
+        }
+
+        .card-info .btn {
+            margin-top: 10px;
             width: 100%;
-            border-collapse: collapse;
             text-align: center;
         }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
         th, td {
-            padding: 10px 15px;
-            border: 1px solid #ddd;
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
         }
+
         th {
-            background-color: #9265A6;
+            background-color: var(--primary);
             color: white;
+            font-size: 14px;
         }
+
         tr:nth-child(even) {
-            background-color: #f3f3f3;
+            background-color: #fafafa;
         }
-        .status-completed {
-            color: green;
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+        .status {
             font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 10px;
+            display: inline-block;
+            font-size: 13px;
+            text-transform: capitalize;
         }
         .status-pending {
-            color: orange;
-            font-weight: bold;
+            background-color: #fef3c7;
+            color: #b45309;
         }
         .status-processing {
-            color: #2980b9;
-            font-weight: bold;
+            background-color: #e0f2fe;
+            color: #1d4ed8;
         }
         .status-shipped {
-            color: #8e44ad;
-            font-weight: bold;
+            background-color: #ede9fe;
+            color: #7c3aed;
         }
         .status-delivered {
-            color: #27ae60;
-            font-weight: bold;
+            background-color: #dcfce7;
+            color: #15803d;
         }
         .status-cancelled {
-            color: red;
-            font-weight: bold;
+            background-color: #fef2f2;
+            color: #991b1b;
+        }
+        .status-completed {
+            background-color: #ecfdf5;
+            color: #065f46;
         }
 
-        @media (max-width: 768px) {
-            .dashboard {
-                padding: 20px;
-                margin: 20px 10px;
-            }
-
-            .btn {
-                font-size: 14px;
-                padding: 8px 12px;
-            }
-
-            table {
-                display: block;
-                overflow-x: auto;
-                width: 100%;
-            }
-
-            thead {
-                display: none;
-            }
-
-            tr {
-                display: block;
-                margin-bottom: 15px;
-                background: #fff;
-                border: 1px solid #ccc;
-                padding: 10px;
-                text-align: left;
-            }
-
-            td {
-                display: flex;
-                justify-content: space-between;
-                padding: 8px 10px;
-                border: none;
-                border-bottom: 1px solid #eee;
-            }
-
-            td::before {
-                content: attr(data-label);
-                font-weight: bold;
-                color: #555;
-            }
-        }
     </style>
+
 </head>
 <body>
+<header>
+    <div style="top: -60px; left: -40px; width: 200px; height: 200px; background: rgba(255,255,255,0.07);"></div>
+    <div style="bottom: -40px; right: -60px; width: 200px; height: 200px; background: rgba(255,255,255,0.04);"></div>
 
-<div class="dashboard">
-    <h1>Hello, <?php echo htmlspecialchars($first_name . ' ' . $last_name); ?>!</h1>
+    <h1>Welcome, <?php echo htmlspecialchars($first_name . ' ' . $last_name); ?> ✨</h1>
+    <p>Your personal dashboard</p>
 
-    <p>This is your dashboard where you can manage your account and track your activity.</p>
-
+    <svg viewBox="0 0 1440 150" preserveAspectRatio="none" style="position:absolute; bottom:0; left:0; width:100%; height:100px; display:block; z-index: 1;" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,64 C480,120 960,0 1440,80 L1440,150 L0,150 Z" fill="#f5f7fa"></path>
+    </svg>
+</header>
+<br><br><br>
+<div style="display: flex; justify-content: center; gap: 15px; margin-top: -60px; z-index: 2; position: relative; flex-wrap: wrap;">
+    <a href="index.php" class="btn">🏠 Home</a>
+    <a href="logout.php" class="btn btn-danger">🚪 Logout</a>
     <?php if ($role === 'admin'): ?>
-        <a href="./admin/admin_dashboard.php" class="btn">Admin Control Panel</a>
+        <a href="admin/admin_dashboard.php" class="btn" style="background-color:#4a2b63;">🛠 Admin Panel</a>
     <?php endif; ?>
-    <a href="index.php" class="btn">HOME</a>
-    <a href="logout.php" class="btn logout-btn">Logout</a>
+</div>
 
-    <h2>My Orders</h2>
-    <?php if ($result_orders->num_rows > 0): ?>
-        <table>
+<div class="container" style="display: flex; gap: 30px; flex-wrap: wrap;">
+    <div class="card" style="flex: 1 1 300px; max-width: 350px; background: linear-gradient(135deg, #ffffff, #f9f9f9); border-left: 6px solid var(--primary);">
+        <h2 style="font-size: 20px; color: var(--primary); margin-bottom: 16px;">👤 Account Info</h2>
+        <p style="margin: 8px 0;"><strong style="color: #555;">Name:</strong><br> <span style="font-size: 15px; color: #333;"><?php echo htmlspecialchars($first_name . ' ' . $last_name); ?></span></p>
+        <p style="margin: 8px 0;"><strong style="color: #555;">Email:</strong><br> <span style="font-size: 15px; color: #333;"><?php echo htmlspecialchars($email); ?></span></p>
+        <button onclick="alert('We will send a reset email link shortly.')" class="btn" style="margin-top: 15px; width: 100%;">Change Password</button>
+    </div>
+
+    <div class="card orders-card">
+        <h2><i class="fas fa-box"></i> My Orders</h2>
+        <table class="styled-table">
             <thead>
             <tr>
                 <th>Order ID</th>
@@ -259,77 +282,38 @@ $result_orders = $stmt_orders->get_result();
             </tr>
             </thead>
             <tbody>
-            <?php while ($order = $result_orders->fetch_assoc()): ?>
+            <?php while ($order = $result->fetch_assoc()): ?>
                 <tr>
-                    <td data-label="Order ID"><?php echo htmlspecialchars($order['id']); ?></td>
-                    <td data-label="Order Date"><?php echo htmlspecialchars($order['order_date']); ?></td>
-                    <td data-label="Total (₪)"><?php echo htmlspecialchars($order['total']); ?></td>
-                    <td data-label="Order Status">
+                    <td>#<?php echo $order['id']; ?></td>
+                    <td><?php echo $order['order_date']; ?></td>
+                    <td>₪<?php echo number_format($order['total'], 2); ?></td>
+                    <td>
                         <?php
-                        $status = htmlspecialchars($order['status']);
-                        switch ($status) {
-                            case 'Completed':
-                                echo "<span class='status-completed'>Completed</span>";
-                                break;
-                            case 'Pending':
-                                echo "<span class='status-pending'>Pending</span>";
-                                break;
-                            case 'Processing':
-                                echo "<span class='status-processing'>Processing</span>";
-                                break;
-                            case 'Shipped':
-                                echo "<span class='status-shipped'>Shipped</span>";
-                                break;
-                            case 'Delivered':
-                                echo "<span class='status-delivered'>Delivered</span>";
-                                break;
-                            case 'Cancelled':
-                                echo "<span class='status-cancelled'>Cancelled</span>";
-                                break;
-                            default:
-                                echo $status;
-                        }
+                        $status = strtolower($order['status']);
+                        echo '<span class="status status-' . $status . '">' . ucfirst($status) . '</span>';
                         ?>
                     </td>
-                    <td data-label="Products">
+                    <td>
                         <?php
-                        $sql_products = "
-                            SELECT p.name, oi.quantity, p.price
-                            FROM order_items oi
-                            JOIN product p ON oi.product_id = p.id
-                            WHERE oi.order_id = ?
-                        ";
-                        $stmt_products = $conn->prepare($sql_products);
-
-                        if (!$stmt_products) {
-                            echo "Error preparing product query: (" . $conn->errno . ") " . $conn->error;
-                            continue;
+                        $stmt_p = $conn->prepare("SELECT p.name, oi.quantity FROM order_items oi JOIN product p ON oi.product_id = p.id WHERE oi.order_id = ?");
+                        $stmt_p->bind_param("i", $order['id']);
+                        $stmt_p->execute();
+                        $res_p = $stmt_p->get_result();
+                        echo "<ul style='padding-left: 18px;'>";
+                        while ($prod = $res_p->fetch_assoc()) {
+                            echo "<li>" . htmlspecialchars($prod['name']) . " × " . $prod['quantity'] . "</li>";
                         }
-
-                        $stmt_products->bind_param("i", $order['id']);
-                        $stmt_products->execute();
-                        $result_products = $stmt_products->get_result();
-
-                        if ($result_products->num_rows > 0) {
-                            echo "<ul style='list-style: none; padding: 0; margin: 0; text-align: left;'>";
-                            while ($product = $result_products->fetch_assoc()) {
-                                echo "<li>" . htmlspecialchars($product['name']) . " (Qty: " . intval($product['quantity']) . ") - ₪" . htmlspecialchars($product['price']) . "</li>";
-                            }
-                            echo "</ul>";
-                        } else {
-                            echo "No products found";
-                        }
+                        echo "</ul>";
                         ?>
                     </td>
-                    <td data-label="Action">
+                    <td>
                         <?php
                         if ($order['status'] === 'Pending' || $order['status'] === 'Processing') {
                             echo '
-                                <form method="post" action="">
-                                    <input type="hidden" name="cancel_order_id" value="' . $order['id'] . '">
-                                    <button type="submit" class="btn" style="background-color:#e67e22;" onclick="return confirm(\'Are you sure you want to cancel this order?\');">Cancel</button>
-                                </form>
-                            ';
+                            <form method="post" action="">
+                                <input type="hidden" name="cancel_order_id" value="' . $order['id'] . '">
+                                <button type="submit" class="btn" style="background-color:#e67e22;" onclick="return confirm(\'Are you sure you want to cancel this order?\');">Cancel</button>
+                            </form>';
                         } elseif ($order['status'] === 'Cancelled') {
                             echo '<span style="color:gray;">N/A</span>';
                         } else {
@@ -341,48 +325,8 @@ $result_orders = $stmt_orders->get_result();
             <?php endwhile; ?>
             </tbody>
         </table>
-    <?php else: ?>
-        <p>No orders found yet.</p>
-    <?php endif; ?>
+    </div>
+
 </div>
-
-<script>
-    setInterval(fetchMessages, 3000);
-
-    function fetchMessages() {
-        fetch('get_messages.php')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('chat-box').innerHTML = data;
-                document.getElementById('chat-box').scrollTop = document.getElementById('chat-box').scrollHeight;
-            });
-    }
-
-    fetchMessages();
-</script>
-<script>
-    document.getElementById('chat-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const messageInput = document.getElementById('message');
-        const message = messageInput.value.trim();
-
-        if (message === "") return;
-
-        fetch('send_message.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: 'message=' + encodeURIComponent(message)
-        })
-            .then(res => res.text())
-            .then(data => {
-                messageInput.value = "";
-                getMessages();
-            })
-            .catch(err => console.error('Send Error:', err));
-    });
-</script>
-
 </body>
 </html>
