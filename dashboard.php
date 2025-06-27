@@ -7,9 +7,6 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
-$first_name = $_SESSION['first_name'];
-$last_name = $_SESSION['last_name'];
-$email = $_SESSION['email'];
 $role = $_SESSION['role'] ?? 'user';
 
 $conn = new mysqli("localhost", "u251541401_maher_user", "Datacoming12345", "u251541401_datacoming");
@@ -18,6 +15,52 @@ if ($conn->connect_error) {
 }
 $conn->set_charset("utf8");
 
+// Handle account update
+$success_message = '';
+$error_message = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_user_info'])) {
+    $new_first_name = trim($_POST['first_name']);
+    $new_last_name = trim($_POST['last_name']);
+    $new_email = trim($_POST['email']);
+    $new_password = trim($_POST['new_password']);
+
+    if (!empty($new_first_name) && !empty($new_last_name) && !empty($new_email)) {
+        $stmt = $conn->prepare("UPDATE users SET first_name = ?, last_name = ?, email = ? WHERE id = ?");
+        $stmt->bind_param("sssi", $new_first_name, $new_last_name, $new_email, $user_id);
+        $stmt->execute();
+        $stmt->close();
+
+        $_SESSION['first_name'] = $new_first_name;
+        $_SESSION['last_name'] = $new_last_name;
+        $_SESSION['email'] = $new_email;
+
+        if (!empty($new_password)) {
+            $hashed = password_hash($new_password, PASSWORD_DEFAULT);
+            $stmt = $conn->prepare("UPDATE users SET password = ? WHERE id = ?");
+            $stmt->bind_param("si", $hashed, $user_id);
+            $stmt->execute();
+            $stmt->close();
+            $success_message = "Password and details updated successfully.";
+        } else {
+            $success_message = "Details updated successfully.";
+        }
+    } else {
+        $error_message = "All fields are required.";
+    }
+}
+
+
+$stmt = $conn->prepare("SELECT first_name, last_name, email FROM users WHERE id = ?");
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$res = $stmt->get_result();
+$row = $res->fetch_assoc();
+$first_name = $row['first_name'];
+$last_name = $row['last_name'];
+$email = $row['email'];
+$stmt->close();
+
+// Handle cancel order
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order_id'])) {
     $cancel_id = intval($_POST['cancel_order_id']);
     $sql_check = "SELECT status FROM orders WHERE id = ? AND user_id = ?";
@@ -28,20 +71,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order_id'])) {
     if ($res->num_rows > 0) {
         $row = $res->fetch_assoc();
         if (in_array(strtolower($row['status']), ['pending', 'processing'])) {
-            // Get products and quantities for the cancelled order
             $stmt_stock = $conn->prepare("SELECT product_id, quantity FROM order_items WHERE order_id = ?");
             $stmt_stock->bind_param("i", $cancel_id);
             $stmt_stock->execute();
             $res_stock = $stmt_stock->get_result();
-
             while ($item = $res_stock->fetch_assoc()) {
                 $conn->query("UPDATE product SET stock = stock + {$item['quantity']} WHERE id = {$item['product_id']}");
             }
-
             $update = $conn->prepare("UPDATE orders SET status = 'Cancelled' WHERE id = ?");
             $update->bind_param("i", $cancel_id);
             $update->execute();
-
         }
     }
     $stmt->close();
@@ -52,8 +91,8 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -263,10 +302,35 @@ $result = $stmt->get_result();
 <div class="container" style="display: flex; gap: 30px; flex-wrap: wrap;">
     <div class="card" style="flex: 1 1 300px; max-width: 350px; background: linear-gradient(135deg, #ffffff, #f9f9f9); border-left: 6px solid var(--primary);">
         <h2 style="font-size: 20px; color: var(--primary); margin-bottom: 16px;">👤 Account Info</h2>
-        <p style="margin: 8px 0;"><strong style="color: #555;">Name:</strong><br> <span style="font-size: 15px; color: #333;"><?php echo htmlspecialchars($first_name . ' ' . $last_name); ?></span></p>
-        <p style="margin: 8px 0;"><strong style="color: #555;">Email:</strong><br> <span style="font-size: 15px; color: #333;"><?php echo htmlspecialchars($email); ?></span></p>
-        <button onclick="alert('We will send a reset email link shortly.')" class="btn" style="margin-top: 15px; width: 100%;">Change Password</button>
+        <?php if ($success_message): ?><p style="color:green; font-size: 14px; font-weight: bold;">✔ <?php echo $success_message; ?></p><?php endif; ?>
+        <?php if ($error_message): ?><p style="color:red; font-size: 14px; font-weight: bold;">✖ <?php echo $error_message; ?></p><?php endif; ?>
+
+        <form method="post" class="account-form" style="display: flex; flex-direction: column; gap: 15px;">
+            <div style="display: flex; flex-direction: column;">
+                <label for="first_name" style="color:#555; font-weight: 600;">First Name</label>
+                <input type="text" id="first_name" name="first_name" value="<?php echo htmlspecialchars($first_name); ?>" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc; font-size: 15px;">
+            </div>
+
+            <div style="display: flex; flex-direction: column;">
+                <label for="last_name" style="color:#555; font-weight: 600;">Last Name</label>
+                <input type="text" id="last_name" name="last_name" value="<?php echo htmlspecialchars($last_name); ?>" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc; font-size: 15px;">
+            </div>
+
+            <div style="display: flex; flex-direction: column;">
+                <label for="email" style="color:#555; font-weight: 600;">Email</label>
+                <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc; font-size: 15px;">
+            </div>
+
+            <div style="display: flex; flex-direction: column;">
+                <label for="new_password" style="color:#555; font-weight: 600;">New Password</label>
+                <input type="password" id="new_password" name="new_password" placeholder="••••••••" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc; font-size: 15px;">
+            </div>
+
+            <button type="submit" name="update_user_info" class="btn" style="margin-top: 10px; width: 100%;">Save Changes</button>
+        </form>
     </div>
+
+
 
     <div class="card orders-card">
         <h2><i class="fas fa-box"></i> My Orders</h2>
