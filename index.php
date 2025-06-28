@@ -266,6 +266,7 @@ if (isset($_SESSION['user_id'])) {
     <div class="container">
 
         <div class="categories">
+            <a href="cpu.php">
             <div class="category-card">
                 <div class="card-bg">
                     <div class="bg-shape"></div>
@@ -274,7 +275,8 @@ if (isset($_SESSION['user_id'])) {
                 <h3>PROCESSORS</h3>
                 <button onclick="location.href='cpu.php'">Browse</button>
             </div>
-
+            </a>
+            <a href="gui.php">
             <div class="category-card">
                 <div class="card-bg">
                     <div class="bg-shape"></div>
@@ -283,7 +285,8 @@ if (isset($_SESSION['user_id'])) {
                 <h3>GRAPHIC CARDS</h3>
                 <button onclick="location.href='gui.php'">Browse</button>
             </div>
-
+            </a>
+            <a href="ram.php">
             <div class="category-card">
                 <div class="card-bg">
                     <div class="bg-shape"></div>
@@ -292,7 +295,8 @@ if (isset($_SESSION['user_id'])) {
                 <h3>MEMORY</h3>
                 <button onclick="location.href='ram.php'">Browse</button>
             </div>
-
+            </a>
+            <a href="case.php">
             <div class="category-card">
                 <div class="card-bg">
                     <div class="bg-shape"></div>
@@ -301,7 +305,8 @@ if (isset($_SESSION['user_id'])) {
                 <h3>CASE</h3>
                 <button onclick="location.href='case.php'">Browse</button>
             </div>
-
+            </a>
+            <a href="headset.php">
             <div class="category-card">
                 <div class="card-bg">
                     <div class="bg-shape"></div>
@@ -310,7 +315,8 @@ if (isset($_SESSION['user_id'])) {
                 <h3>HEAD SET</h3>
                 <button onclick="location.href='headset.php'">Browse</button>
             </div>
-
+            </a>
+            <a href="harddisk.php">
             <div class="category-card">
                 <div class="card-bg">
                     <div class="bg-shape"></div>
@@ -319,6 +325,8 @@ if (isset($_SESSION['user_id'])) {
                 <h3>HARD DISK</h3>
                 <button onclick="location.href='harddisk.php'">Browse</button>
             </div>
+            </a>
+            <a href="ssd.php">
             <div class="category-card">
                 <div class="card-bg">
                     <div class="bg-shape"></div>
@@ -327,6 +335,8 @@ if (isset($_SESSION['user_id'])) {
                 <h3>SSD</h3>
                 <button onclick="location.href='ssd.php'">Browse</button>
             </div>
+            </a>
+            <a href="power.php">
             <div class="category-card">
                 <div class="card-bg">
                     <div class="bg-shape"></div>
@@ -335,7 +345,8 @@ if (isset($_SESSION['user_id'])) {
                 <h3>POWER SUPPLY</h3>
                 <button onclick="location.href='power.php'">Browse</button>
             </div>
-
+            </a>
+            <a href="chair.php">
             <div class="category-card">
                 <div class="card-bg">
                     <div class="bg-shape"></div>
@@ -344,6 +355,8 @@ if (isset($_SESSION['user_id'])) {
                 <h3>Chair</h3>
                 <button onclick="location.href='chair.php'">Browse</button>
             </div>
+            </a>
+            <a href="laptop.php">
             <div class="category-card">
                 <div class="card-bg">
                     <div class="bg-shape"></div>
@@ -352,6 +365,8 @@ if (isset($_SESSION['user_id'])) {
                 <h3>LAPTOP</h3>
                 <button onclick="location.href='laptop.php'">Browse</button>
             </div>
+            </a>
+            <a href="keayboard.php">
             <div class="category-card">
                 <div class="card-bg">
                     <div class="bg-shape"></div>
@@ -360,6 +375,8 @@ if (isset($_SESSION['user_id'])) {
                 <h3>KEYBOARD</h3>
                 <button onclick="location.href='keayboard.php'">Browse</button>
             </div>
+            </a>
+            <a href="mouse.php">
             <div class="category-card">
                 <div class="card-bg">
                     <div class="bg-shape"></div>
@@ -368,6 +385,8 @@ if (isset($_SESSION['user_id'])) {
                 <h3>MOUSE</h3>
                 <button onclick="location.href='mouse.php'">Browse</button>
             </div>
+            </a>
+            <a href="monitor.php">
             <div class="category-card">
                 <div class="card-bg">
                     <div class="bg-shape"></div>
@@ -376,6 +395,8 @@ if (isset($_SESSION['user_id'])) {
                 <h3>MONITOR</h3>
                 <button onclick="location.href='monitor.php'">Browse</button>
             </div>
+            </a>
+            <a href="xbox.php">
             <div class="category-card">
                 <div class="card-bg">
                     <div class="bg-shape"></div>
@@ -384,6 +405,8 @@ if (isset($_SESSION['user_id'])) {
                 <h3>CONSOLES</h3>
                 <button onclick="location.href='xbox.php'">Browse</button>
             </div>
+            </a>
+            <a href="hdmi.php">
             <div class="category-card">
                 <div class="card-bg">
                     <div class="bg-shape"></div>
@@ -392,6 +415,8 @@ if (isset($_SESSION['user_id'])) {
                 <h3>CABLES AND PORTS</h3>
                 <button onclick="location.href='hdmi.php'">Browse</button>
             </div>
+            </a>
+            <a href="mother.php">
             <div class="category-card">
                 <div class="card-bg">
                     <div class="bg-shape"></div>
@@ -400,6 +425,8 @@ if (isset($_SESSION['user_id'])) {
                 <h3>MOTHER BOARD</h3>
                 <button onclick="location.href='mother.php'">Browse</button>
             </div>
+            </a>
+            
         </div>
     </div>
     <div class="cc">
