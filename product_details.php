@@ -21,6 +21,24 @@ if (isset($_GET['id'])) {
 $has_discount = !empty($product['discount_price']) && $product['discount_price'] > 0 && $product['discount_price'] < $product['price'];
 $final_price = $has_discount ? $product['discount_price'] : $product['price'];
 $out_of_stock = $product['stock'] == 0;
+$cart_count = 0;
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+
+    $stmt = $conn->prepare("SELECT SUM(quantity) as total FROM cart_items WHERE user_id = ?");
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $cart_result = $stmt->get_result();
+
+    if ($row = $cart_result->fetch_assoc()) {
+        $cart_count = $row['total'] ?? 0;
+    }
+
+    $stmt->close();
+}
+
+$conn->close();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,119 +50,14 @@ $out_of_stock = $product['stock'] == 0;
     <title><?= htmlspecialchars($product['name']) ?> | Data Coming</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f7f7f7;
+        html {
+            font-size: 75%;
+            scroll-behavior: smooth;
+            scroll-padding-top: 6rem;
+            overflow-x: hidden;
         }
-        .product-details {
-            max-width: 1000px;
-            margin: 50px auto;
-            background: #fff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.08);
-            display: flex;
-            gap: 40px;
-            align-items: flex-start;
-            position: relative;
-        }
-        .image-container {
-            position: relative;
-            width: 400px;
-            flex-shrink: 0;
-        }
-        .image-container img {
-            width: 100%;
-            height: auto;
-            border-radius: 12px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.05);
-            filter: <?= $out_of_stock ? 'grayscale(100%)' : 'none' ?>;
-        }
-        .out-of-stock-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(80, 80, 80, 0.6);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 300px;
-            pointer-events: none;
-        }
-        .product-info {
-            flex: 1;
-        }
-        .product-info h1 {
-            font-size: 32px;
-            color: #333;
-            margin-bottom: 10px;
-        }
-        .product-info p {
-            font-size: 18px;
-            color: #555;
-            line-height: 1.6;
-        }
-        .price {
-            font-size: 24px;
-            margin: 20px 0;
-        }
-        .original-price {
-            text-decoration: line-through;
-            color: #999;
-            margin-right: 10px;
-        }
-        .discount-price {
-            color: #9265A6;
-            font-weight: bold;
-        }
-        .btn {
-            background-color: #9265A6;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            font-size: 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .btn:hover {
-            background-color: #7a4d90;
-        }
-        .stock-status {
-            font-size: 18px;
-            color: red;
-            margin-top: 20px;
-        }
-        #messageBox {
-            display: none;
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 25px;
-            color: white;
-            border-radius: 8px;
-            font-weight: bold;
-            z-index: 9999;
-            box-shadow: 0 0 10px rgba(0,0,0,0.3);
-        }
-        @media (max-width: 768px) {
-            .product-details {
-                flex-direction: column;
-                text-align: center;
-            }
-            .image-container {
-                width: 100%;
-            }
-            .image-container img {
-                width: 100%;
-            }
-        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 
         * {
@@ -165,437 +78,367 @@ $out_of_stock = $product['stock'] == 0;
             padding: 0;
             display: flex;
             flex-direction: column;
+
         }
+
 
         .main-content {
             flex: 1;
         }
 
 
-        footer {
-            background-color: #9265A6;
-            padding: 10px;
-            text-align: center;
-            color: white;
-        }
-        footer {
-            background-color: #9265A6;
-            padding: 10px;
-            text-align: center;
-            color: white;
-        }
-
-
-        html {
-            font-size: 62.5%;
-            scroll-behavior: smooth;
-            scroll-padding-top: 6rem;
-            overflow-x: hidden;
-        }
-
-        header {
+        .header-glass {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background-color: #9265A6;
-            padding: 1.5rem 5%;
+            width: 100%;
+            top: 0; left: 0;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid #ddd;
+            z-index: 9999;
+            box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+        }
+
+        .header-glass .container {
             display: flex;
+            justify-content: space-between; /* توزيع المساحة بين الأقسام */
             align-items: center;
-            justify-content: space-between;
-            z-index: 1000;
-            box-shadow: 0 .1rem 1rem rgba(0, 0, 0, 1);
+            max-width: 1400px; /* زيادة العرض لتوفير مساحة أكبر */
+            width: 100%;
+            margin: 0 auto;
+            padding: 15px 30px;
+            position: relative; /* مهم للعناصر المطلقة */
         }
 
-        header .logo {
-            font-size: 3rem;
-            color: #81C3C2;
-            font-weight: bold;
-            shadow: 0 .1rem 1rem rgba(0, 0, 0, 1);
-            z-index: 1001;
+        .left-section {
+            margin-right: auto; /* يدفع كل شيء بعيداً عنه لليمين */
         }
 
-        header span {
-            color: #FFFFFF;
-            position: relative;
-            top: -3px;
-            left: -5px;
-        }
-
-        header .navbar {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            z-index: 1;
-            margin-right: 10%;
-        }
-
-        header .navbar a {
-            font-size: 1.7rem;
-            padding: 0 1.1rem;
-            color: #ffffff;
-            text-shadow: 0.8px 0.8px #81C3C2;
-            transition: all 0.3s ease;
-            display: inline-block;
-            background-size: 150%;
-        }
-
-        header .navbar a:hover {
-            transform: scale(1.1);
-            color: #81C3C2;
-        }
-
-        header .icons a {
-            font-size: 3rem;
-            margin-left: 2rem;
-            color: white;
-            text-shadow: 1px 1px #81C3C2;
-            transition: all 0.3s ease;
-            display: inline-block;
-        }
-
-        header .icons a:hover {
-            color: #81C3C2;
-            transform: scale(1.2);
-        }
-
-        .laptop-btn {
+        .center-section {
             position: absolute;
-            top: 0;
-            right: 775px;
-            background: rgb(146, 101, 166);
-            color: white !important;
-            padding: 0;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 0;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            text-shadow: 1px 1px #81C3C2;
-            font-size: 1.7rem;
-        }
-        .home-btn {
-            position: absolute;
-            top: 0;
-            right: 970px;
-            background: rgb(146, 101, 166);
-            color: white !important;
-            padding: 0;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 0;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            text-shadow: 1px 1px #81C3C2;
-            font-size: 1.7rem;
-        }
-        .pc-btn {
-            position: absolute;
-            top: 0;
-            right: 896px;
-            background: rgb(146, 101, 166);
-            color: white !important;
-            padding: 0;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 0;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            text-shadow: 1px 1px #81C3C2;
-            font-size: 1.7rem;
-        }
-        .console-btn {
-            position: absolute;
-            top: 0;
-            right: 642px;
-            background: rgb(146, 101, 166);
-            color: white !important;
-            padding: 0;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 0;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            text-shadow: 1px 1px #81C3C2;
-            font-size: 1.7rem;
-        }
-        .cata-btn {
-            position: absolute;
-            top: 0;
-            right: 475px;
-            background: rgb(146, 101, 166);
-            color: white !important;
-            padding: 0;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 0;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            text-shadow: 1px 1px #81C3C2;
-            font-size: 1.7rem;
-        }
-        .dropdown-multicolumn {
-
-            opacity: 0;
-            transform: translateY(10px);
-            transition: opacity 0.4s ease, transform 0.4s ease;
-            pointer-events: none;
-            position: absolute;
-            top: 55px;
-            left: 0;
-            background: linear-gradient(to bottom right, #bbaeca, #9265a6);
-            color: #000000;
-            padding: 20px;
-            border-radius: 8px;
-            gap: 40px;
-            z-index: 1000;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            display: flex;
-            visibility: hidden;
-        }
-
-        .dropdown-multicolumn .column {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .dropdown-multicolumn a {
-            color: #ffffff !important;
-            font-size: 1.3rem;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .dropdown-multicolumn a:hover {
-            background-color: #9265A6;
-
-            transform: translateX(5px);
-            transition: all 0.3s ease;
-            border-radius: 6px;
-        }
-
-        .pc-btn:hover .dropdown-multicolumn {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: auto;
-            visibility: visible;
-        }
-
-
-
-        .dropdown-multicolumn2 {
-            opacity: 0;
-            transform: translateY(10px);
-            pointer-events: none;
-            transition: opacity 0.4s ease, transform 0.4s ease;
-            position: absolute;
-            top: 55px;
-            left: 0;
-            background: linear-gradient(to bottom right, #bbaeca, #9265a6);
-            color: #000000;
-            padding: 20px;
-            border-radius: 8px;
-            gap: 40px;
-            z-index: 1000;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            display: flex;
-            visibility: hidden;
-        }
-
-
-        .dropdown-multicolumn2 .column {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .dropdown-multicolumn2 a {
-            color: #ffffff !important;
-            font-size: 1.3rem;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .dropdown-multicolumn2 a:hover {
-            background-color: #9265A6;
-
-            transform: translateX(5px);
-            transition: all 0.3s ease;
-            border-radius: 6px;
-        }
-
-
-        .cata-btn:hover .dropdown-multicolumn2 {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: auto;
-            visibility: visible;
-        }
-        #messageBox {
-            display: none;
-            position: fixed;
-            top: 80px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: #4CAF50;
-            color: white;
-            padding: 20px 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .right-section {
+            margin-left: auto; /* يدفع كل شيء بعيداً عنه لليسار */
+            display: flex;
+            gap: 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
             font-weight: 700;
-            font-size: 18px;
-            z-index: 1001;
-            max-width: 90%;
-            text-align: center;
-            font-family: 'Cairo', sans-serif;
-            border: 2px solid black;
-        }
-        @media (max-width: 768px) {
-
-
-            nav.navbar {
-                display: none;
-            }
-
-            .menu-toggle {
-                display: block;
-            }
-            .slideshow-container {
-                display: none;
-            }
-
-            .static-mobile-image {
-                display: block;
-            }
-            header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .navbar {
-                flex-direction: column;
-                width: 100%;
-            }
-
-            .navbar a {
-                padding: 1rem;
-                width: 100%;
-                text-align: left;
-            }
-
-            .search, .laptop-btn, .pc-btn, .console-btn, .cata-btn, .home-btn {
-                position: static;
-                width: 100%;
-                margin: 5px 0;
-            }
-
-            .dropdown-multicolumn,
-            .dropdown-multicolumn2 {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .mySlides img,
-            .static-mobile-image {
-                height: auto;
-            }
-        }
-        .categories {
-            display: grid;
-            gap: 30px;
-            justify-content: center;
-            padding: 40px 0;
+            font-size: 2rem;
+            color: #9265A6;
+            text-decoration: none;
         }
 
-        @media (min-width: 1201px) {
-            .categories {
-                grid-template-columns: repeat(4, 1fr);
-            }
-            .card-bg{
-
-            }
+        .logo:hover {
+            color: #b589d6; /* تدرج فاتح للون الأساسي */
         }
 
-        @media (min-width: 901px) and (max-width: 1200px) {
-            .categories {
-                grid-template-columns: repeat(3, 1fr);
-            }
+        .logo img {
+            width: 60px;
+            height: auto;
+            filter: drop-shadow(0 0 5px #9265A6);
         }
 
-        @media (max-width: 900px) {
-            .categories {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .card-bg img{
-                width: 220px;
-            }
-            .category-card{
-                height: 430px;
-            }
-            .card-bg{
-                height: 200px;
-            }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            font-weight: 500;
         }
 
-
-
-
-
-        .icons a {
-            display: inline-block;
-            font-size: 20px;
-            margin-left: 10px;
-            color: #333;
-        }
-
-        @media (max-width: 768px) {
-            .icons .social-icon {
-                display: none !important;
-            }
-
-            .icons {
-                display: flex;
-                gap: 12px;
-                position: absolute;
-                top: 15px;
-                right: 15px;
-                z-index: 1002;
-            }
-        }
-
-
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            justify-content: space-around;
-            width: 30px;
-            height: 25px;
+        /* Dropdown wrapper */
+        .nav-links .dropdown {
+            position: relative;
             cursor: pointer;
-            z-index: 1001;
+        }
+
+        /* Dropdown main link */
+        .nav-links .dropdown > a {
+            display: flex;
+            align-items: center;
             gap: 5px;
+            color: #444;
+            text-decoration: none;
+            font-size: 1.8rem;
+            padding: 6px 12px;
+            border-radius: 6px;
+            position: relative;
+            transition: background 0.3s, color 0.3s;
+        }
 
+        /* Normal links */
+        .nav-links > a:not(.dropdown > a) {
+            color: #444;
+            text-decoration: none;
+            font-size: 1.8rem;
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: background 0.3s, color 0.3s;
+            position: relative;
+        }
 
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #9265A6;
+        }
+
+        /* Dropdown arrow icon */
+        .nav-links .dropdown > a i {
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        /* Rotate arrow on hover */
+        .nav-links .dropdown:hover > a i {
+            transform: rotate(180deg);
+        }
+
+        /* Dropdown menu */
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 180px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 10000;
+        }
+
+        /* Show dropdown on hover */
+        .nav-links .dropdown:hover .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* Dropdown links */
+        .dropdown-content a {
+            display: block;
+            padding: 10px 18px;
+            color: #444;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: background 0.3s, color 0.3s;
+            border-radius: 6px;
+        }
+
+        .dropdown-content a:hover {
+            background: #ddc6e4;
+            color: #9265a6;
+        }
+        .search-bar {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
 
         }
 
-        .hamburger span {
-            display: block;
-            height: 3px;
-            background-color: #FFFFFF;
-            border-radius: 2px;
-            width: 25px;
-            font-size: 3rem;
+        /* الزر */
+        .search-bar button {
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            color: #9265a6;
+            font-size: 1.55rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            z-index: 2;
+            position: relative;
+        }
 
+        /* الحاوية حول input */
+        .search-input-wrapper {
+            position: absolute;
+            right: 50px;
+            top: 50%;
+            transform: translateY(-50%) scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1;
+            width: 500px; /* ✅ العرض الكبير */
+            max-width: 80vw; /* يستجيب لو الشاشة أصغر */
+
+        }
+
+        /* حقل البحث */
+        #search-input {
+            width: 100%;
+            padding: 10px 15px;
+            border-radius: 25px;
+            border: 1.5px solid #ddd;
+            font-size: 1.55rem;
+            background: #fff;
+            color: #333;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        /* عند التفعيل */
+        .search-bar.active .search-input-wrapper {
+            transform: translateY(-50%) scaleX(1);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .nav-links a {
+            position: relative;
+            padding-bottom: 6px;
+            text-decoration: none;
+            color: #444;
+            font-size: 1.9rem;
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover{
+            color: #9265A6;
+        }
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0%;
+            height: 2px;
+            background-color: #9265A6; /* لون الخط */
+            transition: width 0.3s ease;
+        }
+
+        /* عند تمرير الماوس */
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* عند الضغط أو التحديد */
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+
+        .icons {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .icons a,
+        .icons button {
+            color: #555;
+            font-size: 2.5rem;
+            position: relative;
+            background: none;
+            border: none;
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.3s;
+        }
+
+        .icons a:hover,
+        .icons button:hover {
+            color: #9265A6;
+        }
+
+        .cart {
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background: #9265A6;
+            width: 20px;
+            height: 20px;
+            font-size: 1.6rem;
+            border-radius: 50%;
             color: white;
-            text-shadow: 1px 1px #81C3C2;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 5px #9265A6;
+        }
 
+        .menu-toggle {
+            display: none;
+            font-size: 2rem;
+            background: none;
+            border: none;
+            color: #9265A6;
+            cursor: pointer;
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            display: none;
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: saturate(180%) blur(20px);
+            flex-direction: column;
+            gap: 12px;
+            padding: 15px 30px;
+            border-top: 1px solid #ddd;
+        }
+
+        /* Mobile dropdown button */
+        .mobile-dropdown-btn {
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            padding: 10px 0;
+            font-size: 1.4rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #444;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .mobile-dropdown-btn:hover {
+            background: #9265A655;
+            color: #9265A6;
+        }
+
+        /* Mobile dropdown content */
+        .mobile-dropdown-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-left: 15px;
+        }
+
+        .mobile-dropdown-content a {
+            color: #444;
+            font-size: 1.3rem;
+            text-decoration: none;
+            padding: 6px 0;
+            border-radius: 6px;
+            transition: background 0.3s;
+        }
+
+        .mobile-dropdown-content a:hover {
+            background: #9265A655;
+            color: #9265A6;
         }
 
 
@@ -603,7 +446,7 @@ $out_of_stock = $product['stock'] == 0;
             left: -100%;
             transition: 0.3s;
             position: fixed;
-            top: 60px;
+            top: 70px;
             width: 100%;
             height: calc(100% - 70px);
             background: #f1f1f1;
@@ -719,117 +562,251 @@ $out_of_stock = $product['stock'] == 0;
             font-size: 16px;
             user-select: none;
         }
-        @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
-            }
-            nav.navbar {
-                display: none;
-            }
-            .logo {
-                display: none;
-            }
-        }
-        @media (max-width: 1352px ){
 
-            .logo {
-                display: none;
-            }
 
-        }
-        @media (max-width: 1070px) {
-            .hamburger {
-                display: flex;
-            }
-            nav.navbar {
-                display: none;
-            }
-            .logo {
-                display: none;
-            }
-
-        }
-        .main-content {
-            padding-top: 70px;
-        }
-        @media (max-width: 768px) {
-            .main-content {
-                padding-top: 30px;
-            }
-        }
-
+        /* الرسالة ترحب بالزوار وتكون مخفية بشكل افتراضي */
         .welcome-message {
+            display: none; /* مخفية افتراضياً */
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            font-weight: bold;
+            color: #9265A6;
+            text-align: center;
+            white-space: nowrap; /* لمنع التفاف النص */
+            animation: wiggle 7s ease infinite;
+            opacity: 0; /* يبدأ مخفي */
+            z-index: 10000;
+        }
+
+        @keyframes wiggle {
+            0%, 100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) translateX(0);
+            }
+            20%, 60% {
+                opacity: 1;
+                transform: translate(-50%, -50%) translateX(-10px);
+            }
+            40%, 80% {
+                opacity: 1;
+                transform: translate(-50%, -50%) translateX(10px);
+            }
+        }
+
+        @media (max-width: 1285px) {
+            .center-section {
+                display: none;
+            }
+            .welcome-message {
+                display: block;
+            }
+        }
+        @media (max-width: 935px) {
+            .logo {
+                display: none;
+            }
+        }
+        @media (max-width: 770px) {
+            .social-link {
+                display: none;
+            }
+        }
+
+        .hamburger {
             display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            cursor: pointer;
+            z-index: 1001;
+            gap: 5px;
+            color: #9265A6;
+
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
         }
 
-        @media (max-width: 767px) {
-            .welcome-message {
-                display: block;
-                position: fixed;
-                top: 5px;
-                left: 45%;
-                transform: translateX(-50%);
-                background: rgba(146, 101, 166, 0.9);
-                color: white;
-                padding: 8px 15px;
-                border-radius: 20px;
-                font-size: 2.3rem;
-                font-weight: 600;
-                z-index: 9999;
-                animation: zigzagSlideDown 7s ease infinite;
-                pointer-events: none;
-                box-shadow: 0 0 10px rgba(146, 101, 166, 0.7);
-                white-space: nowrap;
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+        @media (max-width: 1285px) {
+
+
+
+            /* عرض زر الهامبرغر */
+            .hamburger {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: 5px;
+                cursor: pointer;
+                margin-left: 10px;
+                color: #9265A6;
+            }
+            .hamburger span {
+                width: 25px;
+                height: 3px;
+                background-color: #9265A6; /* غير اللون إذا بدك */
+                border-radius: 2px;
+                transition: 0.3s;
+            }
+            /* ترتيب اللوغو والهمبرغر */
+            .left-section {
+                display: flex;
+                align-items: center;
+                gap: 10px; /* مسافة بين اللوغو والهمبرغر */
+            }
+        }
+        .product-details {
+            max-width: 1000px;
+            margin: 50px auto;
+            background: #f7f7f7;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.08);
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+            position: relative;
+        }
+        .image-container {
+            position: relative;
+            width: 400px;
+            flex-shrink: 0;
+        }
+        .image-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+            filter: <?= $out_of_stock ? 'grayscale(100%)' : 'none' ?>;
+        }
+        .out-of-stock-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(80, 80, 80, 0.6);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 300px;
+            pointer-events: none;
+        }
+        .product-info {
+            flex: 1;
+        }
+        .product-info h1 {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .product-info p {
+            font-size: 18px;
+            color: #555;
+            line-height: 1.6;
+        }
+        .price {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+        .original-price {
+            text-decoration: line-through;
+            color: #999;
+            margin-right: 10px;
+        }
+        .discount-price {
+            color: #9265A6;
+            font-weight: bold;
+        }
+        .btn {
+            background-color: #9265A6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background-color: #7a4d90;
+        }
+        .stock-status {
+            font-size: 18px;
+            color: red;
+            margin-top: 20px;
+        }
+        #messageBox {
+            display: none;
+            position: fixed;
+            top: 95px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            font-weight: 700;
+            font-size: 18px;
+            z-index: 1001;
+            max-width: 90%;
+            text-align: center;
+            font-family: 'Cairo', sans-serif;
+            border: 2px solid black;
+        }
+
+
+        @media (max-width: 768px) {
+            .product-details {
+                flex-direction: column;
+                text-align: center;
+            }
+            .image-container {
+                width: 100%;
+            }
+            .image-container img {
+                width: 100%;
             }
         }
 
-        @media (max-width: 1065px) and (min-width: 768px){
-            .welcome-message {
-                display: block;
-                position: fixed;
-                top: 2px;
-                left: 45%;
-                transform: translateX(-50%);
-                background: rgba(146, 101, 166, 0.9);
-                color: white;
-                padding: 8px 15px;
-                border-radius: 20px;
-                font-size: 3rem;
-                font-weight: 600;
-                z-index: 9999;
-                animation: zigzagSlideDown 7s ease infinite;
-                pointer-events: none;
-                box-shadow: 0 0 10px rgba(146, 101, 166, 0.7);
-                white-space: nowrap;
-            }
+        .main-content {
+            flex: 1;
         }
 
-        @keyframes zigzagSlideDown {
-            0% {
-                opacity: 0;
-                transform: translateX(-50%) translateY(-20px);
-            }
-            20% {
-                opacity: 1;
-                transform: translateX(calc(-50% - 10px)) translateY(0);
-            }
-            40% {
-                opacity: 1;
-                transform: translateX(calc(-50% + 10px)) translateY(0);
-            }
-            60% {
-                opacity: 1;
-                transform: translateX(calc(-50% - 10px)) translateY(0);
-            }
-            80% {
-                opacity: 1;
-                transform: translateX(calc(-50% + 10px)) translateY(0);
-            }
-            100% {
-                opacity: 0;
-                transform: translateX(-50%) translateY(-20px);
-            }
+
+        footer {
+            background-color: #9265A6;
+            padding: 10px;
+            text-align: center;
+            color: white;
         }
+        footer {
+            background-color: #9265A6;
+            padding: 10px;
+            text-align: center;
+            color: white;
+        }
+
+
+
+
+
+
+
         @media (max-width: 768px) {
             .product-details {
                 flex-direction: column;
@@ -891,216 +868,141 @@ $out_of_stock = $product['stock'] == 0;
 </head>
 <body>
 <div class="main-content">
-    <header>
+    <header class="header-glass">
+        <div class="container">
+            <div class="left-section">
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <a href="index.php" class="logo">
+                    <img src="./img/data2-removebg-preview.png" alt="Logo" class="imgg" /> <span>Data Coming</span>
+                </a>
+            </div>
 
-        <div class="hamburger" id="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
+            <div class="welcome-message">!نورتوا متجرنا</div>
 
-
-        <a href="index.php" class="logo aa">
-            <span class="outlined-text">Data Coming</span><span>.</span>
-        </a>
-        <div class="welcome-message">!نورتوا متجرنا</div>
-        <nav class="navbar">
-            <div class="home-btn"><a href="index.php" class="fas fa-home"> Home</a></div>
-
-            <div class="pc-btn">
-                <a href="#" class="fas fa-desktop"> PC</a>
-                <div class="dropdown-multicolumn">
-                    <div class="column">
-                        <a href="case.php">CASE</a>
-                        <a href="mother.php">MOTHER BOARD</a>
-                        <a href="cpu.php">CPU</a>
-                        <a href="gui.php">GRAPHIC CARDS</a>
-
+            <div class="center-section">
+                <nav class="nav-links">
+                    <div class="dropdown">
+                        <a href="#">PC <i class="fas fa-chevron-down "></i></a>
+                        <div class="dropdown-content">
+                            <a href="case.php">CASE</a>
+                            <a href="mother.php">MOTHER BOARD</a>
+                            <a href="cpu.php">CPU</a>
+                            <a href="gui.php">GRAPHIC CARDS</a>
+                            <a href="ssd.php">SSD</a>
+                            <a href="ram.php">MEMORY</a>
+                            <a href="harddisk.php">HARD DISK</a>
+                            <a href="power.php">POWER SUPPLY</a>
+                        </div>
                     </div>
-                    <div class="column">
-                        <a href="ssd.php">SSD</a>
-                        <a href="ram.php">MEMORY</a>
-                        <a href="harddisk.php">HARD DISK</a>
-                        <a href="power.php">POWER SUPPLY</a>
+                    <a href="laptop.php">Laptop</a>
+                    <a href="xbox.php">Console</a>
+                    <div class="dropdown">
+                        <a href="#">Accessories <i class="fas fa-chevron-down"></i></a>
+                        <div class="dropdown-content">
+                            <a href="headset.php">HEAD SET</a>
+                            <a href="mouse.php">MOUSE</a>
+                            <a href="keayboard.php">KEYBOARD</a>
+                            <a href="chair.php">CHAIR</a>
+                            <a href="monitor.php">MONITOR</a>
+                            <a href="hdmi.php">CABLES AND PORTS</a>
+                        </div>
+                    </div>
+                </nav>
+
+                <div class="search-bar">
+                    <button id="search-toggle"><i class="fas fa-search"></i></button>
+                    <div class="search-input-wrapper">
+                        <input type="text" id="search-input" placeholder="Search for products..." />
                     </div>
                 </div>
             </div>
 
+            <div class="right-section icons">
+                <a href="https://www.facebook.com/profile.php?id=61556946718232" target="_blank" class="social-link" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/datac0ming?igsh=MThhMWs5ZHA5MTZneA==" target="_blank" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
 
 
+                <a href="cart.php" class="cart" title="Cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count"><?php echo $cart_count; ?></span>
+                </a>
 
-            <div class="laptop-btn"><a href="laptop.php" class="fas fa-laptop"> laptop</a></div>
-            <div class="console-btn"><a href="xbox.php" class="fab fa-xbox"> console</a></div>
-            <div class="cata-btn">
-                <a href="#" class="fas fa-mouse"> ACCESSORIES</a>
-                <div class="dropdown-multicolumn2">
-                    <div class="column">
-                        <a href="headset.php">HEAD SET</a>
-                        <a href="mouse.php">MOUSE</a>
-                        <a href="keayboard.php">KEYBOARD</a>
-
-                    </div>
-                    <div class="column">
-                        <a href="chair.php">CHAIR</a>
-                        <a href="monitor.php">MONITOR</a>
-                        <a href="hdmi.php">CABLES AND PORTS</a>
-                    </div>
-                </div>
+                <a href="login.php" title="Account" style="position: relative;">
+                    <i class="fas fa-user"></i>
+                    <?php if (isset($_SESSION['new_order']) && $_SESSION['new_order']): ?>
+                        <span class="cart-count">1</span>
+                        <?php unset($_SESSION['new_order']); ?>
+                    <?php endif; ?>
+                </a>
             </div>
-            <div class="search-btn"><a href="#" onclick="document.getElementById('search1').style.display='block'; return false;" class="fas fa-search "></a></div>
-
-
-            <div class="search" id="search1">
-                <input type="text" id="searchInput" placeholder="search...">
-                <i class="fas fa-search"></i>
-                <button id="closeSearch" class="close-btn">✖</button>
-            </div>
-        </nav>
-
-        <div class="icons">
-            <a href="https://www.facebook.com/profile.php?id=61556946718232" class="fab fa-facebook-f social-icon" target="_blank"></a>
-            <a href="https://www.instagram.com/datac0ming?igsh=MThhMWs5ZHA5MTZneA==" class="fab fa-instagram social-icon" target="_blank"></a>
-            <a href="cart.php" class="fas fa-shopping-cart main-icon"></a>
-            <a href="login.php" class="fas fa-user main-icon"></a>
         </div>
     </header>
-    <div id="side-menu" class="side-menu">
-        <a href="#" class="logo aa">
-            <span class="outlined-text">PC Section</span><span>.</span>
-        </a>
 
+    <div id="side-menu" class="side-menu">
         <div class="back-container">
             <span class="outlined-text">Data Coming</span><span>.</span>
         </div>
-
         <div class="side-menu-grid">
             <a href="index.php" class="side-menu-item">
                 <i class="fas fa-home"></i>
                 <p>Home</p>
             </a>
-
             <a href="#" class="side-menu-item" onclick="openPcMenu(); return false;">
                 <i class="fas fa-desktop"></i>
                 <p>PC</p>
             </a>
-
-
-
-
             <a href="laptop.php" class="side-menu-item">
                 <i class="fas fa-laptop"></i>
                 <p>Laptop</p>
             </a>
-
             <a href="xbox.php" class="side-menu-item">
                 <i class="fab fa-xbox"></i>
                 <p>Console</p>
             </a>
-
             <a href="#" class="side-menu-item" onclick="openAccessoriesMenu(); return false;">
                 <i class="fas fa-mouse"></i>
                 <p>Accessories</p>
             </a>
         </div>
     </div>
-    <div id="pc-side-menu" class="side-menu">
-        <a href="#" class="logo aa">
-            <span class="outlined-text">PC Section</span><span>.</span>
-        </a>
 
+    <div id="pc-side-menu" class="side-menu">
         <div class="back-container">
             <button class="back-button" onclick="backToMainMenu()">
                 <i class="fas fa-arrow-left"></i> Back
             </button>
             <span class="menu-label">PC Section</span>
         </div>
-
-
-
         <div class="side-menu-grid">
-            <a href="case.php" class="side-menu-item">
-                <i class="fas fa-box"></i>
-                <p>Case</p>
-            </a>
-
-            <a href="mother.php" class="side-menu-item">
-                <i class="fas fa-network-wired"></i>
-                <p>Motherboard</p>
-            </a>
-
-            <a href="cpu.php" class="side-menu-item">
-                <i class="fas fa-microchip"></i>
-                <p>CPU</p>
-            </a>
-
-            <a href="gui.php" class="side-menu-item">
-                <i class="fas fa-video"></i>
-                <p>Graphic Cards</p>
-            </a>
-
-            <a href="ssd.php" class="side-menu-item">
-                <i class="fas fa-hdd"></i>
-                <p>SSD</p>
-            </a>
-
-            <a href="ram.php" class="side-menu-item">
-                <i class="fas fa-memory"></i>
-                <p>Memory</p>
-            </a>
-
-            <a href="harddisk.php" class="side-menu-item">
-                <i class="fas fa-database"></i>
-                <p>Hard Disk</p>
-            </a>
-
-            <a href="power.php" class="side-menu-item">
-                <i class="fas fa-plug"></i>
-                <p>Power Supply</p>
-            </a>
+            <a href="case.php" class="side-menu-item"><i class="fas fa-box"></i><p>Case</p></a>
+            <a href="mother.php" class="side-menu-item"><i class="fas fa-network-wired"></i><p>Motherboard</p></a>
+            <a href="cpu.php" class="side-menu-item"><i class="fas fa-microchip"></i><p>CPU</p></a>
+            <a href="gui.php" class="side-menu-item"><i class="fas fa-video"></i><p>Graphic Cards</p></a>
+            <a href="ssd.php" class="side-menu-item"><i class="fas fa-hdd"></i><p>SSD</p></a>
+            <a href="ram.php" class="side-menu-item"><i class="fas fa-memory"></i><p>Memory</p></a>
+            <a href="harddisk.php" class="side-menu-item"><i class="fas fa-database"></i><p>Hard Disk</p></a>
+            <a href="power.php" class="side-menu-item"><i class="fas fa-plug"></i><p>Power Supply</p></a>
         </div>
     </div>
-    <div id="accessories-side-menu" class="side-menu" >
-        <a href="#" class="logo aa">
-            <span class="outlined-text">Accessories</span><span>.</span>
-        </a>
 
+    <div id="accessories-side-menu" class="side-menu" >
         <div class="back-container">
             <button class="back-button" onclick="backToMainMenu()">
                 <i class="fas fa-arrow-left"></i> Back
             </button>
             <span class="menu-label">Accessories Section</span>
         </div>
-
         <div class="side-menu-grid">
-            <a href="headset.php" class="side-menu-item">
-                <i class="fas fa-headphones"></i>
-                <p>Headset</p>
-            </a>
-
-            <a href="mouse.php" class="side-menu-item">
-                <i class="fas fa-mouse"></i>
-                <p>Mouse</p>
-            </a>
-
-            <a href="keayboard.php" class="side-menu-item">
-                <i class="fas fa-keyboard"></i>
-                <p>Keyboard</p>
-            </a>
-
-            <a href="chair.php" class="side-menu-item">
-                <i class="fas fa-chair"></i>
-                <p>Chair</p>
-            </a>
-
-            <a href="monitor.php" class="side-menu-item">
-                <i class="fas fa-desktop"></i>
-                <p>Monitor</p>
-            </a>
-
-            <a href="hdmi.php" class="side-menu-item">
-                <i class="fas fa-plug"></i>
-                <p>Cables and Ports</p>
-            </a>
+            <a href="headset.php" class="side-menu-item"><i class="fas fa-headphones"></i><p>Headset</p></a>
+            <a href="mouse.php" class="side-menu-item"><i class="fas fa-mouse"></i><p>Mouse</p></a>
+            <a href="keayboard.php" class="side-menu-item"><i class="fas fa-keyboard"></i><p>Keyboard</p></a>
+            <a href="chair.php" class="side-menu-item"><i class="fas fa-chair"></i><p>Chair</p></a>
+            <a href="monitor.php" class="side-menu-item"><i class="fas fa-desktop"></i><p>Monitor</p></a>
+            <a href="hdmi.php" class="side-menu-item"><i class="fas fa-plug"></i><p>Cables and Ports</p></a>
         </div>
     </div>
 <main style="padding-top: 70px">
