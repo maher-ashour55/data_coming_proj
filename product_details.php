@@ -100,17 +100,17 @@ $conn->close();
 
         .header-glass .container {
             display: flex;
-            justify-content: space-between; /* توزيع المساحة بين الأقسام */
+            justify-content: space-between;
             align-items: center;
-            max-width: 1400px; /* زيادة العرض لتوفير مساحة أكبر */
+            max-width: 1400px;
             width: 100%;
             margin: 0 auto;
             padding: 15px 30px;
-            position: relative; /* مهم للعناصر المطلقة */
+            position: relative;
         }
 
         .left-section {
-            margin-right: auto; /* يدفع كل شيء بعيداً عنه لليمين */
+            margin-right: auto;
         }
 
         .center-section {
@@ -123,7 +123,7 @@ $conn->close();
         }
 
         .right-section {
-            margin-left: auto; /* يدفع كل شيء بعيداً عنه لليسار */
+            margin-left: auto;
             display: flex;
             gap: 20px;
         }
@@ -139,7 +139,7 @@ $conn->close();
         }
 
         .logo:hover {
-            color: #b589d6; /* تدرج فاتح للون الأساسي */
+            color: #b589d6;
         }
 
         .logo img {
@@ -154,7 +154,6 @@ $conn->close();
             font-weight: 500;
         }
 
-        /* Dropdown wrapper */
         .nav-links .dropdown {
             position: relative;
             cursor: pointer;
@@ -174,7 +173,6 @@ $conn->close();
             transition: background 0.3s, color 0.3s;
         }
 
-        /* Normal links */
         .nav-links > a:not(.dropdown > a) {
             color: #444;
             text-decoration: none;
@@ -190,7 +188,6 @@ $conn->close();
             color: #9265A6;
         }
 
-        /* Dropdown arrow icon */
         .nav-links .dropdown > a i {
             font-size: 0.8rem;
             transition: transform 0.3s ease;
@@ -247,7 +244,6 @@ $conn->close();
 
         }
 
-        /* الزر */
         .search-bar button {
             background: rgba(255, 255, 255, 0.8);
             border: none;
@@ -261,7 +257,6 @@ $conn->close();
             position: relative;
         }
 
-        /* الحاوية حول input */
         .search-input-wrapper {
             position: absolute;
             right: 50px;
@@ -272,8 +267,8 @@ $conn->close();
             opacity: 0;
             visibility: hidden;
             z-index: 1;
-            width: 500px; /* ✅ العرض الكبير */
-            max-width: 80vw; /* يستجيب لو الشاشة أصغر */
+            width: 500px;
+            max-width: 80vw;
 
         }
 
@@ -314,16 +309,14 @@ $conn->close();
             bottom: 0;
             width: 0%;
             height: 2px;
-            background-color: #9265A6; /* لون الخط */
+            background-color: #9265A6;
             transition: width 0.3s ease;
         }
 
-        /* عند تمرير الماوس */
         .nav-links a:hover::after {
             width: 100%;
         }
 
-        /* عند الضغط أو التحديد */
         .nav-links a.active::after {
             width: 100%;
         }
@@ -382,7 +375,6 @@ $conn->close();
             cursor: pointer;
         }
 
-        /* Mobile Navigation */
         .mobile-nav {
             display: none;
             background: rgba(255,255,255,0.9);
