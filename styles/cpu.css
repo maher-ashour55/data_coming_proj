@@ -856,12 +856,12 @@ footer {
     flex-wrap: wrap;
     justify-content: center;
     gap: 50px;
-    padding: 40px 0;
+    padding: 0px 0;
 }
 
 .category-card {
-    width: 230px;
-    height: 400px;
+    width: 250px;
+    height: 450px;
     background-color: #f0f0f0;
     border-radius: 20px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
@@ -899,7 +899,7 @@ footer {
 }
 
 .card-bg img {
-    width: 210px;
+    width: 230px;
     height: auto;
     position: relative;
     top: 5px;
@@ -918,8 +918,8 @@ footer {
 }
 
 .category-card h3 {
-    margin: 34px 0 15px;
-    font-size: 1.9rem;
+    margin: 10px 0 0px;
+    font-size: 1.7rem;
     color: #000;
 }
 
@@ -975,8 +975,8 @@ footer {
 }
 @media (max-width: 768px) {
     .category-card {
-        width: 170px !important;
-        margin: 10px auto !important;
+        width: 200px !important;
+        margin: 2px auto !important;
 
         font-size: 30px !important;
     }
