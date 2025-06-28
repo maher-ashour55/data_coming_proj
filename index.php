@@ -206,37 +206,26 @@ if (isset($_SESSION['user_id'])) {
 <main class="main-content">
     <div class="slideshow-container">
         <div class="mySlides fade">
-            <div class="numbertext">1 / 6</div>
+            <div class="numbertext">1 / 4</div>
             <img src="./img/imgg/salee.jpg" loading="lazy" style="width:100%;">
             <div class="text"></div>
         </div>
 
         <div class="mySlides fade">
-            <div class="numbertext">2 / 6</div>
-            <img src="./img/linus-mimietz-gvptKmonylk-unsplash.jpg" loading="lazy" style="width:100%;">
+            <div class="numbertext">2 / 4</div>
+            <img src="./img/imgg/dc%203.png" loading="lazy" style="width:100%;">
             <div class="text"></div>
         </div>
 
         <div class="mySlides fade">
-            <div class="numbertext">3 / 6</div>
-            <img src="./img/hard.jpg" loading="lazy" style="width:100%;">
+            <div class="numbertext">3 / 4</div>
+            <img src="./img/imgg/wallpaperflare.com_wallpaper%20(4).jpg" loading="lazy" style="width:100%;">
             <div class="text"></div>
         </div>
 
         <div class="mySlides fade">
-            <div class="numbertext">4 / 6</div>
-            <img src="./img/sam-pak-X6QffKLwyoQ-unsplash.jpg" loading="lazy" style="width:100%;">
-            <div class="text"></div>
-        </div>
-
-        <div class="mySlides fade">
-            <div class="numbertext">5 / 6</div>
-            <img src="./img/martin-katler-7wCxlBfGMdk-unsplash.jpg" loading="lazy" style="width:100%;">
-            <div class="text"></div>
-        </div>
-        <div class="mySlides fade">
-            <div class="numbertext">6 / 6</div>
-            <img src="./img/imgg/epic-gamer-battlestation.jpg " loading="lazy" style="width:100%;">
+            <div class="numbertext">4 / 4</div>
+            <img src="./img/imgg/epic-gamer-room-setup.jpg" loading="lazy" style="width:100%;">
             <div class="text"></div>
         </div>
 
@@ -249,8 +238,7 @@ if (isset($_SESSION['user_id'])) {
             <span class="dot" onclick="currentSlide(2)"></span>
             <span class="dot" onclick="currentSlide(3)"></span>
             <span class="dot" onclick="currentSlide(4)"></span>
-            <span class="dot" onclick="currentSlide(5)"></span>
-            <span class="dot" onclick="currentSlide(6)"></span>
+
         </div>
     </div>
     <div class="static-mobile-image">
