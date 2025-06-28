@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['role'] = $user['role'];
             $_SESSION['email'] = $user['email'];
 
-            header("Location: dashboard.php");
+            header("Location: index.php");
             exit();
         } else {
             $error = "كلمة المرور غير صحيحة!";
