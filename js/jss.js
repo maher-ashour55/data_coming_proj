@@ -1,42 +1,8 @@
-const originalProductsHTML = document.querySelector(".categories").innerHTML;
-const searchInput = document.getElementById("searchInput");
+let slideIndex = 1;
+let slideTimer;
 
 
-searchInput.addEventListener("input", function () {
-    const query = searchInput.value.trim();
-
-    if (query === "") {
-        restoreOriginalProducts();
-        return;
-    }
-
-    fetch("search.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query })
-    })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success && data.products.length > 0) {
-                displayResults(data.products);
-            } else {
-                document.querySelector(".categories").innerHTML = "<p class='error-message'></p>";
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            showMessage("Search error ❌", false);
-        });
-});
-
-
-document.getElementById("closeSearch").addEventListener("click", function () {
-    searchInput.value = "";
-    document.getElementById("search1").style.display = "none";
-    restoreOriginalProducts();
-});
-
-
+// ===================== المنتجات =====================
 function restoreOriginalProducts() {
     const container = document.querySelector(".categories");
     container.innerHTML = originalProductsHTML;
@@ -44,45 +10,33 @@ function restoreOriginalProducts() {
     observeCards();
 }
 
-
 function displayResults(products) {
     const container = document.querySelector(".categories");
     container.innerHTML = "";
 
     products.forEach(product => {
-        const grayscaleClass = product.stock == 0 ? 'grayscale' : '';
-
-
-        let finalPrice = (product.discount_price !== null && parseFloat(product.discount_price) > 0 && parseFloat(product.discount_price) < parseFloat(product.price))
-            ? product.discount_price
-            : product.price;
-
         const card = document.createElement("div");
         card.className = "category-card";
+        const grayscaleClass = product.stock == 0 ? 'grayscale' : '';
 
         card.innerHTML = `
-                <div class="card-bg">
-                    <div class="bg-shape ${grayscaleClass}"></div>
-                    <img src="../admin/uploads/${product.image}" alt="${product.name}" class="${grayscaleClass}">
-                </div>
-                <h3>${product.name}</h3>
-                <h2>
-                    ${ (product.discount_price !== null && parseFloat(product.discount_price) > 0 && parseFloat(product.discount_price) < parseFloat(product.price))
-            ? `<span class="original-price">₪${product.price}</span><span class="discount-price">₪${product.discount_price}</span>`
-            : `₪${product.price}`
-        }
-                </h2>
-                ${product.stock == 0
+            <div class="card-bg">
+                <div class="bg-shape ${grayscaleClass}"></div>
+                <img src="../admin/uploads/${product.image}" alt="${product.name}" class="${grayscaleClass}">
+            </div>
+            <h3>${product.name}</h3>
+            <h2>₪${product.price}</h2>
+            ${product.stock == 0
             ? '<button class="buy-now-btn" disabled>OUT OF STOCK</button>'
-            : `<button class="buy-now-btn" data-product-id="${product.id}" data-price="${finalPrice}">BUY NOW</button>`
-        }
-            `;
+            : `<button class="buy-now-btn" data-product-id="${product.id}">BUY NOW</button>`}
+        `;
         container.appendChild(card);
     });
 
     attachBuyNowEvents();
     observeCards();
 }
+
 
 
 function attachBuyNowEvents() {
@@ -135,69 +89,128 @@ function showMessage(text, success = true) {
     }, 3000);
 }
 
-
+// ===================== مراقبة الكروت =====================
 function observeCards() {
     const cards = document.querySelectorAll('.category-card');
-
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('show');
-            } else {
-                entry.target.classList.remove('show');
-            }
+            entry.target.classList.toggle('show', entry.isIntersecting);
         });
-    }, {
-        threshold: 0.1
-    });
+    }, { threshold: 0.1 });
 
-    cards.forEach(card => {
-        observer.observe(card);
-    });
+    cards.forEach(card => observer.observe(card));
 }
 
-
+// حفظ النسخة الأصلية من الكروت
+let originalProductsHTML = "";
 document.addEventListener("DOMContentLoaded", () => {
-    attachBuyNowEvents();
-    observeCards();
+    originalProductsHTML = document.querySelector(".categories").innerHTML;
 });
 
+const toggleBtn = document.getElementById('search-toggle');
+const searchBar = document.querySelector('.search-bar');
+const searchInput = document.getElementById('search-input');
 
-document.addEventListener("DOMContentLoaded", function () {
-    const cards = document.querySelectorAll('.category-card');
-    cards.forEach((card, index) => {
-        setTimeout(() => {
-            card.classList.add('show');
-        }, index * 200);
-    });
-});
-const hamburger = document.getElementById('hamburger');
-const sideMenu = document.getElementById('side-menu');
-const pcSideMenu = document.getElementById('pc-side-menu');
-const accessoriesSideMenu = document.getElementById('accessories-side-menu');
+// فتح أو إغلاق البحث
+toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const wasActive = searchBar.classList.contains('active');
+    searchBar.classList.toggle('active');
 
-hamburger.addEventListener('click', () => {
-    if (sideMenu.classList.contains('active') || pcSideMenu.classList.contains('active') || accessoriesSideMenu.classList.contains('active')) {
-        sideMenu.classList.remove('active');
-        pcSideMenu.classList.remove('active');
-        accessoriesSideMenu.classList.remove('active');
+    if (searchBar.classList.contains('active')) {
+        setTimeout(() => searchInput.focus(), 100);
     } else {
-        sideMenu.classList.add('active');
+        searchInput.value = ""; // إفراغ الحقل
+        restoreOriginalProducts(); // رجّع المنتجات
     }
 });
 
+// الضغط خارج البحث
+document.addEventListener('click', (e) => {
+    if (!searchBar.contains(e.target)) {
+        if (searchBar.classList.contains('active')) {
+            searchBar.classList.remove('active');
+            searchInput.value = "";
+            restoreOriginalProducts();
+        }
+    }
+});
+
+// عند الكتابة في الانبوت
+searchInput.addEventListener("input", () => {
+    const query = searchInput.value.trim();
+    const resultsContainer = document.querySelector(".categories");
+
+    if (query.length === 0) {
+        restoreOriginalProducts();
+        return;
+    }
+
+    fetch("search.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ query: query })
+    })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success && Array.isArray(data.products)) {
+                displayResults(data.products);
+            } else {
+                resultsContainer.innerHTML = "<p style='text-align:center;'>لا يوجد نتائج</p>";
+            }
+        })
+        .catch(err => {
+            console.error("Search error:", err);
+            resultsContainer.innerHTML = "<p style='text-align:center;'>حدث خطأ أثناء البحث</p>";
+        });
+});
+
+
+
+
+
+
+// ===================== سايد منيو =====================
+document.addEventListener("DOMContentLoaded", () => {
+    attachBuyNowEvents();
+    observeCards();
+
+    const hamburger = document.getElementById("hamburger");
+    const sideMenu = document.getElementById("side-menu");
+    const pcSideMenu = document.getElementById("pc-side-menu");
+    const accessoriesSideMenu = document.getElementById("accessories-side-menu");
+
+    hamburger.addEventListener("click", () => {
+        hamburger.classList.toggle("active");
+
+        const anyMenuOpen = sideMenu?.classList.contains("active") ||
+            pcSideMenu?.classList.contains("active") ||
+            accessoriesSideMenu?.classList.contains("active");
+
+        if (anyMenuOpen) {
+            sideMenu?.classList.remove("active");
+            pcSideMenu?.classList.remove("active");
+            accessoriesSideMenu?.classList.remove("active");
+        } else {
+            sideMenu?.classList.add("active");
+        }
+    });
+});
+
 function openPcMenu() {
-    sideMenu.classList.remove('active');
-    pcSideMenu.classList.add('active');
+    document.getElementById("side-menu")?.classList.remove("active");
+    document.getElementById("pc-side-menu")?.classList.add("active");
 }
 
 function openAccessoriesMenu() {
-    sideMenu.classList.remove('active');
-    accessoriesSideMenu.classList.add('active');
+    document.getElementById("side-menu")?.classList.remove("active");
+    document.getElementById("accessories-side-menu")?.classList.add("active");
 }
 
 function backToMainMenu() {
-    pcSideMenu.classList.remove('active');
-    accessoriesSideMenu.classList.remove('active');
-    sideMenu.classList.add('active');
+    document.getElementById("pc-side-menu")?.classList.remove("active");
+    document.getElementById("accessories-side-menu")?.classList.remove("active");
+    document.getElementById("side-menu")?.classList.add("active");
 }
