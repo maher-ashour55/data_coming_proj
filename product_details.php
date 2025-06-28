@@ -78,6 +78,7 @@ $conn->close();
             padding: 0;
             display: flex;
             flex-direction: column;
+            background: radial-gradient(circle at top left, #f4f4ff, #eaeaea);
 
         }
 
@@ -660,16 +661,44 @@ $conn->close();
         }
         .product-details {
             max-width: 1000px;
-            margin: 50px auto;
-            background: #f7f7f7;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.08);
+            margin: 60px auto;
+            padding: 40px;
+            border-radius: 24px;
+            background: linear-gradient(145deg, #ffffff, #f7f4fc);
+            box-shadow:
+                    0 12px 30px rgba(146, 101, 166, 0.15),
+                    0 8px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #ececec;
+
             display: flex;
-            gap: 40px;
+            gap: 50px;
             align-items: flex-start;
             position: relative;
+
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+
+        .product-details:hover {
+            transform: translateY(-6px);
+            box-shadow:
+                    0 20px 40px rgba(146, 101, 166, 0.2),
+                    0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+        .product-details::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 15px;
+            width: calc(100% - 30px);
+            height: 6px;
+            background: linear-gradient(to right, #9265A6, #b48fd2);
+            border-radius: 4px;
+        }
+
+
+
+
+
         .image-container {
             position: relative;
             width: 400px;
@@ -904,13 +933,6 @@ $conn->close();
                         </div>
                     </div>
                 </nav>
-
-                <div class="search-bar">
-                    <button id="search-toggle"><i class="fas fa-search"></i></button>
-                    <div class="search-input-wrapper">
-                        <input type="text" id="search-input" placeholder="Search for products..." />
-                    </div>
-                </div>
             </div>
 
             <div class="right-section icons">
