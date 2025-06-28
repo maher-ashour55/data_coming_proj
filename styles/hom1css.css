@@ -846,7 +846,7 @@ footer {
 
 .category-card {
     width: 230px;
-    height: 400px;
+    height: 370px;
     background-color: #f0f0f0;
     border-radius: 20px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
@@ -903,7 +903,7 @@ footer {
 }
 
 .category-card h3 {
-    margin: 34px 0 15px;
+    margin: 13px 0 28px;
     font-size: 1.9rem;
     color: #000;
 }
