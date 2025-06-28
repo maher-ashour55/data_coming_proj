@@ -190,7 +190,7 @@ $conn->close();
         </div>
     </div>
     <main style="padding-top: 70px">
-        <div id="messageBox"></div>
+        <div id="messageBox" style="margin-top: 16px"></div>
         <div class="container">
 
         <div class="categories">

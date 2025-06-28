@@ -219,7 +219,7 @@ if (isset($_SESSION['user_id'])) {
 
         <div class="mySlides fade">
             <div class="numbertext">3 / 4</div>
-            <img src="./img/imgg/wallpaperflare.com_wallpaper%20(4).jpg" loading="lazy" style="width:100%;">
+            <img src="./img/hard.jpg" loading="lazy" style="width:100%;">
             <div class="text"></div>
         </div>
 
