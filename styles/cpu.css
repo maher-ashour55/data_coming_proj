@@ -133,11 +133,6 @@ html, body {
     position: relative;
 }
 
-.nav-links a:hover,
-.nav-links a.active {
-    color: #9265A6;
-}
-
 /* Dropdown arrow icon */
 .nav-links .dropdown > a i {
     font-size: 0.8rem;
@@ -252,9 +247,7 @@ html, body {
     font-size: 1.9rem;
     transition: color 0.3s ease;
 }
-.nav-links a:hover{
-    color: #9265A6;
-}
+
 .nav-links a::after {
     content: "";
     position: absolute;

@@ -214,3 +214,34 @@ function backToMainMenu() {
     document.getElementById("accessories-side-menu")?.classList.remove("active");
     document.getElementById("side-menu")?.classList.add("active");
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    // ✅ تفعيل كلاس active حسب الصفحة
+    const currentPage = window.location.pathname.split("/").pop().split("?")[0];
+    const navLinks = document.querySelectorAll(".nav-links a");
+
+    let pcPages = ['case.php', 'mother.php', 'cpu.php', 'gui.php', 'ssd.php', 'ram.php', 'harddisk.php', 'power.php'];
+    let accessoriesPages = ['headset.php', 'mouse.php', 'keayboard.php', 'chair.php', 'monitor.php', 'hdmi.php'];
+
+    navLinks.forEach(link => {
+        const href = link.getAttribute("href");
+        if (href === currentPage) {
+            link.classList.add("active");
+        }
+    });
+
+    // ✅ تفعيل active على PC أو Accessories إذا أحد الروابط الفرعية مفتوح
+    if (pcPages.includes(currentPage)) {
+        document.querySelector('.dropdown > a[href="#"]:first-child')?.classList.add("active");
+    }
+
+    if (accessoriesPages.includes(currentPage)) {
+        const allDropdowns = document.querySelectorAll('.dropdown > a[href="#"]');
+        allDropdowns.forEach(link => {
+            if (link.textContent.trim().includes("Accessories")) {
+                link.classList.add("active");
+            }
+        });
+    }
+});
+
