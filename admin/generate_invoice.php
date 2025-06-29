@@ -81,11 +81,20 @@ class PDF extends FPDF {
 }
 
 // دالة لاقتطاع النصوص الطويلة
-function truncateText($text, $maxLength = 35) {
+function truncateText($text, $maxLength = 200) {
     if (strlen($text) > $maxLength) {
         return substr($text, 0, $maxLength - 3) . '...';
     }
     return $text;
+}
+
+// دالة لحساب عدد الأسطر التي سيشغلها النص في عمود بعرض معين
+function getNumLines($pdf, $text, $width) {
+    $cw = $pdf->GetStringWidth($text);
+    if ($cw == 0) return 1; // تجنب القسمة على صفر
+    $avgCharWidth = $cw / strlen($text);
+    $maxCharsPerLine = floor($width / $avgCharWidth);
+    return ceil(strlen($text) / $maxCharsPerLine);
 }
 
 $pdf = new PDF();
@@ -124,12 +133,23 @@ foreach ($items as $item) {
     $lineTotal = $item['quantity'] * $item['price'];
     $totalPrice += $lineTotal;
 
-    $productName = truncateText($item['name'], 35);
+    $productName = truncateText($item['name'], 200);
 
-    $pdf->Cell(80, 10, $productName, 1);
-    $pdf->Cell(30, 10, $item['quantity'], 1, 0, 'C');
-    $pdf->Cell(40, 10, '$' . number_format($item['price'], 2), 1, 0, 'R');
-    $pdf->Cell(40, 10, '$' . number_format($lineTotal, 2), 1, 1, 'R');
+    $numLines = getNumLines($pdf, $productName, 80); // عرض عمود المنتج 80
+    $lineHeight = 6; // ارتفاع السطر
+    $rowHeight = $lineHeight * $numLines;
+
+    // نرسم الخانة الأولى بـ MultiCell (لتدعم تعدد الأسطر)
+    $x = $pdf->GetX();
+    $y = $pdf->GetY();
+    $pdf->MultiCell(80, $lineHeight, $productName, 1);
+
+    // نرسم بقية الخانات بنفس ارتفاع الصف (نرسمها كنوافذ ثم نكتب النص)
+    $pdf->SetXY($x + 80, $y);
+    $pdf->Cell(30, $rowHeight, $item['quantity'], 1, 0, 'C');
+
+    $pdf->Cell(40, $rowHeight, '$' . number_format($item['price'], 2), 1, 0, 'R');
+    $pdf->Cell(40, $rowHeight, '$' . number_format($lineTotal, 2), 1, 1, 'R');
 }
 
 $pdf->Ln(5);
