@@ -926,7 +926,7 @@ $conn->close();
                         <div class="dropdown-content">
                             <a href="headset.php">HEAD SET</a>
                             <a href="mouse.php">MOUSE</a>
-                            <a href="keayboard.php">KEYBOARD</a>
+                            <a href="keyboard.php">KEYBOARD</a>
                             <a href="chair.php">CHAIR</a>
                             <a href="monitor.php">MONITOR</a>
                             <a href="hdmi.php">CABLES AND PORTS</a>
@@ -1013,7 +1013,7 @@ $conn->close();
         <div class="side-menu-grid">
             <a href="headset.php" class="side-menu-item"><i class="fas fa-headphones"></i><p>Headset</p></a>
             <a href="mouse.php" class="side-menu-item"><i class="fas fa-mouse"></i><p>Mouse</p></a>
-            <a href="keayboard.php" class="side-menu-item"><i class="fas fa-keyboard"></i><p>Keyboard</p></a>
+            <a href="keyboard.php" class="side-menu-item"><i class="fas fa-keyboard"></i><p>Keyboard</p></a>
             <a href="chair.php" class="side-menu-item"><i class="fas fa-chair"></i><p>Chair</p></a>
             <a href="monitor.php" class="side-menu-item"><i class="fas fa-desktop"></i><p>Monitor</p></a>
             <a href="hdmi.php" class="side-menu-item"><i class="fas fa-plug"></i><p>Cables and Ports</p></a>
@@ -1060,6 +1060,9 @@ $conn->close();
     </div>
 </div>
     </main>
+    <a href="https://wa.me/972566720728" class="whatsapp-float" target="_blank" title="راسلنا على واتساب">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 
 </div>
 

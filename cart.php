@@ -110,7 +110,7 @@ $conn->close();
                 <div class="column">
                     <a href="headset.php">HEAD SET</a>
                     <a href="mouse.php">MOUSE</a>
-                    <a href="keayboard.php">KEYBOARD</a>
+                    <a href="keyboard.php">KEYBOARD</a>
 
                 </div>
                 <div class="column">
@@ -247,7 +247,7 @@ $conn->close();
             <p>Mouse</p>
         </a>
 
-        <a href="keayboard.php" class="side-menu-item">
+        <a href="keyboard.php" class="side-menu-item">
             <i class="fas fa-keyboard"></i>
             <p>Keyboard</p>
         </a>

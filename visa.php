@@ -48,7 +48,7 @@
                 <div class="column">
                     <a href="headset.php">HEAD SET</a>
                     <a href="mouse.php">MOUSE</a>
-                    <a href="keayboard.php">KEYBOARD</a>
+                    <a href="keyboard.php">KEYBOARD</a>
 
                 </div>
                 <div class="column">

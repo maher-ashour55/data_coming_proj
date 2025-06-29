@@ -240,7 +240,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const navLinks = document.querySelectorAll(".nav-links a");
 
     let pcPages = ['case.php', 'mother.php', 'cpu.php', 'gui.php', 'ssd.php', 'ram.php', 'harddisk.php', 'power.php'];
-    let accessoriesPages = ['headset.php', 'mouse.php', 'keayboard.php', 'chair.php', 'monitor.php', 'hdmi.php'];
+    let accessoriesPages = ['headset.php', 'mouse.php', 'keyboard.php', 'chair.php', 'monitor.php', 'hdmi.php'];
 
     navLinks.forEach(link => {
         const href = link.getAttribute("href");
