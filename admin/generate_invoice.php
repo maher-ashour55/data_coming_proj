@@ -148,8 +148,8 @@ foreach ($items as $item) {
     $pdf->SetXY($x + 80, $y);
     $pdf->Cell(30, $rowHeight, $item['quantity'], 1, 0, 'C');
 
-    $pdf->Cell(40, $rowHeight, '$' . number_format($item['price'], 2), 1, 0, 'R');
-    $pdf->Cell(40, $rowHeight, '$' . number_format($lineTotal, 2), 1, 1, 'R');
+    $pdf->Cell(40, $rowHeight, '' . number_format($item['price'], 2), 1, 0, 'R');
+    $pdf->Cell(40, $rowHeight, '' . number_format($lineTotal, 2), 1, 1, 'R');
 }
 
 $pdf->Ln(5);
@@ -158,7 +158,7 @@ $pdf->Ln(5);
 $pdf->SetFont('Arial', 'B', 13);
 $pdf->SetFillColor(240, 240, 240);
 $pdf->Cell(150, 10, 'Grand Total:', 1, 0, 'R', true);
-$pdf->Cell(40, 10, '$' . number_format($totalPrice, 2), 1, 1, 'R', true);
+$pdf->Cell(40, 10, '' . number_format($totalPrice, 2), 1, 1, 'R', true);
 
 // إخراج الملف
 $pdf->Output('I', 'invoice_order_' . $order['id'] . '.pdf');
