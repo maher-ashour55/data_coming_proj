@@ -70,42 +70,61 @@ function displayResults(products) {
 // ===================== إضافة للسلة =====================
 function attachBuyNowEvents() {
     const buttons = document.querySelectorAll('.buy-now-btn');
+
     buttons.forEach(button => {
         button.addEventListener('click', () => {
             const productId = button.getAttribute('data-product-id');
+            const price = button.getAttribute('data-price');
+
             fetch('add_to_cart.php', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ product_id: productId, quantity: 1 })
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    product_id: productId,
+                    quantity: 1,
+                    price: price
+                }),
+                credentials: 'include'
             })
                 .then(res => res.json())
                 .then(data => {
                     if (data.success) {
-                        showMessage("تم إضافة المنتج إلى السلة ✅", true);
-                        updateCartCount();
+                        showMessage(data.message || "The product has been added to the cart ✅");
+
+                        // تحديث عدد المنتجات في السلة مباشرة
+                        const cartCountSpan = document.querySelector('.cart-count');
+                        if (cartCountSpan && data.cart_count !== undefined) {
+                            cartCountSpan.textContent = data.cart_count;
+                        }
                     } else {
-                        showMessage("User not logged in ❌", false);
+                        showMessage(data.message || "Something went wrong ❌", false);
                     }
                 })
                 .catch(error => {
                     console.error(error);
-                    showMessage("فشل الاتصال بالخادم ❌", false);
+                    showMessage("Failed to connect to server ❌", false);
                 });
         });
     });
 }
 
-function updateCartCount() {
-    fetch('get_cart_count.php')
+document.addEventListener("DOMContentLoaded", () => {
+    fetch('get_cart_count.php', { credentials: 'include' })
         .then(res => res.json())
         .then(data => {
-            if (data.success) {
-                const countSpan = document.querySelector('.cart-count');
-                countSpan.textContent = data.count;
+            if (data.success && data.cart_count !== undefined) {
+                const cartCountSpan = document.querySelector('.cart-count');
+                if (cartCountSpan) {
+                    cartCountSpan.textContent = data.cart_count;
+                }
             }
         })
-        .catch(err => console.error('Error fetching cart count:', err));
-}
+        .catch(err => {
+            console.error('Failed to load cart count:', err);
+        });
+});
 
 function showMessage(text, success = true) {
     const messageBox = document.getElementById('messageBox');
