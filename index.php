@@ -468,6 +468,9 @@ if (isset($_SESSION['user_id'])) {
             </div>
         </div>
     </div>
+    <a href="https://wa.me/972566720728" class="whatsapp-float" target="_blank" title="راسلنا على واتساب">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 </main>
 
 <footer>© 2025 data coming . All Rights Reserved</footer>

@@ -287,3 +287,13 @@ function backToMainMenu() {
     document.getElementById("accessories-side-menu")?.classList.remove("active");
     document.getElementById("side-menu")?.classList.add("active");
 }
+
+
+window.addEventListener('scroll', function () {
+    const waBtn = document.querySelector('.whatsapp-float');
+    if (window.scrollY > 100) {
+        waBtn.classList.add('whatsapp-visible');
+    } else {
+        waBtn.classList.remove('whatsapp-visible');
+    }
+});

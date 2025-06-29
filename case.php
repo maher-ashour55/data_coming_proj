@@ -232,6 +232,9 @@ $conn->close();
         </div>
         </div>
     </main>
+    <a href="https://wa.me/972566720728" class="whatsapp-float" target="_blank" title="راسلنا على واتساب">
+    <i class="fab fa-whatsapp"></i>
+    </a>
 </div>
 
 <footer>© 2025 Data Coming . All Rights Reserved</footer>
