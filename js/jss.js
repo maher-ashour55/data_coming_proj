@@ -80,6 +80,21 @@ function attachBuyNowEvents() {
     });
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+    fetch('get_cart_count.php', { credentials: 'include' })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success && data.cart_count !== undefined) {
+                const cartCountSpan = document.querySelector('.cart-count');
+                if (cartCountSpan) {
+                    cartCountSpan.textContent = data.cart_count;
+                }
+            }
+        })
+        .catch(err => {
+            console.error('Failed to load cart count:', err);
+        });
+});
 
 
 function showMessage(text, success = true) {
