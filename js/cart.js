@@ -75,7 +75,7 @@ function decrease(itemId) {
     }
 }
 
-function updateCartTotal() {
+function updateCartTotal(deliveryFee = null) {
     const items = document.querySelectorAll('.item');
     let total = 0;
     items.forEach(item => {
@@ -87,12 +87,17 @@ function updateCartTotal() {
             total += basePrice * quantity;
         }
     });
-    const formattedTotal = `₪${total.toFixed(2)}`;
-    console.log('Calculated total:', formattedTotal);
-    document.getElementById('cart-total').textContent = formattedTotal;
 
+    // أضف التوصيل
+    if (deliveryFee !== null) {
+        total += deliveryFee;
+    }
+
+    const formattedTotal = `₪${total.toFixed(2)}`;
+    document.getElementById('cart-total').textContent = formattedTotal;
     localStorage.setItem('cartTotal', formattedTotal);
 }
+let total = parseFloat(document.getElementById('cart-total').textContent.replace("₪", "")) || 0;
 
 window.addEventListener('DOMContentLoaded', () => {
     updateCartTotal();
@@ -231,3 +236,21 @@ document.getElementById('doneButton').addEventListener('click', function(event) 
 }
 
 
+function getDeliveryFee(city) {
+    switch (city.toLowerCase()) {
+        case "tulkarm": return 10;
+        case "jerusalem": return 30;
+        case "48": return 65;
+        default: return 20;
+    }
+}
+
+
+function updateDeliveryFeeAndTotal() {
+    const city = document.getElementById("city-select")?.value || document.querySelector("select.sel").value;
+    const fee = getDeliveryFee(city);
+
+    showMessage(`رسوم التوصيل: ${fee}₪`, true);
+
+    updateCartTotal(fee);
+}

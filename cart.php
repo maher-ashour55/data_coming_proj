@@ -262,7 +262,7 @@ $conn->close();
                 <input class="inputs" required type="text" placeholder="Phone number">
                 <div class="address-row">
                     <input class="inputs" required type="text" placeholder="Street / Postal Code">
-                    <select class="sel">
+                    <select class="sel" id="city-select" onchange="updateDeliveryFeeAndTotal()">
                         <option>Jerusalem</option>
                         <option>Ramallah</option>
                         <option>Bethlehem</option>
