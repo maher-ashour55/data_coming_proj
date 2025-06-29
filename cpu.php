@@ -188,8 +188,9 @@ $conn->close();
     </div>
     <main style="padding-top: 70px">
         <div id="messageBox"></div>
-        <div class="categories">
-            <div class="container">
+        <div class="container">
+            <div class="categories">
+
             <?php while ($row = $result->fetch_assoc()):
                 $final_price = ($row['discount_price'] !== null && floatval($row['discount_price']) > 0 && floatval($row['discount_price']) < floatval($row['price']))
                     ? $row['discount_price']

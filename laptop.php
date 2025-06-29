@@ -42,7 +42,7 @@ $conn->close();
     <meta charset="UTF-8" />
     <title>LAPTOP</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
-    <link rel="stylesheet" href="./styles/laptop.css" />
+    <link rel="stylesheet" href="./styles/cpu.css" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 </head>
 <body>
