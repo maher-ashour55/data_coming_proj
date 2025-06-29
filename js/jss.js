@@ -38,7 +38,6 @@ function displayResults(products) {
 }
 
 
-
 function attachBuyNowEvents() {
     const buttons = document.querySelectorAll('.buy-now-btn');
 
@@ -59,16 +58,20 @@ function attachBuyNowEvents() {
                 }),
                 credentials: 'include'
             })
-
                 .then(res => res.json())
                 .then(data => {
                     if (data.success) {
                         showMessage(data.message || "The product has been added to the cart ✅");
+
+                        // تحديث عدد المنتجات في السلة مباشرة
+                        const cartCountSpan = document.querySelector('.cart-count');
+                        if (cartCountSpan && data.cart_count !== undefined) {
+                            cartCountSpan.textContent = data.cart_count;
+                        }
                     } else {
                         showMessage(data.message || "Something went wrong ❌", false);
                     }
                 })
-
                 .catch(error => {
                     console.error(error);
                     showMessage("Failed to connect to server ❌", false);
@@ -76,6 +79,7 @@ function attachBuyNowEvents() {
         });
     });
 }
+
 
 
 function showMessage(text, success = true) {

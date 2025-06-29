@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 $conn = new mysqli("localhost", "u251541401_maher_user", "Datacoming12345", "u251541401_datacoming");
 if ($conn->connect_error) {
     die("فشل الاتصال: " . $conn->connect_error);
