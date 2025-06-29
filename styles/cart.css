@@ -640,6 +640,7 @@ footer {
     border-radius: 18px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
     transition: 0.3s ease;
+    border: 1px solid #9265A6;
 }
 
 /* ===== Headers ===== */
