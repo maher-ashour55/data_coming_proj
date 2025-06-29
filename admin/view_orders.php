@@ -355,7 +355,7 @@ function getOrderItems($conn, $order_id) {
                     if (count($items) > 0):
                         foreach ($items as $item):
                             ?>
-                            <p class="item"><?= htmlspecialchars($item['product_name']) ?> × <?= $item['quantity'] ?> — $<?= number_format($item['price'], 2) ?></p>
+                            <p class="item"><?= htmlspecialchars($item['product_name']) ?> × <?= $item['quantity'] ?> — ₪<?= number_format($item['price'], 2) ?></p>
                         <?php
                         endforeach;
                     else:
