@@ -745,7 +745,7 @@ footer {
 #messageBox {
     display: none;
     position: fixed;
-    top: 80px; /* تحت الهيدر */
+    top: 94px; /* تحت الهيدر */
     left: 50%;
     transform: translateX(-50%);
     background-color: #4CAF50;
