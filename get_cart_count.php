@@ -16,7 +16,7 @@ $conn->set_charset("utf8");
 
 $user_id = $_SESSION['user_id'];
 
-$stmt = $conn->prepare("SELECT SUM(quantity) as total FROM cart_items WHERE user_id = ?");
+$stmt = $conn->prepare("SELECT count(*) as total FROM cart_items WHERE user_id = ?");
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();

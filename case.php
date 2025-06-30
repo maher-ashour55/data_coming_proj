@@ -20,7 +20,7 @@ $cart_count = 0;
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
 
-    $stmt = $conn->prepare("SELECT SUM(quantity) as total FROM cart_items WHERE user_id = ?");
+    $stmt = $conn->prepare("SELECT COUNT(*) as total FROM cart_items WHERE user_id = ?");
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $cart_result = $stmt->get_result();
@@ -31,6 +31,7 @@ if (isset($_SESSION['user_id'])) {
 
     $stmt->close();
 }
+
 
 // ✅ أغلق الاتصال بعد الانتهاء من كل شيء
 $conn->close();
