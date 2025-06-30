@@ -247,8 +247,9 @@ $conn->close();
             <div class="total">
                 <p>Total:</p>
                 <p>
-                    <span id="products-total">₪0.00</span><br>
-                    <span id="delivery-fee">+₪0.00</span><br>
+                    <span id="products-total">₪0.00</span>
+                    <span id="delivery-fee">+₪0.00</span>
+                    <br>
                     <strong>= <span id="cart-total">₪0.00</span></strong>
                 </p>
             </div>
@@ -280,6 +281,7 @@ $conn->close();
                         <option>Jenin</option>
                         <option>Ariha</option>
                         <option>Tubas</option>
+                        <option>arab 48</option>
                     </select>
                 </div>
 

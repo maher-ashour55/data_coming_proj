@@ -304,7 +304,7 @@ function getDeliveryFee(city) {
     switch (city.toLowerCase()) {
         case "tulkarm": return 10;
         case "jerusalem": return 30;
-        case "48": return 65;
+        case "arab 48": return 65;
         default: return 20;
     }
 }
