@@ -246,8 +246,14 @@ $conn->close();
             </div>
             <div class="total">
                 <p>Total:</p>
-                <p id="cart-total">₪0.00</p>
+                <p>
+                    <span id="products-total">₪0.00</span><br>
+                    <span id="delivery-fee">+₪0.00</span><br>
+                    <strong>= <span id="cart-total">₪0.00</span></strong>
+                </p>
             </div>
+
+
         </section>
 
         <!-- Payment Section -->

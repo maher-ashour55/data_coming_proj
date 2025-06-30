@@ -77,26 +77,31 @@ function decrease(itemId) {
 
 function updateCartTotal(deliveryFee = null) {
     const items = document.querySelectorAll('.item');
-    let total = 0;
+    let productsTotal = 0;
     items.forEach(item => {
         const priceElement = item.querySelector('.product_price');
         const basePrice = parseFloat(priceElement.getAttribute('data-base-price'));
         const quantitySpan = item.querySelector('.quantity');
         const quantity = parseInt(quantitySpan.textContent) || 1;
         if (!isNaN(basePrice)) {
-            total += basePrice * quantity;
+            productsTotal += basePrice * quantity;
         }
     });
 
-    // أضف التوصيل
-    if (deliveryFee !== null) {
-        total += deliveryFee;
+    if (deliveryFee === null) {
+        const city = document.getElementById("city-select")?.value || document.querySelector("select.sel").value;
+        deliveryFee = getDeliveryFee(city);
     }
 
-    const formattedTotal = `₪${total.toFixed(2)}`;
-    document.getElementById('cart-total').textContent = formattedTotal;
-    localStorage.setItem('cartTotal', formattedTotal);
+    const total = productsTotal + deliveryFee;
+
+    document.getElementById('products-total').textContent = `₪${productsTotal.toFixed(2)}`;
+    document.getElementById('delivery-fee').textContent = `+₪${deliveryFee.toFixed(2)}`;
+    document.getElementById('cart-total').textContent = `₪${total.toFixed(2)}`;
+
+    localStorage.setItem('cartTotal', total.toFixed(2));
 }
+
 let total = parseFloat(document.getElementById('cart-total').textContent.replace("₪", "")) || 0;
 
 window.addEventListener('DOMContentLoaded', () => {
