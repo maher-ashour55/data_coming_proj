@@ -752,7 +752,7 @@ footer {
 }
 
 .quantity-selector span {
-    padding: 0 12px;
+    padding:12px;
     display: inline-block;
     text-align: center;
     min-width: 30px;
@@ -765,6 +765,11 @@ footer {
     color: #e74c3c;
     font-size: 18px;
     cursor: pointer;
+}
+.remove-item:hover {
+    color: #c0392b; /* لون أغمق عند المرور */
+    transform: scale(1.2); /* تكبير بسيط */
+    transition: all 0.2s ease;
 }
 
 /* ===== Total ===== */
