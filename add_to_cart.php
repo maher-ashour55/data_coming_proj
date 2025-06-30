@@ -40,7 +40,7 @@ if ($result->num_rows > 0) {
     $stmt_insert->execute();
 
     // ✅ احسب عدد العناصر بعد الإضافة
-    $stmt_count = $conn->prepare("SELECT SUM(quantity) AS total FROM cart_items WHERE user_id = ?");
+    $stmt_count = $conn->prepare("SELECT COUNT(*) AS total FROM cart_items WHERE user_id = ?");
     $stmt_count->bind_param("i", $user_id);
     $stmt_count->execute();
     $result_count = $stmt_count->get_result();
