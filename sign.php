@@ -1,4 +1,6 @@
 <?php
+session_start();  // بدء الجلسة
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -21,35 +23,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['reg-password'];
     $confirm_password = $_POST['reg-confirm'];
 
-    if ($password == $confirm_password) {
-        $firstname = $conn->real_escape_string($firstname);
-        $lastname = $conn->real_escape_string($lastname);
-        $email = $conn->real_escape_string($email);
-        $password = password_hash($password, PASSWORD_DEFAULT);
+    if ($password !== $confirm_password) {
+        $error_message = "كلمة المرور غير متطابقة!";
+    } else {
+        // تشفير كلمة المرور
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-        $sql_check_email = "SELECT * FROM users WHERE email = '$email'";
-        $result_check = $conn->query($sql_check_email);
+        // تحقق من وجود البريد الإلكتروني مسبقًا
+        $stmt_check = $conn->prepare("SELECT id FROM users WHERE email = ?");
+        $stmt_check->bind_param("s", $email);
+        $stmt_check->execute();
+        $result_check = $stmt_check->get_result();
 
         if ($result_check->num_rows > 0) {
             $error_message = "البريد الإلكتروني هذا مسجل بالفعل. الرجاء استخدام بريد آخر.";
         } else {
-            $sql = "INSERT INTO users (first_name, last_name, email, password) VALUES ('$firstname', '$lastname', '$email', '$password')";
+            // إدخال المستخدم الجديد باستخدام prepared statement
+            $stmt_insert = $conn->prepare("INSERT INTO users (first_name, last_name, email, password) VALUES (?, ?, ?, ?)");
+            $stmt_insert->bind_param("ssss", $firstname, $lastname, $email, $hashed_password);
 
-            if ($conn->query($sql) === TRUE) {
-                echo "تم التسجيل بنجاح!";
-                header("Location: login.php");
+            if ($stmt_insert->execute()) {
+                // حفظ user_id في الجلسة
+                $user_id = $stmt_insert->insert_id;
+                $_SESSION['user_id'] = $user_id;
+                $_SESSION['email'] = $email;
+
+                // إعادة التوجيه للصفحة الرئيسية
+                header("Location: index.php");
                 exit();
             } else {
-                echo "خطأ في التسجيل: " . $conn->error;
+                $error_message = "خطأ في التسجيل: " . $conn->error;
             }
+
+            $stmt_insert->close();
         }
-    } else {
-        $error_message = "كلمة المرور غير متطابقة!";
+        $stmt_check->close();
     }
 }
 
 $conn->close();
 ?>
+
 
 
 
