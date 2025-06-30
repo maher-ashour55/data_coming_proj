@@ -110,30 +110,31 @@ document.querySelectorAll('input[name="payment"]').forEach(radio => {
         selectedPayment = this.value;
         const button = document.getElementById('doneButton');
 
-        if (selectedPayment === 'visa') {
-            button.textContent = 'Pay with Visa';
-        } else if (selectedPayment === 'master') {
-            button.textContent = 'Pay with MasterCard';
-        } else if (selectedPayment === 'cash') {
-            button.textContent = 'Pay on Delivery';
+        if (selectedPayment === 'cash') {
+            button.textContent = 'Pay with cash';
+        } else if (selectedPayment === 'reflect') {
+            button.textContent = 'Pay with Reflect';
         }
     });
 });
 
+
 document.getElementById('doneButton').addEventListener('click', function(event) {
     event.preventDefault();
 
+    if (document.querySelectorAll('.item').length === 0) {
+        showMessage("🚫 There are no products in the cart!", false);
+        return;
+    }
+
+
     let fname = document.querySelector('.fname').value.trim();
     let lname = document.querySelector('.lname').value.trim();
-    let address = document.querySelector('input[placeholder="Street / Postal code"]').value.trim();
+    let address = document.querySelector('input[placeholder="Street / Postal Code"]').value.trim();
     let email = document.querySelector('input[placeholder="Email"]').value.trim();
     let phone = document.querySelector('input[placeholder="Phone number"]').value.trim();
     let city = document.querySelector('select.sel').value.trim();
-
-    let payment = null;
-    document.querySelectorAll('input[name="payment"]').forEach(radio => {
-        if (radio.checked) payment = radio.value;
-    });
+    let payment = document.querySelector('input[name="payment"]:checked')?.value;
 
     if (!fname || !lname || !address || !email || !phone || !city || !payment) {
         showMessage("Please fill in all fields and select your payment method.", false);
@@ -148,61 +149,119 @@ document.getElementById('doneButton').addEventListener('click', function(event) 
         total += price * quantity;
     });
 
+    const deliveryFee = getDeliveryFee(city);
+    total += deliveryFee;
+
+    const orderData = {
+        fname,
+        lname,
+        address,
+        email,
+        phone,
+        city,
+        payment,
+        total
+    };
+
     if (payment === 'cash') {
+        // كاش
         fetch('place_order.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                fname,
-                lname,
-                address,
-                email,
-                phone,
-                city,
-                payment,
-                total
-            })
+            body: JSON.stringify(orderData)
         })
-            .then(async response => {
-                const text = await response.text();
-                console.log("Raw Response Text:", text);
-
-                try {
-                    const data = JSON.parse(text);
-                    console.log("Parsed JSON:", data);
-
-                    if (data.status === 'success') {
-                        showMessage("Order submitted successfully!");
-                        setTimeout(() => window.location.href = './index.php', 3100);
-
-                    } else {
-                        showMessage(data.message || "Something went wrong!", false);
-                    }
-                } catch (e) {
-                    console.error("JSON parse error:", e);
-                    showMessage("Invalid response from server.", false);
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    showMessage("✅ The order has been placed successfully!");
+                    setTimeout(() => window.location.href = './index.php', 3000);
+                } else {
+                    showMessage(data.message || "❌ حدث خطأ أثناء تنفيذ الطلب.", false);
                 }
             })
-            .catch(error => {
-                console.error('Fetch error:', error);
-                showMessage("Network error. Please try again.", false);
-            });
+            .catch(() => showMessage("❌ فشل الاتصال بالخادم.", false));
+    }
 
-    } else if (payment === 'visa' || payment === 'master') {
-        localStorage.setItem('pendingOrder', JSON.stringify({
-            fname,
-            lname,
-            address,
-            email,
-            phone,
-            city,
-            payment,
-            total
-        }));
+    else if (payment === 'reflect') {
+        // Reflect
+        const confirmBox = document.createElement('div');
+        confirmBox.innerHTML = `
+            <div style="
+    background: #fff;
+    border-radius: 16px;
+    padding: 25px;
+    max-width: 380px;
+    margin: 20px auto;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+">
+    <div style="font-size: 18px; margin-bottom: 12px; color: #333;">
+        <span style="color: #9265A6; font-weight: bold;">💳 Please contact the following number to pay via Reflect</span>
+    </div>
+    
+    <a href="https://wa.me/972566720728" target="_blank" style="
+        display: inline-block;
+        margin: 12px 0;
+        padding: 10px 16px;
+        background-color: #25D366;
+        color: white;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background 0.3s;
+    " onmouseover="this.style.backgroundColor='#1ebe5d'" onmouseout="this.style.backgroundColor='#25D366'">
+        <i class="fab fa-whatsapp"></i> +972566720728
+    </a>
 
-        window.location.href = 'visa.php';
+    <div style="margin-top: 16px;">
+        <button id="confirmReflectBtn" style="
+            padding: 10px 20px;
+            background: #9265A6;
+            color: white;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        " onmouseover="this.style.backgroundColor='#7a4f8b'" onmouseout="this.style.backgroundColor='#9265A6'">
+            Payment was made via Reflect
+        </button>
+    </div>
+</div>
+
+        `;
+        const messageBox = document.getElementById('messageBox');
+        messageBox.innerHTML = '';
+        messageBox.style.backgroundColor = 'transparent';
+        messageBox.style.display = 'block';
+        messageBox.appendChild(confirmBox);
+
+        // عند الضغط على "تم الدفع عبر Reflect"
+        document.getElementById('confirmReflectBtn').addEventListener('click', () => {
+            fetch('place_order.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(orderData)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        showMessage("✅ Order confirmed via Reflect!");
+                        setTimeout(() => window.location.href = './index.php', 3000);
+                    } else {
+                        showMessage(data.message || "❌ حدث خطأ أثناء تنفيذ الطلب.", false);
+                    }
+                })
+                .catch(() => showMessage("❌ فشل الاتصال بالخادم.", false));
+        });
     }
 });
+
+
+
+
+
 
     const hamburger = document.getElementById('hamburger');
     const sideMenu = document.getElementById('side-menu');
@@ -250,7 +309,7 @@ function updateDeliveryFeeAndTotal() {
     const city = document.getElementById("city-select")?.value || document.querySelector("select.sel").value;
     const fee = getDeliveryFee(city);
 
-    showMessage(`رسوم التوصيل: ${fee}₪`, true);
+    showMessage(`Delivery price: ${fee}₪`, true);
 
     updateCartTotal(fee);
 }
