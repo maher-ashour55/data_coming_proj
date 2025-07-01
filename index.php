@@ -373,7 +373,7 @@ if (isset($_SESSION['user_id'])) {
                     <img src="./img/keyboard.png" alt="Processor">
                 </div>
                 <h3>KEYBOARD</h3>
-                <button onclick="location.href='keayboard.php'">Browse</button>
+                <button onclick="location.href='keyboard.php'">Browse</button>
             </div>
             </a>
             <a href="mouse.php">
