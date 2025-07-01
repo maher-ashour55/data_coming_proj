@@ -5,7 +5,6 @@ error_reporting(E_ALL);
 ini_set('log_errors', 1);
 ini_set('error_log', 'php_errors.log');
 
-
 file_put_contents("log.txt", "========== New Request ==========\n", FILE_APPEND);
 file_put_contents("log.txt", "[" . date("Y-m-d H:i:s") . "] Script started\n", FILE_APPEND);
 
@@ -57,20 +56,22 @@ $phone = $data['phone'];
 $city = $data['city'];
 $payment = $data['payment'];
 $total = $data['total'];
+$comments = isset($data['comments']) ? $data['comments'] : null;
 
 $order_date = date("Y-m-d H:i:s");
 $status = "Pending";
 
 file_put_contents("log.txt", "Inserting order...\n", FILE_APPEND);
 
-$stmt = $conn->prepare("INSERT INTO orders (user_id, total, payment_method, address, order_date, status, fname, lname, email, phone, city) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+// ✅ تحديث الاستعلام ليتضمن comments
+$stmt = $conn->prepare("INSERT INTO orders (user_id, total, payment_method, address, order_date, status, fname, lname, email, phone, city, comments) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 if (!$stmt) {
     file_put_contents("log.txt", "Order prepare failed: " . $conn->error . "\n", FILE_APPEND);
     echo json_encode(['status' => 'error', 'message' => 'Prepare failed', 'error' => $conn->error]);
     exit;
 }
 
-$stmt->bind_param("idsssssssss", $user_id, $total, $payment, $address, $order_date, $status, $fname, $lname, $email, $phone, $city);
+$stmt->bind_param("idssssssssss", $user_id, $total, $payment, $address, $order_date, $status, $fname, $lname, $email, $phone, $city, $comments);
 if (!$stmt->execute()) {
     file_put_contents("log.txt", "Order execution failed: " . $stmt->error . "\n", FILE_APPEND);
     echo json_encode(['status' => 'error', 'message' => 'Order insert failed', 'error' => $stmt->error]);
@@ -79,7 +80,7 @@ if (!$stmt->execute()) {
 
 $order_id = $stmt->insert_id;
 file_put_contents("log.txt", "Order inserted successfully with ID: $order_id\n", FILE_APPEND);
-$_SESSION['new_order'] = true;  // ✅ إشعار الهيدر
+$_SESSION['new_order'] = true;
 $stmt->close();
 
 file_put_contents("log.txt", "Fetching cart items...\n", FILE_APPEND);

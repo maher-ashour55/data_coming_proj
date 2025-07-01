@@ -316,6 +316,9 @@ function getOrderItems($conn, $order_id) {
                 </p>
 
                 <p><strong>Current Order Status:</strong> <?= htmlspecialchars($order['status'] ?? 'Pending') ?></p>
+                <?php if (!empty($order['comments'])): ?>
+                    <p><strong>Comments:</strong> <?= nl2br(htmlspecialchars($order['comments'])) ?></p>
+                <?php endif; ?>
 
                 <form class="status-update" method="POST" action="update_order_status.php">
                     <input type="hidden" name="order_id" value="<?= $order['id'] ?>" />

@@ -140,6 +140,8 @@ document.getElementById('doneButton').addEventListener('click', function(event) 
     let phone = document.querySelector('input[placeholder="Phone number"]').value.trim();
     let city = document.querySelector('select.sel').value.trim();
     let payment = document.querySelector('input[name="payment"]:checked')?.value;
+    let comments = document.querySelector('textarea.inputs').value.trim();
+
 
     if (!fname || !lname || !address || !email || !phone || !city || !payment) {
         showMessage("Please fill in all fields and select your payment method.", false);
@@ -165,7 +167,8 @@ document.getElementById('doneButton').addEventListener('click', function(event) 
         phone,
         city,
         payment,
-        total
+        total,
+        comments
     };
 
     if (payment === 'cash') {

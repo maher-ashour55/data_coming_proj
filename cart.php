@@ -301,9 +301,9 @@ $conn->close();
 
 
 
-                <textarea class="inputs" placeholder="Your comments here..." style="height: 100px; resize: none"></textarea>
+                <textarea class="inputs" name="comments" placeholder="Your comments here..." style="height: 100px; resize: none"></textarea>
 
-                <button class="button" id="doneButton">Pay with cash</button>
+                <button class="button" id="doneButton" type="button">Pay with cash</button>
             </form>
         </section>
     </div>
