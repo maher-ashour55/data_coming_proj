@@ -205,10 +205,10 @@ document.getElementById('doneButton').addEventListener('click', function(event) 
     font-family: 'Arial', sans-serif;
 ">
     <div style="font-size: 18px; margin-bottom: 12px; color: #333;">
-        <span style="color: #9265A6; font-weight: bold;">💳 Please contact the following number to pay via Reflect</span>
+        <span style="color: #9265A6; font-weight: bold;">💳 الدفع عن طريق ريفلكت لهذا الرقم</span>
     </div>
     
-    <a href="https://wa.me/972566720728" target="_blank" style="
+    <div style="
         display: inline-block;
         margin: 12px 0;
         padding: 10px 16px;
@@ -219,8 +219,8 @@ document.getElementById('doneButton').addEventListener('click', function(event) 
         font-weight: bold;
         transition: background 0.3s;
     " onmouseover="this.style.backgroundColor='#1ebe5d'" onmouseout="this.style.backgroundColor='#25D366'">
-        <i class="fab fa-whatsapp"></i> +972566720728
-    </a>
+        💳 0595340025
+    </div>
 
     <div style="margin-top: 16px;">
         <button id="confirmReflectBtn" style="
