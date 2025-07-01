@@ -151,12 +151,99 @@ $conn->close();
             background: linear-gradient(180deg, #9265A6, #6d4c82);
             color: white;
             padding: 30px 20px;
-            flex-shrink: 0;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            position: relative;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
         }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .menu-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+        .logout a:hover {
+            background-color: #c0392b;
+        }
+        .menu-links a {
+            display: flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            padding: 12px 15px;
+            border-radius: 10px;
+            transition: background 0.3s ease;
+            font-size: 16px;
+        }
+
+        .menu-links a:hover,
+        .menu-links a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .menu-links a i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        /* === bottom links: home/customer and logout === */
+        .bottom-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: auto;
+        }
+
+        .home-customer {
+            display: flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            gap: 10px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+
+        .home-customer:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f44336;
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .logout-btn i {
+            margin-right: 8px;
+            font-size: 20px;
+        }
+
+        .logout-btn:hover {
+            background-color: #c0392b;
+        }
+
+
         .sidebar h2 {
             margin-bottom: 40px;
             text-align: center;
@@ -187,6 +274,7 @@ $conn->close();
             padding: 40px;
             background-color: #f8f9fa;
             overflow-x: auto;
+            padding-left: 280px;
         }
         .main-header {
             font-size: 30px;
@@ -304,35 +392,22 @@ $conn->close();
 
 <div class="sidebar">
     <h2>Admin Panel</h2>
-    <a href="#" class="active"><i class='bx bx-home'></i> HOME</a>
-    <a href="add.html"><i class='bx bx-plus-circle'></i> Add Product</a>
-    <a href="manage_products.php"><i class='bx bx-edit'></i> Edit Products</a>
-    <a href="view_orders.php"><i class='bx bx-cart'></i> View Orders</a>
-    <a href="manage_users.php"><i class='bx bx-group'></i> Manage Users</a>
-    <div class="logout">
-        <a href="../index.php" class="home-link" style="
-            background-color: transparent;
-            padding: 12px 20px;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-            font-family: 'Cairo', sans-serif;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-        "
-           onmouseover="this.style.backgroundColor='rgba(255, 255, 255, 0.2)';"
-           onmouseout="this.style.backgroundColor='transparent';"
-        >
-            <i class='bx bx-home' style="font-size: 22px;"></i> home/customer
-        </a>
-        <a href="../logout.php"><i class='bx bx-log-out'></i> Logout</a>
+
+    <div class="menu-links">
+        <a href="#" class="active"><i class='bx bx-home'></i> HOME</a>
+        <a href="add.html"><i class='bx bx-plus-circle'></i> Add Product</a>
+        <a href="manage_products.php"><i class='bx bx-edit'></i> Edit Products</a>
+        <a href="view_orders.php"><i class='bx bx-cart'></i> View Orders</a>
+        <a href="manage_users.php"><i class='bx bx-group'></i> Manage Users</a>
+    </div>
+
+    <div class="bottom-links">
+        <a href="../index.php" class="home-customer"><i class='bx bx-home'></i> home/customer</a>
+        <a href="../logout.php" class="logout-btn"><i class='bx bx-log-out'></i> Logout</a>
     </div>
 </div>
+
+
 
 <div class="main">
     <div class="main-header">
