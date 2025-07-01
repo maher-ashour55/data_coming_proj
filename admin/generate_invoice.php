@@ -154,11 +154,23 @@ foreach ($items as $item) {
 
 $pdf->Ln(5);
 
+// المجموع الفرعي للمنتجات
+$pdf->SetFont('Arial', '', 12);
+$pdf->SetFillColor(255, 255, 255);
+$pdf->Cell(150, 10, 'Subtotal (Products):', 1, 0, 'R');
+$pdf->Cell(40, 10, number_format($totalPrice, 2), 1, 1, 'R');
+
+// رسوم التوصيل
+$deliveryFee = $order['total'] - $totalPrice;
+$pdf->Cell(150, 10, 'Delivery Fee:', 1, 0, 'R');
+$pdf->Cell(40, 10, number_format($deliveryFee, 2), 1, 1, 'R');
+
 // المجموع الكلي
 $pdf->SetFont('Arial', 'B', 13);
 $pdf->SetFillColor(240, 240, 240);
 $pdf->Cell(150, 10, 'Grand Total:', 1, 0, 'R', true);
-$pdf->Cell(40, 10, '' . number_format($totalPrice, 2), 1, 1, 'R', true);
+$pdf->Cell(40, 10, number_format($order['total'], 2), 1, 1, 'R', true);
+
 
 // إخراج الملف
 $pdf->Output('I', 'invoice_order_' . $order['id'] . '.pdf');
