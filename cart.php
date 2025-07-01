@@ -269,20 +269,22 @@ $conn->close();
                 <input class="inputs" required type="text" placeholder="Phone number">
                 <div class="address-row">
                     <input class="inputs" required type="text" placeholder="Street / Postal Code">
-                    <select class="sel" id="city-select" onchange="updateDeliveryFeeAndTotal()">
-                        <option>Jerusalem</option>
-                        <option>Ramallah</option>
-                        <option>Bethlehem</option>
-                        <option>Hebron</option>
-                        <option>Nablus</option>
-                        <option>Qalqilya</option>
-                        <option>Tulkarm</option>
-                        <option>Salfit</option>
-                        <option>Jenin</option>
-                        <option>Ariha</option>
-                        <option>Tubas</option>
-                        <option>arab 48</option>
+                    <select class="sel" id="city-select" name="city" required onchange="updateDeliveryFeeAndTotal()">
+                        <option value="select" disabled selected hidden>Select city</option>
+                        <option value="jerusalem">Jerusalem</option>
+                        <option value="ramallah">Ramallah</option>
+                        <option value="bethlehem">Bethlehem</option>
+                        <option value="hebron">Hebron</option>
+                        <option value="nablus">Nablus</option>
+                        <option value="qalqilya">Qalqilya</option>
+                        <option value="tulkarm">Tulkarm</option>
+                        <option value="salfit">Salfit</option>
+                        <option value="jenin">Jenin</option>
+                        <option value="ariha">Ariha</option>
+                        <option value="tubas">Tubas</option>
+                        <option value="arab 48">arab 48</option>
                     </select>
+
                 </div>
 
                 <div class="custom-radio-group">

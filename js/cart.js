@@ -305,9 +305,11 @@ function getDeliveryFee(city) {
         case "tulkarm": return 10;
         case "jerusalem": return 30;
         case "arab 48": return 65;
+        case "select": return 0;
         default: return 20;
     }
 }
+
 
 
 function updateDeliveryFeeAndTotal() {
