@@ -250,7 +250,7 @@ function displayDropdownResults(products) {
         searchDropdown.innerHTML = `<div class="no-results">لا يوجد نتائج</div>`;
     } else {
         searchDropdown.innerHTML = products.map(product => `
-            <div class="result-item" onclick="window.location='product.php?id=${product.id}'">
+            <div class="result-item" onclick="window.location='product_details.php?id=${product.id}'">
                 <img src="admin/uploads/${product.image}" alt="${product.name}">
                 <div class="info">
                     <h4>${product.name}</h4>
@@ -261,6 +261,7 @@ function displayDropdownResults(products) {
     }
     searchDropdown.style.display = "block";
 }
+
 
 
 
