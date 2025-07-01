@@ -339,38 +339,43 @@ $conn->close();
             background-color: #f5f5f5;
         }
         .status {
+            display: inline-block;
             text-transform: capitalize;
             font-weight: 600;
-            padding: 6px 14px;
-            border-radius: 20px;
-            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
             font-size: 14px;
             color: white;
-            min-width: 90px;
+            background-color: gray;
+            min-width: 80px;
             text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-            transition: background-color 0.3s ease, color 0.3s ease;
+            vertical-align: middle;
+            line-height: 1.4;
         }
+
 
         .status.pending {
-            background-color: #f0ad4e; /* برتقالي فاتح */
-            color: #663d00;
-        }
-
-        .status.processing {
-            background-color: #5bc0de; /* أزرق سماوي */
-            color: #084d6e;
+            background-color: #f0ad4e;
+            color: white;
         }
 
         .status.completed {
-            background-color: #5cb85c; /* أخضر */
-            color: #2a542c;
+            background-color: #5cb85c;
+            color: white;
         }
 
         .status.cancelled {
-            background-color: #d9534f; /* أحمر */
-            color: #611111;
+            background-color: #d9534f;
+            color: white;
         }
+
+        .status.processing {
+            background-color: #5bc0de;
+            color: white;
+        }
+
+
+
 
         @media (max-width: 768px) {
             .sidebar {
