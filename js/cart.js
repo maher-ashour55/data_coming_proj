@@ -123,7 +123,6 @@ document.querySelectorAll('input[name="payment"]').forEach(radio => {
     });
 });
 
-
 document.getElementById('doneButton').addEventListener('click', function(event) {
     event.preventDefault();
 
@@ -131,7 +130,6 @@ document.getElementById('doneButton').addEventListener('click', function(event) 
         showMessage("🚫 There are no products in the cart!", false);
         return;
     }
-
 
     let fname = document.querySelector('.fname').value.trim();
     let lname = document.querySelector('.lname').value.trim();
@@ -141,7 +139,6 @@ document.getElementById('doneButton').addEventListener('click', function(event) 
     let city = document.querySelector('select.sel').value.trim();
     let payment = document.querySelector('input[name="payment"]:checked')?.value;
     let comments = document.querySelector('textarea.inputs').value.trim();
-
 
     if (!fname || !lname || !address || !email || !phone || !city || !payment) {
         showMessage("Please fill in all fields and select your payment method.", false);
@@ -191,61 +188,66 @@ document.getElementById('doneButton').addEventListener('click', function(event) 
     }
 
     else if (payment === 'reflect') {
-        // Reflect
-        const confirmBox = document.createElement('div');
-        confirmBox.innerHTML = `
-            <div style="
-    background: #fff;
-    border-radius: 16px;
-    padding: 25px;
-    max-width: 380px;
-    margin: 20px auto;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-    text-align: center;
-    font-family: 'Arial', sans-serif;
-">
-    <div style="font-size: 18px; margin-bottom: 12px; color: #333;">
-        <span style="color: #9265A6; font-weight: bold;">💳 الدفع عن طريق ريفلكت لهذا الرقم</span>
-    </div>
-    
-    <div style="
-        display: inline-block;
-        margin: 12px 0;
-        padding: 10px 16px;
-        background-color: #25D366;
-        color: white;
-        border-radius: 8px;
-        text-decoration: none;
-        font-weight: bold;
-        transition: background 0.3s;
-    " onmouseover="this.style.backgroundColor='#1ebe5d'" onmouseout="this.style.backgroundColor='#25D366'">
-        💳 0595340025
-    </div>
-
-    <div style="margin-top: 16px;">
-        <button id="confirmReflectBtn" style="
-            padding: 10px 20px;
-            background: #9265A6;
-            color: white;
-            font-weight: bold;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s;
-        " onmouseover="this.style.backgroundColor='#7a4f8b'" onmouseout="this.style.backgroundColor='#9265A6'">
-            Payment was made via Reflect
-        </button>
-    </div>
-</div>
-
+        // overlay
+        const overlay = document.createElement('div');
+        overlay.style.cssText = `
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         `;
-        const messageBox = document.getElementById('messageBox');
-        messageBox.innerHTML = '';
-        messageBox.style.backgroundColor = 'transparent';
-        messageBox.style.display = 'block';
-        messageBox.appendChild(confirmBox);
 
-        // عند الضغط على "تم الدفع عبر Reflect"
+        // confirm box
+        const confirmBox = document.createElement('div');
+        confirmBox.style.cssText = `
+            background: #fff;
+            border-radius: 16px;
+            padding: 25px;
+            max-width: 380px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+        `;
+
+        confirmBox.innerHTML = `
+            <div style="font-size: 18px; margin-bottom: 12px; color: #333;">
+                <span style="color: #9265A6; font-weight: bold;">💳 الدفع عن طريق ريفلكت لهذا الرقم</span>
+            </div>
+            <div style="
+                display: inline-block;
+                margin: 12px 0;
+                padding: 10px 16px;
+                background-color: #25D366;
+                color: white;
+                border-radius: 8px;
+                font-weight: bold;
+                transition: background 0.3s;
+            " onmouseover="this.style.backgroundColor='#1ebe5d'" onmouseout="this.style.backgroundColor='#25D366'">
+                💳 0595340025
+            </div>
+            <div style="margin-top: 16px;">
+                <button id="confirmReflectBtn" style="
+                    padding: 10px 20px;
+                    background: #9265A6;
+                    color: white;
+                    font-weight: bold;
+                    border: none;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    transition: background 0.3s;
+                " onmouseover="this.style.backgroundColor='#7a4f8b'" onmouseout="this.style.backgroundColor='#9265A6'">
+                    تم الدفع عبر Reflect
+                </button>
+            </div>
+        `;
+
+        overlay.appendChild(confirmBox);
+        document.body.appendChild(overlay);
+
         document.getElementById('confirmReflectBtn').addEventListener('click', () => {
             fetch('place_order.php', {
                 method: 'POST',
@@ -255,16 +257,22 @@ document.getElementById('doneButton').addEventListener('click', function(event) 
                 .then(res => res.json())
                 .then(data => {
                     if (data.status === 'success') {
+                        overlay.remove();
                         showMessage("✅ Order confirmed via Reflect!");
                         setTimeout(() => window.location.href = './index.php', 3000);
                     } else {
+                        overlay.remove();
                         showMessage(data.message || "❌ حدث خطأ أثناء تنفيذ الطلب.", false);
                     }
                 })
-                .catch(() => showMessage("❌ فشل الاتصال بالخادم.", false));
+                .catch(() => {
+                    overlay.remove();
+                    showMessage("❌ فشل الاتصال بالخادم.", false);
+                });
         });
     }
 });
+
 
 
 
