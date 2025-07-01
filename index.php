@@ -111,8 +111,10 @@ if (isset($_SESSION['user_id'])) {
                 <button id="search-toggle"><i class="fas fa-search"></i></button>
                 <div class="search-input-wrapper">
                     <input type="text" id="search-input" placeholder="Search for products..." />
+                    <div class="search-dropdown" id="search-dropdown"></div> <!-- هذا ما يخرب إذا التنسيق صح -->
                 </div>
             </div>
+
         </div>
 
         <div class="right-section icons">

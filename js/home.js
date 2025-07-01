@@ -41,31 +41,32 @@ function restoreOriginalProducts() {
 }
 
 function displayResults(products) {
-    const container = document.querySelector(".categories");
-    container.innerHTML = "";
+    const dropdown = document.getElementById("search-dropdown");
+    dropdown.innerHTML = "";
 
-    products.forEach(product => {
-        const card = document.createElement("div");
-        card.className = "category-card";
-        const grayscaleClass = product.stock == 0 ? 'grayscale' : '';
+    if (products.length === 0) {
+        dropdown.innerHTML = "<div class='dropdown-item'>لا يوجد نتائج</div>";
+    } else {
+        products.forEach(product => {
+            const item = document.createElement("div");
+            item.className = "dropdown-item";
+            item.innerHTML = `
+                <strong>${product.name}</strong> - ₪${product.price}
+                ${product.stock == 0 ? "<span style='color:red;'>(نفذ)</span>" : ""}
+            `;
 
-        card.innerHTML = `
-            <div class="card-bg">
-                <div class="bg-shape ${grayscaleClass}"></div>
-                <img src="../admin/uploads/${product.image}" alt="${product.name}" class="${grayscaleClass}">
-            </div>
-            <h3>${product.name}</h3>
-            <h2>₪${product.price}</h2>
-            ${product.stock == 0
-            ? '<button class="buy-now-btn" disabled>OUT OF STOCK</button>'
-            : `<button class="buy-now-btn" data-product-id="${product.id}">BUY NOW</button>`}
-        `;
-        container.appendChild(card);
-    });
+            // لما المستخدم يضغط على المنتج
+            item.addEventListener("click", () => {
+                window.location.href = `product.php?id=${product.id}`;
+            });
 
-    attachBuyNowEvents();
-    observeCards();
+            dropdown.appendChild(item);
+        });
+    }
+
+    dropdown.style.display = "block";
 }
+
 
 // ===================== إضافة للسلة =====================
 function attachBuyNowEvents() {
@@ -176,7 +177,6 @@ if (carousel) {
     setInterval(slide, 5000);
 }
 // ===================== شريط البحث =====================
-// حفظ النسخة الأصلية من الكروت
 let originalProductsHTML = "";
 document.addEventListener("DOMContentLoaded", () => {
     originalProductsHTML = document.querySelector(".categories").innerHTML;
@@ -185,6 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
 const toggleBtn = document.getElementById('search-toggle');
 const searchBar = document.querySelector('.search-bar');
 const searchInput = document.getElementById('search-input');
+const searchDropdown = document.getElementById("search-dropdown");
 
 // فتح أو إغلاق البحث
 toggleBtn.addEventListener('click', (e) => {
@@ -195,52 +196,72 @@ toggleBtn.addEventListener('click', (e) => {
     if (searchBar.classList.contains('active')) {
         setTimeout(() => searchInput.focus(), 100);
     } else {
-        searchInput.value = ""; // إفراغ الحقل
-        restoreOriginalProducts(); // رجّع المنتجات
+        searchInput.value = "";
+        searchDropdown.style.display = "none";
+        restoreOriginalProducts();
     }
 });
 
-// الضغط خارج البحث
+// الضغط خارج البحث يغلقه
 document.addEventListener('click', (e) => {
     if (!searchBar.contains(e.target)) {
         if (searchBar.classList.contains('active')) {
             searchBar.classList.remove('active');
             searchInput.value = "";
+            searchDropdown.style.display = "none";
             restoreOriginalProducts();
         }
     }
 });
 
-// عند الكتابة في الانبوت
+// كتابة في الحقل
 searchInput.addEventListener("input", () => {
     const query = searchInput.value.trim();
-    const resultsContainer = document.querySelector(".categories");
 
     if (query.length === 0) {
-        restoreOriginalProducts();
+        searchDropdown.style.display = "none";
         return;
     }
 
     fetch("search.php", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ query: query })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query })
     })
         .then(res => res.json())
         .then(data => {
             if (data.success && Array.isArray(data.products)) {
-                displayResults(data.products);
+                displayDropdownResults(data.products);
             } else {
-                resultsContainer.innerHTML = "<p style='text-align:center;'>لا يوجد نتائج</p>";
+                searchDropdown.innerHTML = `<div class="no-results">لا يوجد نتائج</div>`;
+                searchDropdown.style.display = "block";
             }
         })
         .catch(err => {
             console.error("Search error:", err);
-            resultsContainer.innerHTML = "<p style='text-align:center;'>حدث خطأ أثناء البحث</p>";
+            searchDropdown.innerHTML = `<div class="no-results">حدث خطأ</div>`;
+            searchDropdown.style.display = "block";
         });
 });
+
+// عرض نتائج الدروب داون
+function displayDropdownResults(products) {
+    if (products.length === 0) {
+        searchDropdown.innerHTML = `<div class="no-results">لا يوجد نتائج</div>`;
+    } else {
+        searchDropdown.innerHTML = products.map(product => `
+            <div class="result-item" onclick="window.location='product.php?id=${product.id}'">
+                <img src="admin/uploads/${product.image}" alt="${product.name}">
+                <div class="info">
+                    <h4>${product.name}</h4>
+                    <span>${product.price} ₪</span>
+                </div>
+            </div>
+        `).join('');
+    }
+    searchDropdown.style.display = "block";
+}
+
 
 
 // ===================== سايد منيو =====================
