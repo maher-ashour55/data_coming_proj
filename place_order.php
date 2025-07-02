@@ -1,4 +1,6 @@
 <?php
+date_default_timezone_set('Asia/Jerusalem');
+
 ini_set('display_errors', 0);
 error_reporting(E_ALL);
 
@@ -62,6 +64,8 @@ $order_date = date("Y-m-d H:i:s");
 $status = "Pending";
 
 file_put_contents("log.txt", "Inserting order...\n", FILE_APPEND);
+
+file_put_contents("log.txt", "Order date set as: $order_date\n", FILE_APPEND);
 
 // ✅ تحديث الاستعلام ليتضمن comments
 $stmt = $conn->prepare("INSERT INTO orders (user_id, total, payment_method, address, order_date, status, fname, lname, email, phone, city, comments) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
