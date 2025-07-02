@@ -270,7 +270,6 @@ document.addEventListener("DOMContentLoaded", () => {
     showSlides(slideIndex);
     attachBuyNowEvents();
     observeCards();
-    updateCartCount(); // عند تحميل الصفحة
 
     const hamburger = document.getElementById("hamburger");
     const sideMenu = document.getElementById("side-menu");
