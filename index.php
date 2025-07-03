@@ -278,7 +278,7 @@ if (isset($_SESSION['user_id'])) {
     ?>
 
     <div class="featured-carousel-section">
-        <h2 class="section-title">Featured Offers</h2>
+        <h2 class="section-title">العروض المميزة</h2>
         <div class="featured-carousel">
             <?php while ($row = $featured_result->fetch_assoc()): ?>
                 <div class="featured-card">

@@ -1209,7 +1209,7 @@ footer {
 .featured-carousel-section {
     margin: 80px 0;
     padding: 0 30px;
-    background: #f9f9f9;
+    background: #f3e4f3;
     border-radius: 24px;
     padding-top: 40px;
 }
@@ -1242,7 +1242,6 @@ footer {
     scrollbar-width: none;
     -ms-overflow-style: none;
     scroll-behavior: smooth;
-    justify-content: center;
 }
 
 .featured-carousel::-webkit-scrollbar {
@@ -1310,6 +1309,82 @@ footer {
 .browse-btn:hover {
     background: linear-gradient(135deg, #7b4f95, #ab7cd8);
 }
+/* الشاشات المتوسطة - أقل من 1024px */
+@media (max-width: 1023px) {
+    .featured-carousel {
+        gap: 20px;
+    }
+
+    .featured-card {
+        min-width: 220px;
+        max-width: 240px;
+    }
+
+    .featured-card img {
+        height: 170px;
+    }
+}
+
+/* الشاشات الصغيرة - أقل من 768px */
+@media (max-width: 767px) {
+    .featured-carousel {
+        gap: 16px;
+        padding: 10px 10px 20px;
+        justify-content: flex-start;
+    }
+
+    .featured-card {
+        min-width: 200px;
+        max-width: 200px;
+        padding: 18px 12px;
+    }
+
+    .featured-card img {
+        height: 160px;
+    }
+
+    .section-title {
+        font-size: 28px;
+    }
+}
+
+/* الشاشات الصغيرة جداً - أقل من 480px */
+@media (max-width: 479px) {
+    .featured-carousel {
+        gap: 12px;
+        padding: 10px 5px 20px;
+    }
+
+    .featured-card {
+        min-width: 175px;
+        max-width: 175px;
+        padding: 15px 10px;
+    }
+
+    .featured-card img {
+        height: 140px;
+    }
+
+    .section-title {
+        font-size: 24px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .category-card:hover {
     transform: translateY(-5px) scale(1.1);
