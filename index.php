@@ -1,25 +1,32 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
 $cart_count = 0;
 
-if (isset($_SESSION['user_id'])) {
-    $conn = new mysqli("localhost", "u251541401_maher_user", "Datacoming12345", "u251541401_datacoming");
-    if (!$conn->connect_error) {
-        $conn->set_charset("utf8");
-        $user_id = $_SESSION['user_id'];
+// اتصال عام
+$conn = new mysqli("localhost", "u251541401_maher_user", "Datacoming12345", "u251541401_datacoming");
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$conn->set_charset("utf8");
 
-        $stmt = $conn->prepare("SELECT SUM(quantity) as total FROM cart_items WHERE user_id = ?");
-        $stmt->bind_param("i", $user_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        if ($row = $result->fetch_assoc()) {
-            $cart_count = $row['total'] ?? 0;
-        }
-        $stmt->close();
-        $conn->close();
+// حساب عدد السلة فقط إذا كان مسجل دخول
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+    $stmt = $conn->prepare("SELECT SUM(quantity) as total FROM cart_items WHERE user_id = ?");
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($row = $result->fetch_assoc()) {
+        $cart_count = $row['total'] ?? 0;
     }
+    $stmt->close();
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -265,9 +272,31 @@ if (isset($_SESSION['user_id'])) {
             </div>
         </div>
     </div>
+
+    <?php
+    $featured_result = $conn->query("SELECT * FROM product WHERE is_featured_offer = 1 AND stock > 0 AND is_active = 1 LIMIT 15");
+    ?>
+
+    <div class="featured-carousel-section">
+        <h2 class="section-title">Featured Offers</h2>
+        <div class="featured-carousel">
+            <?php while ($row = $featured_result->fetch_assoc()): ?>
+                <div class="featured-card">
+                    <img src="../admin/uploads/<?php echo htmlspecialchars($row['image']); ?>" alt="<?php echo htmlspecialchars($row['name']); ?>">
+                    <h3><?php echo htmlspecialchars($row['name']); ?></h3>
+                    <p class="price"><?php echo htmlspecialchars($row['discount_price']); ?>₪</p>
+                    <a href="product_details.php?id=<?php echo $row['id']; ?>" class="browse-btn">View</a>
+                </div>
+            <?php endwhile; ?>
+        </div>
+    </div>
     <div class="container">
 
         <div class="categories">
+
+
+
+            <br>
             <a href="laptop.php">
                 <div class="category-card">
                     <div class="card-bg">

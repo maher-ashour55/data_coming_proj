@@ -318,3 +318,35 @@ window.addEventListener('scroll', function () {
         waBtn.classList.remove('whatsapp-visible');
     }
 });
+
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const carousel = document.querySelector('.featured-carousel');
+    let scrollAmount = 0;
+    const cardWidth = 250;
+    let interval;
+
+    function autoScroll() {
+        if (!carousel) return;
+
+        if (carousel.scrollLeft + carousel.offsetWidth >= carousel.scrollWidth - 10) {
+            carousel.scrollTo({ left: 0, behavior: 'smooth' });
+            scrollAmount = 0;
+        } else {
+            scrollAmount += cardWidth;
+            carousel.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+        }
+    }
+
+    function startAutoScroll() {
+        clearInterval(interval);  // مهم: نوقف interval القديم قبل تشغيل الجديد
+        interval = setInterval(autoScroll, 4000);
+    }
+
+    carousel.addEventListener('mouseenter', () => clearInterval(interval));
+    carousel.addEventListener('mouseleave', startAutoScroll);
+
+    startAutoScroll(); // تشغيل أولي
+});
