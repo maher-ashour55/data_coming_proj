@@ -285,6 +285,7 @@ $product = $result->fetch_assoc();
                 <label for="stock">Stock</label>
                 <input type="number" id="stock" name="stock" min="0" value="<?= $product['stock'] ?>" required />
             </div>
+
             <div>
                 <label for="category">Category</label>
                 <select id="category" name="category" required>
@@ -309,6 +310,15 @@ $product = $result->fetch_assoc();
                 <label for="description">Description</label>
                 <textarea id="description" name="description" required><?= htmlspecialchars($product['description']) ?></textarea>
             </div>
+            <div>
+                <label for="is_featured_offer" style="font-weight: 600;">
+                    <input type="checkbox" id="is_featured_offer" name="is_featured_offer"
+                        <?= ($product['is_featured_offer']) ? 'checked' : '' ?>
+                           style="transform: scale(1.2); margin-right: 8px;" />
+                    Add to Offers Bar
+                </label>
+            </div>
+
         </div>
         <button type="submit" class="submit-btn">💾 Update Product</button>
     </form>

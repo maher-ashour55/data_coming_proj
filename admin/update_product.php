@@ -1,68 +1,66 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 header('Content-Type: application/json');
 
 $conn = new mysqli("localhost", "u251541401_maher_user", "Datacoming12345", "u251541401_datacoming");
 if ($conn->connect_error) {
-    echo json_encode(['success' => false, 'msg' => "Connection failed: " . $conn->connect_error]);
+    echo json_encode(['success' => false, 'msg' => 'Database connection failed']);
     exit;
 }
 
 $id = intval($_POST['id']);
-$name = $_POST['product_name'] ?? '';
-$price = floatval($_POST['price'] ?? 0);
-$discount_price = floatval($_POST['discount_price'] ?? 0);
-$stock = intval($_POST['stock'] ?? 0);
-$category = $_POST['category'] ?? '';
-$description = $_POST['description'] ?? '';
-
-if (!$id || !$name) {
-    echo json_encode(['success' => false, 'msg' => 'Missing required fields.']);
-    exit;
-}
+$name = $_POST['product_name'];
+$price = floatval($_POST['price']);
+$discount_price = isset($_POST['enable_discount']) ? floatval($_POST['discount_price']) : 0;
+$stock = intval($_POST['stock']);
+$category = $_POST['category'];
+$description = $_POST['description'];
+$is_featured_offer = isset($_POST['is_featured_offer']) ? 1 : 0;
 
 $imageName = null;
-$targetDir = "uploads/";
+if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+    $tmpName = $_FILES['image']['tmp_name'];
+    $imageName = basename($_FILES['image']['name']);
+    $uploadDir = 'uploads/';
+    $uploadPath = $uploadDir . $imageName;
 
-if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
-    $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-    $maxFileSize = 2 * 1024 * 1024; // 2 ميجابايت
-
-    $fileType = mime_content_type($_FILES['image']['tmp_name']);
-    $fileSize = $_FILES['image']['size'];
-
-    if (!in_array($fileType, $allowedTypes)) {
-        echo json_encode(['success' => false, 'msg' => 'Invalid image type. Allowed: JPG, PNG, GIF.']);
-        exit;
-    }
-    if ($fileSize > $maxFileSize) {
-        echo json_encode(['success' => false, 'msg' => 'Image size exceeds 2MB limit.']);
-        exit;
-    }
-
-    $imageName = uniqid() . '_' . basename($_FILES["image"]["name"]);
-    $imagePath = $targetDir . $imageName;
-
-    if (!move_uploaded_file($_FILES["image"]["tmp_name"], $imagePath)) {
-        echo json_encode(['success' => false, 'msg' => "Failed to upload image."]);
+    if (!move_uploaded_file($tmpName, $uploadPath)) {
+        echo json_encode(['success' => false, 'msg' => 'Image upload failed']);
         exit;
     }
 }
 
+// 🔍 اطبع كل القيم المستلمة للتأكد
+$debug = [
+    'id' => $id,
+    'name' => $name,
+    'price' => $price,
+    'discount_price' => $discount_price,
+    'stock' => $stock,
+    'category' => $category,
+    'description' => $description,
+    'image' => $imageName ?? 'NO IMAGE',
+    'is_featured_offer' => $is_featured_offer
+];
+
+file_put_contents("debug_update.txt", print_r($debug, true));
+
 if ($imageName !== null) {
-    $stmt = $conn->prepare("UPDATE product SET name=?, price=?, discount_price=?, stock=?, category=?, description=?, image=? WHERE id=?");
-    $stmt->bind_param("sddisssi", $name, $price, $discount_price, $stock, $category, $description, $imageName, $id);
+    $stmt = $conn->prepare("UPDATE product SET name=?, price=?, discount_price=?, stock=?, category=?, description=?, image=?, is_featured_offer=? WHERE id=?");
+    $stmt->bind_param("sddisssii", $name, $price, $discount_price, $stock, $category, $description, $imageName, $is_featured_offer, $id);
 } else {
-    $stmt = $conn->prepare("UPDATE product SET name=?, price=?, discount_price=?, stock=?, category=?, description=? WHERE id=?");
-    $stmt->bind_param("sddissi", $name, $price, $discount_price, $stock, $category, $description, $id);
+    $stmt = $conn->prepare("UPDATE product SET name=?, price=?, discount_price=?, stock=?, category=?, description=?, is_featured_offer=? WHERE id=?");
+    $stmt->bind_param("sddissii", $name, $price, $discount_price, $stock, $category, $description, $is_featured_offer, $id);
 }
 
 if ($stmt->execute()) {
-    echo json_encode(['success' => true, 'msg' => "Product updated successfully!"]);
+    echo json_encode(['success' => true, 'msg' => 'Product updated successfully']);
 } else {
-    echo json_encode(['success' => false, 'msg' => "Error updating product: " . $stmt->error]);
+    echo json_encode(['success' => false, 'msg' => 'Update failed: ' . $stmt->error]);
 }
 
 $stmt->close();
 $conn->close();
-exit;
-?>
