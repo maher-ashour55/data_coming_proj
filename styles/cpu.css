@@ -646,10 +646,7 @@ footer {
 
 
 
-.category-card:hover {
-    transform: translateY(-5px);
-    transform: scale(1.1);
-}
+
 .category-card.show {
     opacity: 1;
     transform: translateY(0);
@@ -849,6 +846,7 @@ footer {
     justify-content: center;
     gap: 50px;
     padding: 10px 0;
+    margin-bottom: 30px;
 }
 
 .category-card {
@@ -1113,3 +1111,7 @@ footer {
 }
 
 
+.category-card:hover {
+    transform: translateY(-5px) scale(1.1);
+
+}
