@@ -31,21 +31,48 @@ $category_sql = "SELECT DISTINCT category FROM product";
 $category_result = $conn->query($category_sql);
 
 $selected_category = isset($_GET['category']) ? $_GET['category'] : '';
+$featured_filter = isset($_GET['featured']) && $_GET['featured'] == 1 ? true : false;
 
+// بناء الاستعلام مع دعم الفلترين
+$sql_conditions = [];
+$params = [];
+$param_types = "";
+
+// فلتر التصنيف
 if ($selected_category !== '') {
-    $stmt = $conn->prepare("SELECT * FROM product WHERE category = ?");
-    $stmt->bind_param("s", $selected_category);
+    $sql_conditions[] = "category = ?";
+    $params[] = $selected_category;
+    $param_types .= "s";
+}
+
+// فلتر العروض المميزة
+if ($featured_filter) {
+    $sql_conditions[] = "is_featured_offer = 1";
+}
+
+// بناء الجملة الشرطية WHERE
+$where_clause = "";
+if (count($sql_conditions) > 0) {
+    $where_clause = "WHERE " . implode(" AND ", $sql_conditions);
+}
+
+if (count($params) > 0) {
+    $stmt = $conn->prepare("SELECT * FROM product $where_clause");
+    // ربط المعاملات فقط إذا في معاملات (فلتر تصنيف)
+    if ($param_types !== "") {
+        $stmt->bind_param($param_types, ...$params);
+    }
     $stmt->execute();
     $result = $stmt->get_result();
 } else {
-    $sql = "SELECT * FROM product";
+    // بدون فلتر
+    $sql = "SELECT * FROM product $where_clause";
     $result = $conn->query($sql);
 }
 
 $first_name = $_SESSION['first_name'];
 $last_name = $_SESSION['last_name'];
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -323,6 +350,32 @@ $last_name = $_SESSION['last_name'];
             .action-buttons {
                 justify-content: flex-start;
             }
+            .filter-bar {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+                margin-bottom: 50px; !important;
+                gap: 20px;
+            }
+
+            .filter-bar form {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+
+            .filter-bar select {
+                padding: 8px 12px;
+                border-radius: 6px;
+            }
+
+            .filter-bar label {
+                font-weight: bold;
+            }
+
+
 
     </style>
 </head>
@@ -363,17 +416,31 @@ $last_name = $_SESSION['last_name'];
 
 <div class="main">
 
-    <form method="GET" style="margin-bottom: 20px;">
-        <label for="category" style="font-weight: bold;">Filter by Category:</label>
-        <select name="category" id="category" onchange="this.form.submit()" style="padding: 8px 12px; margin-left: 10px; border-radius: 6px;">
-            <option value="">All Categories</option>
-            <?php while ($cat_row = $category_result->fetch_assoc()): ?>
-                <option value="<?php echo htmlspecialchars($cat_row['category']); ?>" <?php echo ($selected_category == $cat_row['category']) ? 'selected' : ''; ?>>
-                    <?php echo htmlspecialchars($cat_row['category']); ?>
-                </option>
-            <?php endwhile; ?>
-        </select>
-    </form>
+    <div class="filter-bar">
+        <form method="GET" style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin: 0;">
+            <label for="category" style="font-weight: bold;">Filter by Category:</label>
+            <select name="category" id="category" onchange="this.form.submit()" style="padding: 8px 12px; border-radius: 6px;">
+                <option value="">All Categories</option>
+                <?php
+                $category_result->data_seek(0);
+                while ($cat_row = $category_result->fetch_assoc()):
+                    $selected = ($selected_category == $cat_row['category']) ? 'selected' : '';
+                    ?>
+                    <option value="<?php echo htmlspecialchars($cat_row['category']); ?>" <?php echo $selected; ?>>
+                        <?php echo htmlspecialchars($cat_row['category']); ?>
+                    </option>
+                <?php endwhile; ?>
+            </select>
+
+            <!-- ✅ راديو Show Featured -->
+            <label style="display: flex; align-items: center; gap: 5px; font-weight: bold;">
+                <input type="checkbox" name="featured" value="1" onchange="this.form.submit()" <?php echo $featured_filter ? 'checked' : ''; ?>>
+                Show Featured Only
+            </label>
+        </form>
+    </div>
+
+    <br>
 
     <div class="table-container">
         <table>
@@ -385,6 +452,7 @@ $last_name = $_SESSION['last_name'];
                 <th class="category-col">Category</th>
                 <th class="stock-col">Stock</th>
                 <th class="image-col">Image</th>
+                <th class="featured-col">✅</th>
                 <th class="actions-col">Actions</th>
             </tr>
             </thead>
@@ -399,6 +467,9 @@ $last_name = $_SESSION['last_name'];
                     <td data-label="Image" class="image-col">
                         <img src="uploads/<?php echo $row['image']; ?>" alt="Product Image" />
                     </td>
+                    <td data-label="Featured" class="featured-col">
+                        <?php echo $row['is_featured_offer'] ? "✅" : ""; ?>
+                    </td>
                     <td data-label="Actions" class="actions-col">
                         <div class="action-buttons">
                             <a class="btn edit" href="edit_product.php?id=<?php echo $row['id']; ?>">Edit</a>
@@ -409,8 +480,6 @@ $last_name = $_SESSION['last_name'];
                             <?php endif; ?>
                         </div>
                     </td>
-
-
                 </tr>
             <?php endwhile; ?>
             </tbody>
