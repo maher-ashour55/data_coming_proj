@@ -268,6 +268,56 @@ if (isset($_SESSION['user_id'])) {
     <div class="container">
 
         <div class="categories">
+            <a href="laptop.php">
+                <div class="category-card">
+                    <div class="card-bg">
+                        <div class="bg-shape"></div>
+                        <img src="./img/laptop.png" alt="Processor">
+                    </div>
+                    <h3>LAPTOP</h3>
+                    <button onclick="location.href='laptop.php'">Browse</button>
+                </div>
+            </a>
+            <a href="keyboard.php">
+                <div class="category-card">
+                    <div class="card-bg">
+                        <div class="bg-shape"></div>
+                        <img src="./img/keyboard.png" alt="Processor">
+                    </div>
+                    <h3>KEYBOARD</h3>
+                    <button onclick="location.href='keyboard.php'">Browse</button>
+                </div>
+            </a>
+            <a href="mouse.php">
+                <div class="category-card">
+                    <div class="card-bg">
+                        <div class="bg-shape"></div>
+                        <img src="./img/mouse.png" alt="Processor">
+                    </div>
+                    <h3>MOUSE</h3>
+                    <button onclick="location.href='mouse.php'">Browse</button>
+                </div>
+            </a>
+            <a href="monitor.php">
+                <div class="category-card">
+                    <div class="card-bg">
+                        <div class="bg-shape"></div>
+                        <img src="./img/monitor.png" alt="Processor">
+                    </div>
+                    <h3>MONITOR</h3>
+                    <button onclick="location.href='monitor.php'">Browse</button>
+                </div>
+            </a>
+            <a href="headset.php">
+                <div class="category-card">
+                    <div class="card-bg">
+                        <div class="bg-shape"></div>
+                        <img src="./img/headset.png" alt="Power supply">
+                    </div>
+                    <h3>HEAD SET</h3>
+                    <button onclick="location.href='headset.php'">Browse</button>
+                </div>
+            </a>
             <a href="cpu.php">
             <div class="category-card">
                 <div class="card-bg">
@@ -308,15 +358,15 @@ if (isset($_SESSION['user_id'])) {
                 <button onclick="location.href='case.php'">Browse</button>
             </div>
             </a>
-            <a href="headset.php">
-            <div class="category-card">
-                <div class="card-bg">
-                    <div class="bg-shape"></div>
-                    <img src="./img/headset.png" alt="Power supply">
+            <a href="chair.php">
+                <div class="category-card">
+                    <div class="card-bg">
+                        <div class="bg-shape"></div>
+                        <img src="./img/chair.png" alt="Chair">
+                    </div>
+                    <h3>Chair</h3>
+                    <button onclick="location.href='chair.php'">Browse</button>
                 </div>
-                <h3>HEAD SET</h3>
-                <button onclick="location.href='headset.php'">Browse</button>
-            </div>
             </a>
             <a href="harddisk.php">
             <div class="category-card">
@@ -348,56 +398,9 @@ if (isset($_SESSION['user_id'])) {
                 <button onclick="location.href='power.php'">Browse</button>
             </div>
             </a>
-            <a href="chair.php">
-            <div class="category-card">
-                <div class="card-bg">
-                    <div class="bg-shape"></div>
-                    <img src="./img/chair.png" alt="Chair">
-                </div>
-                <h3>Chair</h3>
-                <button onclick="location.href='chair.php'">Browse</button>
-            </div>
-            </a>
-            <a href="laptop.php">
-            <div class="category-card">
-                <div class="card-bg">
-                    <div class="bg-shape"></div>
-                    <img src="./img/laptop.png" alt="Processor">
-                </div>
-                <h3>LAPTOP</h3>
-                <button onclick="location.href='laptop.php'">Browse</button>
-            </div>
-            </a>
-            <a href="keyboard.php">
-            <div class="category-card">
-                <div class="card-bg">
-                    <div class="bg-shape"></div>
-                    <img src="./img/keyboard.png" alt="Processor">
-                </div>
-                <h3>KEYBOARD</h3>
-                <button onclick="location.href='keyboard.php'">Browse</button>
-            </div>
-            </a>
-            <a href="mouse.php">
-            <div class="category-card">
-                <div class="card-bg">
-                    <div class="bg-shape"></div>
-                    <img src="./img/mouse.png" alt="Processor">
-                </div>
-                <h3>MOUSE</h3>
-                <button onclick="location.href='mouse.php'">Browse</button>
-            </div>
-            </a>
-            <a href="monitor.php">
-            <div class="category-card">
-                <div class="card-bg">
-                    <div class="bg-shape"></div>
-                    <img src="./img/monitor.png" alt="Processor">
-                </div>
-                <h3>MONITOR</h3>
-                <button onclick="location.href='monitor.php'">Browse</button>
-            </div>
-            </a>
+
+
+
             <a href="xbox.php">
             <div class="category-card">
                 <div class="card-bg">
