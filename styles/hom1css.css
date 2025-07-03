@@ -1209,7 +1209,7 @@ footer {
 .featured-carousel-section {
     margin: 80px 0;
     padding: 0 30px;
-    background: #f1ebf1;
+    background: #f9f9f9;
     border-radius: 24px;
     padding-top: 40px;
 }
@@ -1310,7 +1310,6 @@ footer {
 .browse-btn:hover {
     background: linear-gradient(135deg, #7b4f95, #ab7cd8);
 }
-
 
 .category-card:hover {
     transform: translateY(-5px) scale(1.1);
