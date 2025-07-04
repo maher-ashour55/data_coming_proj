@@ -281,7 +281,7 @@ let slideIndex = 1;
 let slideTimer;
 
 document.addEventListener("DOMContentLoaded", () => {
-    
+
 
     const hamburger = document.getElementById("hamburger");
     const sideMenu = document.getElementById("side-menu");
