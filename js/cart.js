@@ -277,37 +277,48 @@ document.getElementById('doneButton').addEventListener('click', function(event) 
 
 
 
+let slideIndex = 1;
+let slideTimer;
 
+document.addEventListener("DOMContentLoaded", () => {
+    
 
-    const hamburger = document.getElementById('hamburger');
-    const sideMenu = document.getElementById('side-menu');
-    const pcSideMenu = document.getElementById('pc-side-menu');
-    const accessoriesSideMenu = document.getElementById('accessories-side-menu');
+    const hamburger = document.getElementById("hamburger");
+    const sideMenu = document.getElementById("side-menu");
+    const pcSideMenu = document.getElementById("pc-side-menu");
+    const accessoriesSideMenu = document.getElementById("accessories-side-menu");
 
-    hamburger.addEventListener('click', () => {
-    if (sideMenu.classList.contains('active') || pcSideMenu.classList.contains('active') || accessoriesSideMenu.classList.contains('active')) {
-    sideMenu.classList.remove('active');
-    pcSideMenu.classList.remove('active');
-    accessoriesSideMenu.classList.remove('active');
-} else {
-    sideMenu.classList.add('active');
-}
+    hamburger.addEventListener("click", () => {
+        hamburger.classList.toggle("active");
+
+        const anyMenuOpen = sideMenu?.classList.contains("active") ||
+            pcSideMenu?.classList.contains("active") ||
+            accessoriesSideMenu?.classList.contains("active");
+
+        if (anyMenuOpen) {
+            sideMenu?.classList.remove("active");
+            pcSideMenu?.classList.remove("active");
+            accessoriesSideMenu?.classList.remove("active");
+        } else {
+            sideMenu?.classList.add("active");
+        }
+    });
 });
 
-    function openPcMenu() {
-    sideMenu.classList.remove('active');
-    pcSideMenu.classList.add('active');
+function openPcMenu() {
+    document.getElementById("side-menu")?.classList.remove("active");
+    document.getElementById("pc-side-menu")?.classList.add("active");
 }
 
-    function openAccessoriesMenu() {
-    sideMenu.classList.remove('active');
-    accessoriesSideMenu.classList.add('active');
+function openAccessoriesMenu() {
+    document.getElementById("side-menu")?.classList.remove("active");
+    document.getElementById("accessories-side-menu")?.classList.add("active");
 }
 
-    function backToMainMenu() {
-    pcSideMenu.classList.remove('active');
-    accessoriesSideMenu.classList.remove('active');
-    sideMenu.classList.add('active');
+function backToMainMenu() {
+    document.getElementById("pc-side-menu")?.classList.remove("active");
+    document.getElementById("accessories-side-menu")?.classList.remove("active");
+    document.getElementById("side-menu")?.classList.add("active");
 }
 
 
