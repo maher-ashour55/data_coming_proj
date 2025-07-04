@@ -36,7 +36,7 @@ if ($order_result->num_rows === 0) {
 
 $order = $order_result->fetch_assoc();
 
-$item_sql = "SELECT oi.quantity, p.name, p.price FROM order_items oi JOIN product p ON oi.product_id = p.id WHERE oi.order_id = ?";
+$item_sql = "SELECT oi.quantity, p.name, p.price, p.discount_price FROM order_items oi JOIN product p ON oi.product_id = p.id WHERE oi.order_id = ?";
 $stmt_items = $conn->prepare($item_sql);
 $stmt_items->bind_param("i", $order_id);
 $stmt_items->execute();
@@ -130,10 +130,14 @@ $pdf->Cell(40, 10, 'Total', 1, 1, 'C', true);
 $pdf->SetFont('Arial', '', 12);
 $totalPrice = 0;
 foreach ($items as $item) {
-    $lineTotal = $item['quantity'] * $item['price'];
+    // نستخدم الخصم إذا موجود
+    $unitPrice = (!empty($item['discount_price']) && $item['discount_price'] > 0) ? $item['discount_price'] : $item['price'];
+
+    $lineTotal = $item['quantity'] * $unitPrice;
     $totalPrice += $lineTotal;
 
     $productName = truncateText($item['name'], 200);
+
 
     $numLines = getNumLines($pdf, $productName, 80); // عرض عمود المنتج 80
     $lineHeight = 6; // ارتفاع السطر
@@ -148,7 +152,7 @@ foreach ($items as $item) {
     $pdf->SetXY($x + 80, $y);
     $pdf->Cell(30, $rowHeight, $item['quantity'], 1, 0, 'C');
 
-    $pdf->Cell(40, $rowHeight, '' . number_format($item['price'], 2), 1, 0, 'R');
+    $pdf->Cell(40, $rowHeight, '' . number_format($unitPrice, 2), 1, 0, 'R');
     $pdf->Cell(40, $rowHeight, '' . number_format($lineTotal, 2), 1, 1, 'R');
 }
 

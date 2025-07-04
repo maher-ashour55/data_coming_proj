@@ -21,7 +21,7 @@ $result = $conn->query($sql);
 
 
 function getOrderItems($conn, $order_id) {
-    $stmt = $conn->prepare("SELECT oi.quantity, p.name AS product_name, p.price, p.id AS product_id
+    $stmt = $conn->prepare("SELECT oi.quantity, p.name AS product_name, p.price, p.discount_price, p.id AS product_id
                             FROM order_items oi
                             JOIN product p ON oi.product_id = p.id
                             WHERE oi.order_id = ?");
@@ -35,6 +35,7 @@ function getOrderItems($conn, $order_id) {
     $stmt->close();
     return $items;
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -358,7 +359,12 @@ function getOrderItems($conn, $order_id) {
                     if (count($items) > 0):
                         foreach ($items as $item):
                             ?>
-                            <p class="item"><?= htmlspecialchars($item['product_name']) ?> × <?= $item['quantity'] ?> — ₪<?= number_format($item['price'], 2) ?></p>
+                            <?php
+                            $priceToShow = (!empty($item['discount_price']) && $item['discount_price'] > 0)
+                                ? $item['discount_price']
+                                : $item['price'];
+                            ?>
+                            <p class="item"><?= htmlspecialchars($item['product_name']) ?> × <?= $item['quantity'] ?> — ₪<?= number_format($priceToShow, 2) ?></p>
                         <?php
                         endforeach;
                     else:
