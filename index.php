@@ -372,7 +372,7 @@ if (isset($_SESSION['user_id'])) {
                         <div class="bg-shape"></div>
                         <img src="./img/chair.png" alt="Chair">
                     </div>
-                    <h3>Chair</h3>
+                    <h3>CHAIR</h3>
                     <button onclick="location.href='chair.php'">Browse</button>
                 </div>
             </a>
@@ -394,6 +394,16 @@ if (isset($_SESSION['user_id'])) {
                     </div>
                     <h3>COOLERPAD</h3>
                     <button onclick="location.href='coolerpad.php'">Browse</button>
+                </div>
+            </a>
+            <a href="hdmi.php">
+                <div class="category-card">
+                    <div class="card-bg">
+                        <div class="bg-shape"></div>
+                        <img src="./img/hdmi.png" alt="Processor">
+                    </div>
+                    <h3>CABLES AND PORTS</h3>
+                    <button onclick="location.href='hdmi.php'">Browse</button>
                 </div>
             </a>
             <a href="cpu.php">
@@ -471,16 +481,7 @@ if (isset($_SESSION['user_id'])) {
                 <button onclick="location.href='xbox.php'">Browse</button>
             </div>
             </a>
-            <a href="hdmi.php">
-            <div class="category-card">
-                <div class="card-bg">
-                    <div class="bg-shape"></div>
-                    <img src="./img/hdmi.png" alt="Processor">
-                </div>
-                <h3>CABLES AND PORTS</h3>
-                <button onclick="location.href='hdmi.php'">Browse</button>
-            </div>
-            </a>
+
             <a href="mother.php">
             <div class="category-card">
                 <div class="card-bg">
