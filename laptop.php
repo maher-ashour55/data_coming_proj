@@ -203,13 +203,21 @@ $conn->close();
                 ?>
                 <div class="category-card">
                     <a href="product_details.php?id=<?= $row['id'] ?>" class="category-card-link">
-                    <div class="card-bg">
-                        <div class="bg-shape <?php echo $row['stock'] == 0 ? 'grayscale' : ''; ?>"></div>
-                        <img src="../admin/uploads/<?php echo htmlspecialchars($row['image']); ?>"
-                             alt="<?php echo htmlspecialchars($row['name']); ?>"
-                             class="<?php echo $row['stock'] == 0 ? 'grayscale' : ''; ?>">
-                    </div>
-                    <h3><?php echo htmlspecialchars($row['name']); ?></h3>
+                        <div class="card-bg">
+                            <div class="bg-shape <?php echo $row['stock'] == 0 ? 'grayscale' : ''; ?>"></div>
+
+                            <!-- badge للحالة -->
+                            <?php if (!empty($row['condition'])): ?>
+                                <div class="product-badge">
+                                    <?= htmlspecialchars(strtoupper($row['condition'])); ?>
+                                </div>
+                            <?php endif; ?>
+
+                            <img src="../admin/uploads/<?php echo htmlspecialchars($row['image']); ?>"
+                                 alt="<?php echo htmlspecialchars($row['name']); ?>"
+                                 class="<?php echo $row['stock'] == 0 ? 'grayscale' : ''; ?>">
+                        </div>
+                        <h3><?php echo htmlspecialchars($row['name']); ?></h3>
                     </a>
                     <?php if ($row['discount_price'] !== null && floatval($row['discount_price']) > 0 && floatval($row['discount_price']) < floatval($row['price'])): ?>
                         <h2>

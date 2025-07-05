@@ -298,6 +298,14 @@ $product = $result->fetch_assoc();
                     ?>
                 </select>
             </div>
+            <div id="condition-container" style="display: none;">
+                <label for="condition">Condition</label>
+                <select name="condition" id="condition">
+                    <option value="New" <?= $product['condition'] === 'New' ? 'selected' : '' ?>>New</option>
+                    <option value="Like New" <?= $product['condition'] === 'Like New' ? 'selected' : '' ?>>Like New</option>
+                </select>
+            </div>
+
         </div>
 
         <div class="right-col">
@@ -323,6 +331,25 @@ $product = $result->fetch_assoc();
         <button type="submit" class="submit-btn">💾 Update Product</button>
     </form>
 </div>
+<script>
+    const categorySelect = document.getElementById('category');
+    const conditionContainer = document.getElementById('condition-container');
+
+    function toggleConditionField() {
+        if (categorySelect.value === 'Laptop') {
+            conditionContainer.style.display = 'block';
+        } else {
+            conditionContainer.style.display = 'none';
+            document.getElementById('condition').value = '';
+        }
+    }
+
+    // شغّل التحقق أول ما تفتح الصفحة
+    toggleConditionField();
+
+    // شغّل التحقق عند تغيير التصنيف
+    categorySelect.addEventListener('change', toggleConditionField);
+</script>
 
 <script>
     const discountInput = document.getElementById('discount_price');

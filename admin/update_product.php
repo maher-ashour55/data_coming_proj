@@ -19,6 +19,8 @@ $stock = intval($_POST['stock']);
 $category = $_POST['category'];
 $description = $_POST['description'];
 $is_featured_offer = isset($_POST['is_featured_offer']) ? 1 : 0;
+$condition = isset($_POST['condition']) ? $_POST['condition'] : null;
+
 
 $imageName = null;
 if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
@@ -43,17 +45,20 @@ $debug = [
     'category' => $category,
     'description' => $description,
     'image' => $imageName ?? 'NO IMAGE',
-    'is_featured_offer' => $is_featured_offer
+    'is_featured_offer' => $is_featured_offer,
+    'condition' => $condition
 ];
 
 file_put_contents("debug_update.txt", print_r($debug, true));
 
 if ($imageName !== null) {
-    $stmt = $conn->prepare("UPDATE product SET name=?, price=?, discount_price=?, stock=?, category=?, description=?, image=?, is_featured_offer=? WHERE id=?");
-    $stmt->bind_param("sddisssii", $name, $price, $discount_price, $stock, $category, $description, $imageName, $is_featured_offer, $id);
+    $stmt = $conn->prepare("UPDATE product SET name=?, price=?, discount_price=?, stock=?, category=?, description=?, image=?, is_featured_offer=?, `condition`=? WHERE id=?");
+    $stmt->bind_param("sddisssisi", $name, $price, $discount_price, $stock, $category, $description, $imageName, $is_featured_offer, $condition, $id);
+
 } else {
-    $stmt = $conn->prepare("UPDATE product SET name=?, price=?, discount_price=?, stock=?, category=?, description=?, is_featured_offer=? WHERE id=?");
-    $stmt->bind_param("sddissii", $name, $price, $discount_price, $stock, $category, $description, $is_featured_offer, $id);
+    $stmt = $conn->prepare("UPDATE product SET name=?, price=?, discount_price=?, stock=?, category=?, description=?, is_featured_offer=?, `condition`=? WHERE id=?");
+    $stmt->bind_param("sddissisi", $name, $price, $discount_price, $stock, $category, $description, $is_featured_offer, $condition, $id);
+
 }
 
 if ($stmt->execute()) {

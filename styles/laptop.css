@@ -682,6 +682,24 @@ footer {
     transform: translateY(30px);
     transition: opacity 0.6s ease, transform 0.6s ease;
 }
+.category-card {
+    position: relative; /* مهم ليكون العنصر الأب مرجعي للبادج */
+}
+
+.product-badge {
+    position: absolute;
+    top: 10px;    /* بعد عن الحافة العلوية */
+    right: 10px;  /* بعد عن الحافة اليمنى */
+    background-color: #9265A6;  /* لون البنفسجي */
+    color: white;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 5px;
+    text-transform: uppercase;
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    z-index: 10;
+}
 
 
 
