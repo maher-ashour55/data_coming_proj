@@ -83,11 +83,18 @@ $conn->close();
                         <a href="#">Accessories <i class="fas fa-chevron-down"></i></a>
                         <div class="dropdown-content">
                             <a href="headset.php">HEAD SET</a>
-                            <a href="mouse.php">MOUSE</a>
+                            <div class="sub-dropdown">
+                                <a href="mouse.php">MOUSE</a>
+                                <div class="sub-dropdown-content">
+                                    <a href="MOUSEPAD.php">MOUSEPAD</a>
+                                </div>
+                            </div>
+                            <a href="coolerpad.php">coolerpad</a>
                             <a href="keyboard.php">KEYBOARD</a>
                             <a href="chair.php">CHAIR</a>
                             <a href="monitor.php">MONITOR</a>
                             <a href="hdmi.php">CABLES AND PORTS</a>
+                            <a href="speaker.php">speaker</a>
                         </div>
                     </div>
                 </nav>
