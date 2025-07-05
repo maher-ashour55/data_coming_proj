@@ -342,7 +342,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function startAutoScroll() {
         clearInterval(interval);  // مهم: نوقف interval القديم قبل تشغيل الجديد
-        interval = setInterval(autoScroll, 4000);
+        interval = setInterval(autoScroll, 2800);
     }
 
     carousel.addEventListener('mouseenter', () => clearInterval(interval));
