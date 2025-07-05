@@ -290,7 +290,7 @@ $product = $result->fetch_assoc();
                 <label for="category">Category</label>
                 <select id="category" name="category" required>
                     <?php
-                    $categories = ["Processors", "Graphics Cards", "Case", "Power supply", "SSD", "ram", "Hard Disk", "Mother board", "Monitor", "Laptop", "Mouse", "Keyboard", "Head set", "Chair", "console", "CABLES AND PORTS" , "coolerpad" , "mousepad"];
+                    $categories = ["Processors", "Graphics Cards", "Case", "Power supply", "SSD", "ram", "Hard Disk", "Mother board", "Monitor", "Laptop", "Mouse", "Keyboard", "Head set", "Chair", "console", "CABLES AND PORTS" , "coolerpad" , "mousepad" , "speaker" ];
                     foreach ($categories as $cat) {
                         $selected = $product['category'] === $cat ? "selected" : "";
                         echo "<option value=\"$cat\" $selected>$cat</option>";
