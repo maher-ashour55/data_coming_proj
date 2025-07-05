@@ -294,6 +294,7 @@ if (isset($_SESSION['user_id'])) {
         <div class="featured-carousel">
             <?php while ($row = $featured_result->fetch_assoc()): ?>
                 <div class="featured-card">
+                    <div class="offer-badge">عروض</div>
                     <img src="../admin/uploads/<?php echo htmlspecialchars($row['image']); ?>" alt="<?php echo htmlspecialchars($row['name']); ?>">
                     <h3><?php echo htmlspecialchars($row['name']); ?></h3>
                     <p class="price"><?php echo htmlspecialchars($row['discount_price']); ?>₪</p>
@@ -305,10 +306,6 @@ if (isset($_SESSION['user_id'])) {
     <div class="container">
 
         <div class="categories">
-
-
-
-            <br>
             <a href="laptop.php">
                 <div class="category-card">
                     <div class="card-bg">
@@ -359,6 +356,46 @@ if (isset($_SESSION['user_id'])) {
                     <button onclick="location.href='headset.php'">Browse</button>
                 </div>
             </a>
+            <a href="case.php">
+                <div class="category-card">
+                    <div class="card-bg">
+                        <div class="bg-shape"></div>
+                        <img src="./img/case2.png" alt="CASE">
+                    </div>
+                    <h3>CASE</h3>
+                    <button onclick="location.href='case.php'">Browse</button>
+                </div>
+            </a>
+            <a href="chair.php">
+                <div class="category-card">
+                    <div class="card-bg">
+                        <div class="bg-shape"></div>
+                        <img src="./img/chair.png" alt="Chair">
+                    </div>
+                    <h3>Chair</h3>
+                    <button onclick="location.href='chair.php'">Browse</button>
+                </div>
+            </a>
+            <a href="MOUSEPAD.php">
+                <div class="category-card">
+                    <div class="card-bg">
+                        <div class="bg-shape"></div>
+                        <img src="./img/imgg/mousepad.png" alt="Chair">
+                    </div>
+                    <h3>MOUSEPAD</h3>
+                    <button onclick="location.href='MOUSEPAD.php'">Browse</button>
+                </div>
+            </a>
+            <a href="coolerpad.php">
+                <div class="category-card">
+                    <div class="card-bg">
+                        <div class="bg-shape"></div>
+                        <img src="./img/imgg/coolerpad-removebg-preview.png" alt="Chair">
+                    </div>
+                    <h3>COOLERPAD</h3>
+                    <button onclick="location.href='coolerpad.php'">Browse</button>
+                </div>
+            </a>
             <a href="cpu.php">
             <div class="category-card">
                 <div class="card-bg">
@@ -389,26 +426,8 @@ if (isset($_SESSION['user_id'])) {
                 <button onclick="location.href='ram.php'">Browse</button>
             </div>
             </a>
-            <a href="case.php">
-            <div class="category-card">
-                <div class="card-bg">
-                    <div class="bg-shape"></div>
-                    <img src="./img/case2.png" alt="CASE">
-                </div>
-                <h3>CASE</h3>
-                <button onclick="location.href='case.php'">Browse</button>
-            </div>
-            </a>
-            <a href="chair.php">
-                <div class="category-card">
-                    <div class="card-bg">
-                        <div class="bg-shape"></div>
-                        <img src="./img/chair.png" alt="Chair">
-                    </div>
-                    <h3>Chair</h3>
-                    <button onclick="location.href='chair.php'">Browse</button>
-                </div>
-            </a>
+
+
             <a href="harddisk.php">
             <div class="category-card">
                 <div class="card-bg">
