@@ -36,6 +36,7 @@ if (isset($_SESSION['user_id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>data coming | داتا كامينغ</title>
+    <link rel="canonical" href="https://datacoming.store/" />
 
     <link rel="icon" type="image/png" href="https://datacoming.store/img/data2-removebg-preview.png">
 
