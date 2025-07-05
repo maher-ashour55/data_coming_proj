@@ -212,7 +212,10 @@ if (isset($_SESSION['user_id'])) {
         <a href="chair.php" class="side-menu-item"><i class="fas fa-chair"></i><p>Chair</p></a>
         <a href="monitor.php" class="side-menu-item"><i class="fas fa-desktop"></i><p>Monitor</p></a>
         <a href="hdmi.php" class="side-menu-item"><i class="fas fa-plug"></i><p>Cables and Ports</p></a>
+        <a href="MOUSEPAD.php" class="side-menu-item"><i class="fas fa-mouse"></i><p>Mousepad</p></a>
+        <a href="coolerpad.php" class="side-menu-item"><i class="fas fa-snowflake"></i><p>Coolerpad</p></a> <!-- تمت الإضافة هنا -->
     </div>
+
 </div>
 
 
