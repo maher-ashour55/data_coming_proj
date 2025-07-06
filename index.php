@@ -294,7 +294,7 @@ if (isset($_SESSION['user_id'])) {
         <h2 class="section-title">العروض المميزة</h2>
 
         <div class="carousel-wrapper">
-            <button class="carousel-btn left">&#10094;</button> <!-- سهم لليسار -->
+            <button class="carousel-btn left">&#10094;</button>
 
             <div class="featured-carousel">
                 <?php while ($row = $featured_result->fetch_assoc()): ?>
@@ -308,7 +308,7 @@ if (isset($_SESSION['user_id'])) {
                 <?php endwhile; ?>
             </div>
 
-            <button class="carousel-btn right">&#10095;</button> <!-- سهم لليمين -->
+            <button class="carousel-btn right">&#10095;</button>
         </div>
     </div>
 
