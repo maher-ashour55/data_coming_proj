@@ -292,18 +292,26 @@ if (isset($_SESSION['user_id'])) {
 
     <div class="featured-carousel-section">
         <h2 class="section-title">العروض المميزة</h2>
-        <div class="featured-carousel">
-            <?php while ($row = $featured_result->fetch_assoc()): ?>
-                <div class="featured-card">
-                    <div class="offer-badge">عروض</div>
-                    <img src="../admin/uploads/<?php echo htmlspecialchars($row['image']); ?>" alt="<?php echo htmlspecialchars($row['name']); ?>">
-                    <h3><?php echo htmlspecialchars($row['name']); ?></h3>
-                    <p class="price"><?php echo htmlspecialchars($row['discount_price']); ?>₪</p>
-                    <a href="product_details.php?id=<?php echo $row['id']; ?>" class="browse-btn">View</a>
-                </div>
-            <?php endwhile; ?>
+
+        <div class="carousel-wrapper">
+            <button class="carousel-btn left">&#10094;</button> <!-- سهم لليسار -->
+
+            <div class="featured-carousel">
+                <?php while ($row = $featured_result->fetch_assoc()): ?>
+                    <div class="featured-card">
+                        <div class="offer-badge">عروض</div>
+                        <img src="../admin/uploads/<?php echo htmlspecialchars($row['image']); ?>" alt="<?php echo htmlspecialchars($row['name']); ?>">
+                        <h3><?php echo htmlspecialchars($row['name']); ?></h3>
+                        <p class="price"><?php echo htmlspecialchars($row['discount_price']); ?>₪</p>
+                        <a href="product_details.php?id=<?php echo $row['id']; ?>" class="browse-btn">View</a>
+                    </div>
+                <?php endwhile; ?>
+            </div>
+
+            <button class="carousel-btn right">&#10095;</button> <!-- سهم لليمين -->
         </div>
     </div>
+
     <div class="container">
 
         <div class="categories">

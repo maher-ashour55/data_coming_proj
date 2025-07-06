@@ -350,3 +350,39 @@ document.addEventListener('DOMContentLoaded', function () {
 
     startAutoScroll(); // تشغيل أولي
 });
+document.addEventListener('DOMContentLoaded', function () {
+    const carousel = document.querySelector('.featured-carousel');
+    let scrollAmount = 0;
+    const cardWidth = 250;
+    let interval;
+
+    function autoScroll() {
+        if (!carousel) return;
+
+        if (carousel.scrollLeft + carousel.offsetWidth >= carousel.scrollWidth - 10) {
+            carousel.scrollTo({ left: 0, behavior: 'smooth' });
+            scrollAmount = 0;
+        } else {
+            scrollAmount += cardWidth;
+            carousel.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+        }
+    }
+
+    function startAutoScroll() {
+        clearInterval(interval);
+        interval = setInterval(autoScroll, 2800);
+    }
+
+    carousel.addEventListener('mouseenter', () => clearInterval(interval));
+    carousel.addEventListener('mouseleave', startAutoScroll);
+    startAutoScroll();
+
+    // 🔽 زر اليسار واليمين
+    document.querySelector('.carousel-btn.left').addEventListener('click', () => {
+        carousel.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+    });
+
+    document.querySelector('.carousel-btn.right').addEventListener('click', () => {
+        carousel.scrollBy({ left: cardWidth, behavior: 'smooth' });
+    });
+});
