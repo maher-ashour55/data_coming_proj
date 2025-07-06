@@ -23,6 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_user_info'])) 
     $new_last_name = trim($_POST['last_name']);
     $new_email = trim($_POST['email']);
     $new_password = trim($_POST['new_password']);
+    $confirm_password = trim($_POST['confirm_password']);
 
     if (!empty($new_first_name) && !empty($new_last_name) && !empty($new_email)) {
         $stmt = $conn->prepare("UPDATE users SET first_name = ?, last_name = ?, email = ? WHERE id = ?");
@@ -35,15 +36,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_user_info'])) 
         $_SESSION['email'] = $new_email;
 
         if (!empty($new_password)) {
-            $hashed = password_hash($new_password, PASSWORD_DEFAULT);
-            $stmt = $conn->prepare("UPDATE users SET password = ? WHERE id = ?");
-            $stmt->bind_param("si", $hashed, $user_id);
-            $stmt->execute();
-            $stmt->close();
-            $success_message = "Password and details updated successfully.";
+            if ($new_password !== $confirm_password) {
+                $error_message = "Passwords do not match.";
+            } else {
+                $hashed = password_hash($new_password, PASSWORD_DEFAULT);
+                $stmt = $conn->prepare("UPDATE users SET password = ? WHERE id = ?");
+                $stmt->bind_param("si", $hashed, $user_id);
+                $stmt->execute();
+                $stmt->close();
+                $success_message = "Password and details updated successfully.";
+            }
         } else {
             $success_message = "Details updated successfully.";
         }
+
     } else {
         $error_message = "All fields are required.";
     }
@@ -317,6 +323,11 @@ $result = $stmt->get_result();
                 <label for="new_password">New Password</label>
                 <input type="password" id="new_password" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc;" name="new_password" placeholder="••••••••">
             </div>
+            <div style="display: flex; flex-direction: column;">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="••••••••" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+            </div>
+
             <button type="submit" name="update_user_info" class="btn">Save Changes</button>
         </form>
     </div>
