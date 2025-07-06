@@ -106,6 +106,7 @@ $result = $stmt->get_result();
     <title><?php echo htmlspecialchars($first_name);?> | Account </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="./img/data2-removebg-preview.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-MZgBkd2p1CqcPScvf9svJ4rOY+QX3M3V7UUL0ekN2Zj0Q5XPKjG0gxN2aW9i9ZfVvRjAF2U4osFJFuESJ+H0Vw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         :root {
             --primary: #9265A6;
@@ -124,7 +125,7 @@ $result = $stmt->get_result();
             position: relative;
             overflow: hidden;
             text-align: center;
-            padding: 60px 20px 100px;
+            padding: 25px 20px 80px;
             color: white;
             background: linear-gradient(135deg, #9265A6 0%, #7f55a3 50%, #9b74b8 100%);
         }
@@ -275,6 +276,14 @@ $result = $stmt->get_result();
         .status-delivered { background-color: #dcfce7; color: #15803d; }
         .status-cancelled { background-color: #fef2f2; color: #991b1b; }
         .status-completed { background-color: #ecfdf5; color: #065f46; }
+        @media (max-width: 768px) {
+            .account-form > div {
+                flex-direction: column !important;
+            }
+            .account-form > div > div {
+                width: 100% !important;
+            }
+        }
     </style>
 
 </head>
@@ -299,42 +308,49 @@ $result = $stmt->get_result();
     <?php endif; ?>
 </div>
 
-<div class="container" style="display: flex; gap: 30px; flex-wrap: wrap;">
+<div class="container" style="display: flex; gap: 30px; flex-wrap: wrap; justify-content: center;">
     <!-- Account Info Card -->
-    <div class="card" style="flex: 1 1 300px; max-width: 350px; background: linear-gradient(135deg, #ffffff, #f9f9f9); border-left: 6px solid var(--primary);">
+    <div class="card" style="flex: 1 1 300px; max-width: 500px; background: linear-gradient(135deg, #ffffff, #f9f9f9); border-left: 6px solid var(--primary);">
         <h2 style="font-size: 20px; color: var(--primary); margin-bottom: 16px;">👤 Account Info</h2>
         <?php if ($success_message): ?><p style="color:green; font-size: 14px; font-weight: bold;">✔ <?php echo $success_message; ?></p><?php endif; ?>
         <?php if ($error_message): ?><p style="color:red; font-size: 14px; font-weight: bold;">✖ <?php echo $error_message; ?></p><?php endif; ?>
 
-        <form method="post" class="account-form" style="display: flex; flex-direction: column; gap: 15px;">
-            <div style="display: flex; flex-direction: column;">
-                <label for="first_name">First Name</label>
-                <input type="text" id="first_name" name="first_name" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc;" value="<?php echo htmlspecialchars($first_name); ?>">
+        <form method="post" class="account-form" style="display: flex; flex-direction: column; gap: 20px;">
+            <div style="display: flex; gap: 15px;">
+                <div style="flex: 1; display: flex; flex-direction: column;">
+                    <label for="first_name">First Name</label>
+                    <input type="text" id="first_name" name="first_name" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc;" value="<?php echo htmlspecialchars($first_name); ?>">
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column;">
+                    <label for="last_name">Last Name</label>
+                    <input type="text" id="last_name" name="last_name" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc;" value="<?php echo htmlspecialchars($last_name); ?>">
+                </div>
             </div>
-            <div style="display: flex; flex-direction: column;">
-                <label for="last_name">Last Name</label>
-                <input type="text" id="last_name" name="last_name" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc;" value="<?php echo htmlspecialchars($last_name); ?>">
-            </div>
+
             <div style="display: flex; flex-direction: column;">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc;" value="<?php echo htmlspecialchars($email); ?>">
             </div>
-            <div style="display: flex; flex-direction: column;">
-                <label for="new_password">New Password</label>
-                <input type="password" id="new_password" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc;" name="new_password" placeholder="••••••••">
-            </div>
-            <div style="display: flex; flex-direction: column;">
-                <label for="confirm_password">Confirm Password</label>
-                <input type="password" id="confirm_password" name="confirm_password" placeholder="••••••••" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+
+            <div style="display: flex; gap: 15px;">
+                <div style="flex: 1; display: flex; flex-direction: column;">
+                    <label for="new_password">New Password</label>
+                    <input type="password" id="new_password" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc;" name="new_password" placeholder="••••••••">
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column;">
+                    <label for="confirm_password">Confirm Password</label>
+                    <input type="password" id="confirm_password" name="confirm_password" placeholder="••••••••" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+                </div>
             </div>
 
             <button type="submit" name="update_user_info" class="btn">Save Changes</button>
         </form>
+
     </div>
 
     <!-- Orders Card -->
     <div class="card orders-card">
-        <h2><i class="fas fa-box"></i> My Orders</h2>
+        <h2 style="font-size: 20px; color: var(--primary); margin-bottom: 16px;">📦 My Orders</h2>
 
         <!-- Desktop Table View -->
         <div class="table-responsive order-table-view">
