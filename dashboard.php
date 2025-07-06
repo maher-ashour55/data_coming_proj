@@ -175,7 +175,6 @@ $result = $stmt->get_result();
             gap: 20px;
         }
 
-        /* جدول الطلبات - موبايل */
         .order-table-view {
             display: none;
         }
@@ -309,7 +308,7 @@ $result = $stmt->get_result();
 </div>
 
 <div class="container" style="display: flex; gap: 30px; flex-wrap: wrap; justify-content: center;">
-    <!-- Account Info Card -->
+
     <div class="card" style="flex: 1 1 300px; max-width: 500px; background: linear-gradient(135deg, #ffffff, #f9f9f9); border-left: 6px solid var(--primary);">
         <h2 style="font-size: 20px; color: var(--primary); margin-bottom: 16px;">👤 Account Info</h2>
         <?php if ($success_message): ?><p style="color:green; font-size: 14px; font-weight: bold;">✔ <?php echo $success_message; ?></p><?php endif; ?>
@@ -348,11 +347,9 @@ $result = $stmt->get_result();
 
     </div>
 
-    <!-- Orders Card -->
     <div class="card orders-card">
         <h2 style="font-size: 20px; color: var(--primary); margin-bottom: 16px;">📦 My Orders</h2>
 
-        <!-- Desktop Table View -->
         <div class="table-responsive order-table-view">
             <table class="styled-table">
                 <thead>
@@ -408,7 +405,6 @@ $result = $stmt->get_result();
             </table>
         </div>
 
-        <!-- Mobile Card View -->
         <div class="order-mobile-view">
             <?php mysqli_data_seek($result, 0); while ($order = $result->fetch_assoc()): ?>
                 <div class="order-card">
