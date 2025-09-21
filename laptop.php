@@ -5,7 +5,10 @@ if ($conn->connect_error) {
 }
 $conn->set_charset("utf8");
 
-$sql = "SELECT * FROM product WHERE category = 'laptop' AND is_active = 1";
+$sql = "SELECT * FROM product 
+        WHERE category = 'laptop' AND is_active = 1
+        ORDER BY (stock = 0), price DESC";
+
 $result = $conn->query($sql);
 
 if (!$result) {
